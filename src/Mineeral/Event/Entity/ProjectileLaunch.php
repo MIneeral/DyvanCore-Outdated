@@ -33,10 +33,6 @@ class ProjectileLaunch implements Listener
 				}
             }
             
-		} else {
-
-            $event->setCancelled();
-
-        }
+		}
 	}
 }
