@@ -20,7 +20,7 @@ class Stats extends Command{
     {
         parent::__construct("stats", "Permet d'affiché tes stats");
         $this->setAliases(["st"]);
-        $this->plugin = $plugin;
+
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
