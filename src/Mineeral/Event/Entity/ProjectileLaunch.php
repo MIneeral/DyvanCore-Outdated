@@ -32,7 +32,6 @@ class ProjectileLaunch implements Listener
 				} else {
 
                     $event->setCancelled();
-                    ProjectileLaunch::$cooldown[$player->getName()] = time() + ProjectileLaunch::$time;
 
                 }
             }
