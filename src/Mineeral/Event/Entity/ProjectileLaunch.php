@@ -19,7 +19,7 @@ class ProjectileLaunch implements Listener
 {   
 
     /**
-     * TODO Fix la suppression de l'enderpearl meme quand l'event est canceled.
+     * TODO Fix la suppression de l'enderpearl quand l'event est canceled.
     */
 
     private static $cooldown = array();
