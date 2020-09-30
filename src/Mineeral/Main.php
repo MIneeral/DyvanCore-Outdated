@@ -10,14 +10,14 @@ use pocketmine\entity\Entity;
 
 use onebone\economyapi\EconomyAPI;
 
-use Commands\Player\Feed;
-use Commands\Player\Stats;
-use Commands\Player\Kits;
-use Commands\Player\TopDeath;
-use Commands\Player\TopKill;
-use Commands\Player\Hub;
-use Commands\Player\Spawn;
-use Commands\Player\Money;
+use Mineeral\Commands\Player\Feed;
+use Mineeral\Commands\Player\Stats;
+use Mineeral\Commands\Player\Kits;
+use Mineeral\Commands\Player\TopDeath;
+use Mineeral\Commands\Player\TopKill;
+use Mineeral\Commands\Player\Hub;
+use Mineeral\Commands\Player\Spawn;
+use Mineeral\Commands\Player\Money;
 
 use Commands\Staff\Leaderboard;
 
