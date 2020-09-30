@@ -18,6 +18,10 @@ use Mineeral\Main;
 class ProjectileLaunch implements Listener
 {   
 
+    /**
+     * TODO Fix la suppression de l'enderpearl meme quand l'event est canceled.
+    */
+
     private static $cooldown = array();
 
     private static $time = 10;
