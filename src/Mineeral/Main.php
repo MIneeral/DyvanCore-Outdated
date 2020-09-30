@@ -2,69 +2,113 @@
 
 namespace Mineeral;
 
-use Mineeral\Entity\Death;
-use Mineeral\Entity\Kill;
-use Mineeral\Event\PlayerDeath;
+use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\entity\Entity;
-use pocketmine\plugin\PluginBase;
-use pocketmine\utils\Config;
+
 use onebone\economyapi\EconomyAPI;
+
+use Commands\Player\Feed;
+use Commands\Player\Stats;
+use Commands\Player\Kits;
+use Commands\Player\TopDeath;
+use Commands\Player\TopKill;
+use Commands\Player\Hub;
+use Commands\Player\Spawn;
+use Commands\Player\Money;
+
+use Commands\Staff\Leaderboard;
+
+use Mineeral\Event\Player\PlayerJoin;
+use Mineeral\Event\Player\PlayerQuit;
+use Mineeral\Event\Player\KnockBack;
+use Mineeral\Event\Player\PlayerDeath;
+use Mineeral\Event\Blocks\Sign;
+use Mineeral\Event\Items\Soup;
+
+use Mineeral\Entity\Death;
+use Mineeral\Entity\Kill;
+
 
 class Main extends PluginBase
 {
 
-    public $kill;
-    public $death;
     private static $instance;
 
     public function onEnable()
     {
-        @mkdir($this->getDataFolder());
-        $this->getServer()->getLogger()->info("ServerCore is operational");
-        $this->kill = new Config($this->getDataFolder(). "kill.yml", Config::YAML);
-        $this->death = new Config($this->getDataFolder(). "death.yml", Config::YAML);
-       $this->getServer()->getPluginManager()->registerEvents(new Event\QuitJoinEvent(), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new Event\KnockBack(), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new PlayerDeath($this), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new Event\Blocks\Sign(), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new Event\Items\Soup(), $this);
-        $this->getServer()->getCommandMap()->register("feed", new Commands\Player\Feed($this));
-        $this->getServer()->getCommandMap()->register("stats", new Commands\Player\Stats($this));
-        $this->getServer()->getCommandMap()->register("kit", new Commands\Player\Kits($this));
-        $this->getServer()->getCommandMap()->register("leaderboard", new Commands\Staff\Leaderboard($this));
-        $this->getServer()->getCommandMap()->register("td", new Commands\Player\TopDeath($this));
-        $this->getServer()->getCommandMap()->register("tk", new Commands\Player\TopKill($this));
-        self::$instance = $this;
-        $this->getServer()->loadLevel("Arene");
+        Main::$instance = $this;
+        Main::getInstance()->getServer()->getLogger()->info("ServerCore is operational");
+        Main::getCommands();
+        Main::getEvents();
+        Main::getEntity();
+
+        @mkdir(Main::getInstance()->getDataFolder());
+        Main::onConfig("kill");
+        Main::onConfig("death");
+
+        Main::getInstance()->getServer()->loadLevel("Arene");
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
     }
-   public function onDisable()
-{
-        $this->kill->save();
-        $this->death->save();
+
+    public static function getInstance() : Main
+    {
+
+        return self::$instance;
 
     }
-   public static function getInstance(){
-        return self::$instance;
-    }
-    public function onCommand(CommandSender $player, Command $cmd, string $label, array $args) : bool{
-        switch($cmd->getName()){
-            case "spawn":
-                $player->teleport($this->getServer()->getLevelByName("Arene")->getSafeSpawn());
-                $player->sendMessage("§f[§c!§f] Vous avez bien était téléporter au spawn");
-                break;
-            case "hub":
-                $player->teleport($this->getServer()->getLevelByName("Arene")->getSafeSpawn());
-                $player->sendMessage("§f[§c!§f] Vous avez bien était téléporter au lobby");
-                break;
-            case "money":
-                $money = EconomyAPI::getInstance()->myMoney($player);
-                $player->sendMessage("§f[§c!§f] Vous avez §4" . $money . "");
-                break;
+
+    public static function onConfig(string $config) : Config
+    {
+
+        switch($config){
+
+            case "kill":
+                return new Config(Main::getInstance()->getDataFolder(). "kill.yml", Config::YAML);
+            break;
+
+            case "death":
+                return new Config(Main::getInstance()->getDataFolder(). "death.yml", Config::YAML);
+            break;
+
         }
-        return true;
+    }
+
+    private static function getCommands() : void
+    {
+
+        Main::getInstance()->getServer()->getCommandMap()->register("feed", new Feed());
+        Main::getInstance()->getServer()->getCommandMap()->register("stats", new Stats());
+        Main::getInstance()->getServer()->getCommandMap()->register("kit", new Kits());
+        Main::getInstance()->getServer()->getCommandMap()->register("td", new TopDeath());
+        Main::getInstance()->getServer()->getCommandMap()->register("tk", new TopKill());
+        Main::getInstance()->getServer()->getCommandMap()->register("leaderboard", new Leaderboard());
+        Main::getInstance()->getServer()->getCommandMap()->register("hub", new Hub());
+        Main::getInstance()->getServer()->getCommandMap()->register("spawn", new Spawn());
+        Main::getInstance()->getServer()->getCommandMap()->register("money", new Money());
+
+    }
+
+    private static function getEvents() : void
+    {
+
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerJoin(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerQuit(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new KnockBack(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerDeath(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Sign(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Soup(), Main::getInstance());
+
+    }
+
+    private static function getEntity() : void 
+    {
+
+        Entity::registerEntity(Kill::class, true);
+        Entity::registerEntity(Death::class, true);
+
     }
 }

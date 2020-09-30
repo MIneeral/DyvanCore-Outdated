@@ -2,11 +2,13 @@
 
 namespace Mineeral\Entity;
 
-use Mineeral\Main;
 use pocketmine\entity\Monster;
 use pocketmine\entity\EntityIds;
 
-class Death extends Monster{
+use Mineeral\Main;
+
+class Death extends Monster
+{
 
     const NETWORK_ID = EntityIds::CHICKEN;
 
@@ -14,32 +16,40 @@ class Death extends Monster{
     public $width = 0.4;
     public $gravity = 0;
 
-    public function getName(): string
+    public function getName() : string
     {
+
         return "Death";
+
     }
 
-    public function initEntity(): void
+    public function initEntity() : void
     {
+
         parent::initEntity();
         $this->setImmobile(true);
         $this->setHealth($this->getHealth());
         $this->setNameTagAlwaysVisible(true);
         $this->setScale(0.001);
+
     }
 
-    public function onUpdate(int $currentTick): bool
+    public function onUpdate(int $currentTick) : bool
     {
-        $AllDeaths = Main::getInstance()->death->getAll();
-        arsort($AllDeaths);
+        
+        $alldeaths = Main::onConfig("death")->getAll();
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes les plus mort(s) §c-\n";
-        foreach($AllDeaths as $name => $value){
-            if($top > 10)break;
-            $nametag .= "§4#{$top} §c{$name} §favec §c{$value} §fmort(s)\n";
-            $top++;
+
+        arsort($alldeaths);
+        foreach($alldeaths as $name => $value){
+            if($top > 10) break;
+                $nametag .= "§4#{$top} §c{$name} §favec §c{$value} §fmort(s)\n";
+                $top++;
         }
+
         $this->setNameTag($nametag);
         return parent::onUpdate($currentTick);
+
     }
 }

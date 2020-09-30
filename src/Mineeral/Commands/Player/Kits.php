@@ -2,37 +2,40 @@
 
 namespace Mineeral\Commands\Player;
 
-use pocketmine\command\PluginCommand;
-use pocketmine\Server;
 use pocketmine\Player;
-use Mineeral\Main;
+
+use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 
-use onebone\economyapi\EconomyAPI;
 use pocketmine\item\Item;
-use pocketmine\event\Listener;
 
-class Kits extends PluginCommand{
+use onebone\economyapi\EconomyAPI;
 
-    private $plugin;
+use Mineeral\Main;
 
-    public function __construct(Main $plugin)
+class Kits extends Command{
+
+    public function __construct()
     {
-        parent::__construct("kit", $plugin);
 
-        $this->plugin = $plugin;
+        parent::__construct("kit", "Permet d'affiché les kits");
+
     }
 
-    public function execute(CommandSender $player, string $commandLabel, array $args)
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
-        $api =
-Server::getInstance()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createSimpleForm(function (Player $player, int $data = null){
+        $api = Main::getInstance()->getServer()->getPluginManager()->getPlugin("FormAPI");
+
+        $form = $api->createSimpleForm(function (Player $sender, int $data = null){
+
             $result = $data;
+
             if($result === null){
                 return true;
             }
+
             switch($result){
                 case 0;
                     $sword1 = Item::get(276, 0, 1);
@@ -43,41 +46,44 @@ Server::getInstance()->getPluginManager()->getPlugin("FormAPI");
                     $chestplate1 = Item::get(311, 0, 1);
                     $leggings1 = Item::get(312, 0, 1);
                     $boots1 = Item::get(313, 0, 1);
-                    $player->sendMessage("§f[§c!§f] Vous venez de prendre le kit §4Basic");
-                    $player->getInventory()->clearAll();
-                    $player->getArmorInventory()->clearAll();
-                    $player->getInventory()->addItem($sword1);
-                    $player->getInventory()->addItem($soup1);
-                    $player->getInventory()->setItem(7, $gapple);
-                    $player->getInventory()->setItem(8, $pearl);
-                    $player->getArmorInventory()->setHelmet($helmet1);
-                    $player->getArmorInventory()->setChestplate($chestplate1);
-                    $player->getArmorInventory()->setLeggings($leggings1);
-                    $player->getArmorInventory()->setBoots($boots1);
+                    $sender->sendMessage("§f[§c!§f] Vous venez de prendre le kit §4Basic");
+                    $sender->getInventory()->clearAll();
+                    $sender->getArmorInventory()->clearAll();
+                    $sender->getInventory()->addItem($sword1);
+                    $sender->getInventory()->addItem($soup1);
+                    $sender->getInventory()->setItem(7, $gapple);
+                    $sender->getInventory()->setItem(8, $pearl);
+                    $sender->getArmorInventory()->setHelmet($helmet1);
+                    $sender->getArmorInventory()->setChestplate($chestplate1);
+                    $sender->getArmorInventory()->setLeggings($leggings1);
+                    $sender->getArmorInventory()->setBoots($boots1);
                 break;
 
                 case 1;
-                    $player->sendMessage("§f[§c!§f] §4Coming soon..");
+                    $sender->sendMessage("§f[§c!§f] §4Coming soon..");
                 break;
                 
                 case 2;
-                    $player->sendMessage("§f[§c!§f] §4Coming soon..");
+                    $sender->sendMessage("§f[§c!§f] §4Coming soon..");
                 break;
 
                 case 3;
-                    $player->sendMessage("§f[§c!§f] §4Coming soon..");
+                    $sender->sendMessage("§f[§c!§f] §4Coming soon..");
                 break;
             }
         });
+
         $form->setTitle("§c- §fKits§c-");
         $form->setContent("§c» §fVoici les différents Kits disponibles");
+
         $form->addButton("§7Basic\n§e[Joueur]", 0, "textures/items/gold_sword");
-      $form->addButton("§7Superior\n§d[Saturne]", 0, "textures/items/iron_sword");
+        $form->addButton("§7Superior\n§d[Saturne]", 0, "textures/items/iron_sword");
+        $form->addButton("§7Mythical\n§5[Saturne+]", 0, "textures/items/diamond_sword");
+        $form->addButton("§7Legendary\n§9[Eris]", 0, "textures/items/netherite_sword");
 
-$form->addButton("§7Mythical\n§5[Saturne+]", 0, "textures/items/diamond_sword");
+        $form->sendToPlayer($sender);
 
-$form->addButton("§7Legendary\n§9[Eris]", 0, "textures/items/netherite_sword");
-        $form->sendToPlayer($player);
-        return $form;
+        return true;
+
     }
 }
