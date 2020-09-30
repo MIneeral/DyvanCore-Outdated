@@ -12,8 +12,6 @@ use morcheysha77\Form\FormAPI\SimpleForm;
 
 use morcheysha77\Main;
 
-use onebone\economyapi\EconomyAPI;
-
 class Commands
 {
 
@@ -76,10 +74,10 @@ class Commands
         $form->sendToPlayer($player);
     }
 
-    public static function Stats(Player $player, $perms, $crank, $money) : bool 
+    public static function Stats(Player $player, $rank, $money) : bool 
     {
 
-        $form = new SimpleForm(function (Player $player, int $data = null) use ($perms, $crank, $money){
+        $form = new SimpleForm(function (Player $player, int $data = null) use ($rank, $money){
 
             $result = $data;
 
@@ -89,12 +87,12 @@ class Commands
 
             switch($result){
                 case 0:
-                    switch($crank) {
+                    switch($rank) {
                         case "Player":
                             if($money >= 10000){
 
-                                EconomyAPI::getInstance()->reduceMoney($player, "10000");
-                                $perms->setGroup($player, $perms->getGroup("Saturne"));
+                                Main::setConfig($player, "money", Main::onConfig($player, "money") - 10000);
+                                Main::setConfig($player, "rank", "Saturne");
                                 Main::getInstance()->getServer()->broadcastMessage("§f[§c!§f]§r §fBravo à §4" . $player->getName() . "§f qui vient d'améloirer son rank à §dSaturne§f !");
                                 $player->sendTitle("§c-§4 Bravo §c-");
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
@@ -111,8 +109,8 @@ class Commands
 
                         case "Saturne":
                             if($money >= 30000){
-                                EconomyAPI::getInstance()->reduceMoney($player, "30000");
-                                $perms->setGroup($player, $perms->getGroup("Saturne-Plus"));
+                                Main::setConfig($player, "money", Main::onConfig($player, "money") - 30000);
+                                Main::setConfig($player, "rank", "Saturne-Plus");
                                 Main::getInstance()->getServer()->broadcastMessage("§f[§c!§f]§r §fBravo à §4" . $player->getName() . "§f qui vient d'améloirer son rank à §5Saturne+§f !");
                                 $player->sendTitle("§c-§4 Bravo §c-");
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
@@ -126,8 +124,8 @@ class Commands
 
                         case "Saturne-Plus":
                             if($money >= 50000){
-                                EconomyAPI::getInstance()->reduceMoney($player, "50000");
-                                $perms->setGroup($player, $perms->getGroup("Eris"));
+                                Main::setConfig($player, "money", Main::onConfig($player, "money") - 50000);
+                                Main::setConfig($player, "rank", "Eris");
                                 Main::getInstance()->getServer()->broadcastMessage("§f[§c!§f]§r §fBravo à §4" . $player->getName() . "§f qui vient d'améloirer son rank à §9Eris§f !");
                                 $player->sendTitle("§c-§4 Bravo §c-");
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
@@ -152,8 +150,8 @@ class Commands
         });
 
         $form->setTitle("§c- §fStats §c-");
-        $form->setContent("§fVotre rank actuel est:§4 " . $crank . "\n§fVous avez: §4" . $money . "\n§fUn kill = §410\n§c» §fVoici les prix des ranks payants\n\n§fSaturne: §410000\n§fSaturne+:§4 30000\n§fEris:§4 50000\n\n§c» §fVous pouvez aussi en payer un depuis la boutique disponible sur le Discord : §bhttps://discord.gg/cGPvEmu");
-        $form->addButton("Améliorer son rank\n§c(" . $crank . ")", 0);
+        $form->setContent("§fVotre rank actuel est:§4 " . $rank . "\n§fVous avez: §4" . $money . "\n§fUn kill = §410\n§c» §fVoici les prix des ranks payants\n\n§fSaturne: §410000\n§fSaturne+:§4 30000\n§fEris:§4 50000\n\n§c» §fVous pouvez aussi en payer un depuis la boutique disponible sur le Discord : §bhttps://discord.gg/cGPvEmu");
+        $form->addButton("Améliorer son rank\n§c(" . $rank . ")", 0);
         $form->sendToPlayer($player);
 
         return true;
