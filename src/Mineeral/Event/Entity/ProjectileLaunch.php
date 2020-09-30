@@ -7,6 +7,8 @@ use pocketmine\Player;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\ProjectileLaunchEvent;
 
+use pocketmine\entity\projectile\EnderPearl;
+
 use pocketmine\item\Item;
 
 class ProjectileLaunch implements Listener
