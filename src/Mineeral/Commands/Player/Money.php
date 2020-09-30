@@ -20,7 +20,7 @@ class Money extends Command{
 
         if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
 
-        $sender->sendMessage("§f[§c!§f] Vous avez §4" . $sender->getNamedTag()->money . "");
+        $sender->sendMessage("§f[§c!§f] Vous avez §4" . Main::onConfig($sender, "money") . "");
 
     }
 }
