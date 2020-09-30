@@ -23,9 +23,12 @@ use Mineeral\Commands\Staff\Leaderboard;
 
 use Mineeral\Event\Player\PlayerJoin;
 use Mineeral\Event\Player\PlayerQuit;
-use Mineeral\Event\Player\KnockBack;
 use Mineeral\Event\Player\PlayerDeath;
-use Mineeral\Event\Blocks\Sign;
+use Mineeral\Event\Player\PlayerInteract;
+
+use Mineeral\Event\Entity\EntityDamageByEntity;
+use Mineeral\Event\Entity\ProjectileLaunch;
+
 use Mineeral\Event\Items\Soup;
 
 use Mineeral\Entity\Death;
@@ -39,6 +42,7 @@ class Main extends PluginBase
 
     public function onEnable()
     {
+
         Main::$instance = $this;
         Main::getInstance()->getServer()->getLogger()->info("ServerCore is operational");
         Main::getCommands();
@@ -52,6 +56,7 @@ class Main extends PluginBase
 
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
+
     }
 
     public static function getInstance() : Main
@@ -112,9 +117,12 @@ class Main extends PluginBase
 
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerJoin(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerQuit(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new KnockBack(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerDeath(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Sign(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerInteract(), Main::getInstance());
+
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new EntityDamageByEntity(), Main::getInstance());
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new ProjectileLaunch(), Main::getInstance());
+
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Soup(), Main::getInstance());
 
     }
