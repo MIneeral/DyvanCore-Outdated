@@ -25,14 +25,17 @@ class ProjectileLaunch implements Listener
 		if ($player instanceof Player) {
 			if ($event->getEntity() instanceof EnderPearl) {
 
-				if (isset(ProjectileLaunch::$cooldown[$player->getName()]) && time() < ProjectileLaunch::$cooldown[$player->getName()]) {
+				if (!isset(ProjectileLaunch::$cooldown[$player->getName()]) || time() > ProjectileLaunch::$cooldown[$player->getName()]) {
+
+                    ProjectileLaunch::$cooldown[$player->getName()] = time() + ProjectileLaunch::$time;
+                    
+				} else {
 
                     $event->setCancelled();
                     ProjectileLaunch::$cooldown[$player->getName()] = time() + ProjectileLaunch::$time;
-                    
-				}
+
+                }
             }
-            
 		}
 	}
 }
