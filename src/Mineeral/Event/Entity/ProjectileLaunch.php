@@ -16,7 +16,7 @@ class ProjectileLaunch implements Listener
 
     private static $cooldown = array();
 
-    private static $time = 5;
+    private static $time = 10;
 
     public function onLaunch(ProjectileLaunchEvent $event): void
 	{
@@ -31,6 +31,7 @@ class ProjectileLaunch implements Listener
                     
 				} else {
 
+                    $player->getInventory()->addItem(Item::get(368, 0, 1));
                     $event->setCancelled();
 
                 }
