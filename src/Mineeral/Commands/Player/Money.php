@@ -9,7 +9,7 @@ use onebone\economyapi\EconomyAPI;
 
 use Mineeral\Main;
 
-class Feed extends Command{
+class Money extends Command{
 
     public function __construct()
     {
