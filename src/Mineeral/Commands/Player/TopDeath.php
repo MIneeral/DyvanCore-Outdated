@@ -27,7 +27,7 @@ class TopDeath extends Command{
     public static function sendTopDeath(Player $player)
     {
 
-        $config = Main::onConfig("death")->getAll();
+        $config = array();
         $top = 1;
         $player->sendMessage("§f[§c!§f]§f Top §410§f des personnes les plus morts !\n");
 

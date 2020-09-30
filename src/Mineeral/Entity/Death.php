@@ -35,9 +35,9 @@ class Death extends Monster
     }
 
     public function onUpdate(int $currentTick) : bool
-    {
-        
-        $alldeaths = Main::onConfig("death")->getAll();
+    {   
+        $alldeaths = array();
+
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes les plus mort(s) §c-\n";
 

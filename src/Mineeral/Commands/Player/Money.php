@@ -5,8 +5,6 @@ namespace Mineeral\Commands\Player;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
-use onebone\economyapi\EconomyAPI;
-
 use Mineeral\Main;
 
 class Money extends Command{
@@ -22,7 +20,7 @@ class Money extends Command{
 
         if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
 
-        $sender->sendMessage("§f[§c!§f] Vous avez §4" . EconomyAPI::getInstance()->myMoney($sender) . "");
+        $sender->sendMessage("§f[§c!§f] Vous avez §4" . $sender->getNamedTag()->money . "");
 
     }
 }

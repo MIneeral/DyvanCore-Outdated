@@ -50,10 +50,6 @@ class Main extends PluginBase
         Main::getEntity();
         Main::loadLevel();
 
-        @mkdir(Main::getInstance()->getDataFolder());
-        Main::onConfig("kill");
-        Main::onConfig("death");
-
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
 
@@ -81,17 +77,72 @@ class Main extends PluginBase
         }
     }
 
-    public static function onConfig(string $config) : Config
+    public static function onConfig(Player $player, string $type)
     {
 
-        switch($config){
+        switch($type){
+
+            case "ip":
+                return $player->getNamedTag()->ip;
+            break;
+
+            case "rank":
+                return $player->getNamedTag()->rank;
+            break;
+
+            case "money":
+                return $player->getNamedTag()->money;
+            break;
 
             case "kill":
-                return new Config(Main::getInstance()->getDataFolder(). "kill.yml", Config::YAML);
+                return $player->getNamedTag()->kill;
             break;
 
             case "death":
-                return new Config(Main::getInstance()->getDataFolder(). "death.yml", Config::YAML);
+                return $player->getNamedTag()->death;
+            break;
+
+        }
+    }
+
+    public static function setConfig(Player $player, string $type, $value)
+    {
+
+        switch($type){
+
+            case "ip":
+                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                unset($nbt->ip);
+                $nbt->ip = new StringTag("IP", $value);
+                $player->setNamedTag($nbt);
+            break;
+
+            case "rank":
+                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                unset($nbt->rank);
+                $nbt->rank = new StringTag("RANK", $value);
+                $player->setNamedTag($nbt);
+            break;
+
+            case "money":
+                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                unset($nbt->money);
+                $nbt->money = new IntTag("MONEY", $value);
+                $player->setNamedTag($nbt);
+            break;
+
+            case "kill":
+                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                unset($nbt->kill);
+                $nbt->kill = new IntTag("KILL", $value);
+                $player->setNamedTag($nbt);
+            break;
+
+            case "death":
+                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                unset($nbt->death);
+                $nbt->death = new IntTag("DEATH", $value);
+                $player->setNamedTag($nbt);
             break;
 
         }

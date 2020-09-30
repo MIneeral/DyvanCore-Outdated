@@ -36,8 +36,10 @@ class PlayerDeath implements Listener
                 $player->teleport($this->getServer()->getLevelByName("Arene")->getSafeSpawn());
                 EconomyAPI::getInstance()->addMoney($damager, "10");
                 $damager->setHealth(20);
-                Main::onConfig("kill")->set($dname, Main::onConfig("kill")->get($dname) + 1)->save();
-                Main::onConfig("death")->set($name, Main::onConfig("death")->get($name) + 1)->save();
+
+                Main::setConfig($damager, "kill", Main::onConfig($damager, "kill") + 1);
+
+                Main::setConfig($player, "death", Main::onConfig($player, "death") + 1);
 
             }
         }

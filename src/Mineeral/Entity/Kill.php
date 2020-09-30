@@ -37,7 +37,7 @@ class Kill extends Monster
     public function onUpdate(int $currentTick) : bool
     {
 
-        $allkills = Main::onConfig("kill")->getAll();
+        $allkills = array();
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes avec le plus de kill(s) §c-\n";
 

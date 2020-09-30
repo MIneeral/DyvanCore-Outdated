@@ -25,6 +25,16 @@ class PlayerJoin implements Listener
             $player->sendMessage("§f[§c!§f] Bienvenue sur §4Dyvan§f PvP-Box !");
             $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
 
+            $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+
+            $nbt->ip = new StringTag("IP", $player->getAddress());
+            $nbt->rank = new StringTag("RANK", "Player");
+            $nbt->money = new IntTag("MONEY", 1000);
+            $nbt->kill = new IntTag("KILL", 0);
+            $nbt->death = new IntTag("DEATH", 0);
+
+            $player->setNamedTag($nbt);
+
         } else {
 
             Main::getInstance()->getServer()->broadcastPopup("§f[§c+§f] §a " . $player->getName());

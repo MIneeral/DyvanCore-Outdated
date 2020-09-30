@@ -26,7 +26,7 @@ class TopKill extends Command{
     public static function sendTopKill(Player $player)
     {
 
-        $config = Main::onConfig("kill")->getAll();
+        $config = array();
         $top = 1;
         $player->sendMessage("§f[§c!§f]§f Top §410§f des personnes qui ont le tuer de personnes !\n");
         
