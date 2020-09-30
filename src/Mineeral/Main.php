@@ -44,12 +44,12 @@ class Main extends PluginBase
         Main::getCommands();
         Main::getEvents();
         Main::getEntity();
+        Main::loadLevel();
 
         @mkdir(Main::getInstance()->getDataFolder());
         Main::onConfig("kill");
         Main::onConfig("death");
 
-        Main::getInstance()->getServer()->loadLevel("Arene");
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
     }
@@ -59,6 +59,21 @@ class Main extends PluginBase
 
         return self::$instance;
 
+    }
+
+    public static function loadLevel() 
+    {
+
+        foreach(scandir(Main::getInstance()->getServer()->getDataPath() . "/worlds/") as $world){
+
+            if($world !== "." && $world !== ".." ){
+                if(!(Main::getInstance()->getServer()->isLevelLoaded($world))){
+
+                    Main::getInstance()->getServer()->loadLevel($world);
+
+                }
+            }
+        }
     }
 
     public static function onConfig(string $config) : Config
