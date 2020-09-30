@@ -11,6 +11,10 @@ use pocketmine\entity\projectile\EnderPearl;
 
 use pocketmine\item\Item;
 
+use pocketmine\inventory\Inventory;
+
+use Mineeral\Main;
+
 class ProjectileLaunch implements Listener
 {   
 
@@ -23,11 +27,15 @@ class ProjectileLaunch implements Listener
         $player = $event->getEntity()->getOwningEntity();
         
 		if ($player instanceof Player) {
+
+            $name = $player->getName();
+            $player = Main::getInstance()->getServer()->getPlayer($name);
+
 			if ($event->getEntity() instanceof EnderPearl) {
 
-				if (!isset(ProjectileLaunch::$cooldown[$player->getName()]) || time() > ProjectileLaunch::$cooldown[$player->getName()]) {
+				if (!isset(ProjectileLaunch::$cooldown[$name]) || time() > ProjectileLaunch::$cooldown[$name]) {
 
-                    ProjectileLaunch::$cooldown[$player->getName()] = time() + ProjectileLaunch::$time;
+                    ProjectileLaunch::$cooldown[$name] = time() + ProjectileLaunch::$time;
                     
 				} else {
 

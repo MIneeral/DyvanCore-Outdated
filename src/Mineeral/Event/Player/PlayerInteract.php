@@ -4,7 +4,10 @@ namespace Mineeral\Event\Player;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
+
 use pocketmine\item\Item;
+
+use pocketmine\inventory\Inventory;
 
 class PlayerInteract implements Listener
 {   
