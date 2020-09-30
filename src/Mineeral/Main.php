@@ -19,7 +19,7 @@ use Mineeral\Commands\Player\Hub;
 use Mineeral\Commands\Player\Spawn;
 use Mineeral\Commands\Player\Money;
 
-use Commands\Staff\Leaderboard;
+use Mineeral\Commands\Staff\Leaderboard;
 
 use Mineeral\Event\Player\PlayerJoin;
 use Mineeral\Event\Player\PlayerQuit;
