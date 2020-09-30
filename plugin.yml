@@ -1,14 +1,6 @@
 name: ServerCore
-author: [Mineeral, Morshey]
+author: Mineeral & Morshey
 main: Mineeral\Main
 version: 1.0.0
 api: 3.0.0
-
-commands:
-  hub:
-    description: ""
-  spawn:
-    description: ""
-  money:
-    description: ""
 
