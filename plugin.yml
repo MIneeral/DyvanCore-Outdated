@@ -1,5 +1,5 @@
 name: ServerCore
-author: Mineeral
+author: [Mineeral, Morshey]
 main: Mineeral\Main
 version: 1.0.0
 api: 3.0.0
