@@ -211,14 +211,16 @@ class Main extends PluginBase
     {
 
         Main::getInstance()->getServer()->getCommandMap()->register("feed", new Feed());
-        Main::getInstance()->getServer()->getCommandMap()->register("stats", new Stats());
         Main::getInstance()->getServer()->getCommandMap()->register("kit", new Kits());
-        Main::getInstance()->getServer()->getCommandMap()->register("td", new TopDeath());
+        Main::getInstance()->getServer()->getCommandMap()->register("stats", new Stats());
+        Main::getInstance()->getServer()->getCommandMap()->register("money", new Money());
         Main::getInstance()->getServer()->getCommandMap()->register("tk", new TopKill());
-        Main::getInstance()->getServer()->getCommandMap()->register("leaderboard", new Leaderboard());
+        Main::getInstance()->getServer()->getCommandMap()->register("td", new TopDeath());
         Main::getInstance()->getServer()->getCommandMap()->register("hub", new Hub());
         Main::getInstance()->getServer()->getCommandMap()->register("spawn", new Spawn());
-        Main::getInstance()->getServer()->getCommandMap()->register("money", new Money());
+
+        Main::getInstance()->getServer()->getCommandMap()->register("leaderboard", new Leaderboard());
+        Main::getInstance()->getServer()->getCommandMap()->register("rank", new Rank());
 
         Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Commands are loaded");
         return true;
