@@ -14,7 +14,7 @@ class SetMoney extends Command{
     public function __construct()
     {
 
-        parent::__construct("removemoney", "Vous permez de set l'argent d'une personne");
+        parent::__construct("setmoney", "Vous permez de set l'argent d'une personne");
 
     }
     
@@ -32,7 +32,7 @@ class SetMoney extends Command{
                     $p = Main::getInstance()->getServer()->getPlayer($args[0]);
 
                     Main::setConfig($p, "int", "money", intval($args[1]));
-                    $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien set " . $p->getName() . " à §4" . Main::onConfig($p, "money") . "");
+                    $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien set " . $p->getName() . " à §4" . $args[1] . "");
 
                 }
                 else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Le joueur n'existe pas !");
