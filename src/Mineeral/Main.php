@@ -40,18 +40,24 @@ class Main extends PluginBase
 
     private static $instance;
 
-    public function onEnable()
+    public const PREFIX = "§3[§6Dyvan§3] §a";
+
+    public function onEnable() : void
     {
 
         Main::$instance = $this;
-        Main::getInstance()->getServer()->getLogger()->info("ServerCore is operational");
+
+        Main::loadLevel();
         Main::getCommands();
         Main::getEvents();
         Main::getEntity();
-        Main::loadLevel();
 
-        Entity::registerEntity(Kill::class, true);
-        Entity::registerEntity(Death::class, true);
+        $msg = Main::PREFIX . "ServerCore is not operationnal";
+
+        if(Main::getCommands() === true && Main::getEvents() === true && Main::getEntity() === true && Main::loadLevel() === true) $msg = Main::PREFIX . "ServerCore is operational";
+        else Main::getInstance()->getServer()->shutdown();
+
+        Main::getInstance()->getServer()->getLogger()->info($msg);
 
     }
 
@@ -62,7 +68,7 @@ class Main extends PluginBase
 
     }
 
-    public static function loadLevel() 
+    public static function loadLevel() : bool
     {
 
         foreach(scandir(Main::getInstance()->getServer()->getDataPath() . "/worlds/") as $world){
@@ -74,10 +80,14 @@ class Main extends PluginBase
 
                 }
             }
-        }
+        }  
+
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Levels are loaded");
+        return true;
+
     }
 
-    public static function onConfig(Player $player, string $type) : void
+    public static function onConfig(Player $player, string $type)
     {
 
         switch($type){
@@ -177,7 +187,25 @@ class Main extends PluginBase
         }
     }
 
-    private static function getCommands() : void
+    public static function onAllConfig() : array 
+    {
+        $array = array();
+
+        foreach(scandir(Main::getInstance()->getServer()->getDataPath() . "/players/") as $player){
+
+            if($player !== "." && $player !== ".."){
+
+                $p = explode(".", $player);
+                array_push($array, $p[0]);
+
+            }
+        }
+
+        return $array;
+    }
+
+
+    private static function getCommands() : bool
     {
 
         Main::getInstance()->getServer()->getCommandMap()->register("feed", new Feed());
@@ -190,9 +218,12 @@ class Main extends PluginBase
         Main::getInstance()->getServer()->getCommandMap()->register("spawn", new Spawn());
         Main::getInstance()->getServer()->getCommandMap()->register("money", new Money());
 
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Commands are loaded");
+        return true;
+
     }
 
-    private static function getEvents() : void
+    private static function getEvents() : bool
     {
 
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerJoin(), Main::getInstance());
@@ -205,13 +236,19 @@ class Main extends PluginBase
 
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Soup(), Main::getInstance());
 
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Events are loaded");
+        return true;
+
     }
 
-    private static function getEntity() : void 
+    private static function getEntity() : bool
     {
 
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
+
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Entity are loaded");
+        return true;
 
     }
 }
