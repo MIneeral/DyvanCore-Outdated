@@ -26,8 +26,8 @@ class Stats extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
 
-        $rank = Main::onConfig($player, "rank");
-        $money = Main::onConfig($player, "money");
+        $rank = Main::onConfig($sender, "rank");
+        $money = Main::onConfig($sender, "money");
 
         if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
             Commands::Stats($sender, $rank, $money);
