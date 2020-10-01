@@ -85,11 +85,11 @@ class Main extends PluginBase
             break;
 
             case "important":
-                return "§4[!]§f ";
+                return "§c[§4!§c]§f ";
             break;
 
             case "good":
-                return "§f[§4!§f] ";
+                return "§f[§c!§f] ";
             break;
 
             case "join":
