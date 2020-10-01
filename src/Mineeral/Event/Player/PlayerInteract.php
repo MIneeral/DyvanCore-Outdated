@@ -34,7 +34,7 @@ class PlayerInteract implements Listener
                     $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
                     $inventory->addItem(Item::get(281, 0, 1));
                     $player->setHealth($player->getHealth() + 3);
-                    PlayerInteract::$cooldown[$player->getName()] = time() + 1;
+                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.3;
     
                 } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
     
@@ -42,7 +42,7 @@ class PlayerInteract implements Listener
                     $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
                     $inventory->addItem(Item::get(281, 0, 1));
                     $player->setHealth($player->getHealth() + 3);
-                    PlayerInteract::$cooldown[$player->getName()] = time() + 1;
+                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.3;
     
                 }
             }
