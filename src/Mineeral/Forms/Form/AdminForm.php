@@ -4,6 +4,8 @@ namespace Mineeral\Forms\Form;
 
 use pocketmine\Player;
 
+use pocketmine\utils\Config;
+
 use Mineeral\Forms\FormAPI\CustomForm;
 use Mineeral\Forms\FormAPI\ModalForm;
 use Mineeral\Forms\FormAPI\SimpleForm;
@@ -64,7 +66,8 @@ class AdminForm
                 $rank = $ranks[$result[1]];
                 
                 unset($array);
-                Main::setConfig($p, "string", "rank", $rank);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Rank.json", Config::JSON);
+                Main::setConfig($p, $config, $rank);
                 Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . $p->getName() . " vient de passer " . $ranks_text[$rank]);
     
             }

@@ -12,10 +12,6 @@ use pocketmine\utils\Config;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\StringTag;
-use pocketmine\nbt\tag\IntTag;
-
 use Mineeral\Commands\Player\Feed;
 use Mineeral\Commands\Player\Stats;
 use Mineeral\Commands\Player\Kits;
@@ -84,6 +80,15 @@ class Main extends PluginBase
 
         Main::getInstance()->getServer()->getLogger()->info($msg);
 
+        @mkdir(Main::getInstance()->getDataFolder());
+        @mkdir(Main::getInstance()->getDataFolder()."/Infos");
+        new Config(Main::getInstance()->getDataFolder() ."/Infos/Ip.json", Config::JSON);
+        new Config(Main::getInstance()->getDataFolder() ."/Infos/Rank.json", Config::JSON);
+        new Config(Main::getInstance()->getDataFolder() ."/Infos/Money.json", Config::JSON);
+        new Config(Main::getInstance()->getDataFolder() ."/Infos/Kill.json", Config::JSON);
+        new Config(Main::getInstance()->getDataFolder() ."/Infos/Death.json", Config::JSON);
+        new Config(Main::getInstance()->getDataFolder() ."/Infos/Ban.json", Config::JSON);
+
     }
 
     public static function getInstance() : Main
@@ -115,50 +120,54 @@ class Main extends PluginBase
     public static function onConfig(Player $player, string $key)
     {
 
-        if(!$player->namedtag->hasTag("info", CompoundTag::class)) Main::setConfig($player, "compound", "info");
-
-        $compound = $player->namedtag->getCompoundTag("info");
-
         switch($key){
 
             case "ip":
-                if(!$compound->hasTag($key, StringTag::class)) Main::setConfig($player, "string", $key, $player->getAddress());
-                return $compound->getTagValue($key, StringTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Ip.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, $player->getAddress());
+                return $config->get($player->getName());
             break;
 
             case "rank":
-                if(!$compound->hasTag($key, StringTag::class)) Main::setConfig($player, "string", $key, "Player");
-                return $compound->getTagValue($key, StringTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() ."/Infos/Rank.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, "Player");
+                return $config->get($player->getName());
             break;
 
             case "money":
-                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 1000);
-                return $compound->getTagValue($key, IntTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 1000);
+                return $config->get($player->getName());
             break;
 
             case "kill":
-                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
-                return $compound->getTagValue($key, IntTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                return $config->get($player->getName());
             break;
 
             case "death":
-                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
-                return $compound->getTagValue($key, IntTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                return $config->get($player->getName());
             break;
 
             case "ban":
-                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
-                return $compound->getTagValue($key, IntTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Ban.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                return $config->get($player->getName());
             break;
 
             case "tempban":
-                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
-                return $compound->getTagValue($key, IntTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/TempBan.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                return $config->get($player->getName());
             break;
 
             case "time":
-                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
-                return $compound->getTagValue($key, IntTag::class);
+                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Time.json", Config::JSON);
+                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                return $config->get($player->getName());
             break;
 
         }
@@ -167,35 +176,12 @@ class Main extends PluginBase
 
     }
 
-    public static function setConfig(Player $player,string $type, string $key, $value = null) : bool
+    public static function setConfig(Player $player, Config $config, $value) : bool
     {   
-        if($key === "info"){
 
-            $player->namedtag->setTag(new CompoundTag($key), false);
-            return true;
+        $config->set($player->getName(), $value)->save();
+        return true;
 
-        } else {
-
-            if(!$player->namedtag->hasTag("info", CompoundTag::class)) Main::setConfig($player, "compound", "info");
-            $compound = $player->namedtag->getCompoundTag("info");
-
-            switch($type){
-    
-                case "string":
-                    $compound->setString($key, $value);
-                    return true;
-                break;
-    
-                case "int":
-                    $compound->setInt($key, $value);
-                    return true;
-                break;
-    
-            }
-
-            return true;
-            
-        }
     }
 
     public static function onAllConfig() : array 

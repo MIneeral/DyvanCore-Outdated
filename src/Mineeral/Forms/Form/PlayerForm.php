@@ -4,6 +4,8 @@ namespace Mineeral\Forms\Form;
 
 use pocketmine\Player;
 
+use pocketmine\utils\Config;
+
 use pocketmine\item\Item;
 
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
@@ -83,10 +85,10 @@ class PlayerForm
         
     }
 
-    public static function Stats(Player $player, $rank, $money) : bool 
+    public static function Stats(Player $player, $rank, $money, Config $rank_db, Config $money_db) : bool 
     {
 
-        $form = new SimpleForm(function (Player $player, int $data = null) use ($rank, $money){
+        $form = new SimpleForm(function (Player $player, int $data = null) use ($rank, $money, $rank_db, $money_db){
 
             $result = $data;
 
@@ -100,8 +102,8 @@ class PlayerForm
                         case "Player":
                             if($money >= 10000){
 
-                                Main::setConfig($player, "money", Main::onConfig($player, "money") - 10000);
-                                Main::setConfig($player, "rank", "Saturne");
+                                Main::setConfig($player, $money_db, Main::onConfig($player, "money") - 10000);
+                                Main::setConfig($player, $rank_db, "Saturne");
                                 Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . PlayerForm::UP . "§dSaturne§f !");
                                 $player->sendTitle(PlayerForm::WELL_DONE);
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
@@ -118,8 +120,8 @@ class PlayerForm
 
                         case "Saturne":
                             if($money >= 30000){
-                                Main::setConfig($player, "money", Main::onConfig($player, "money") - 30000);
-                                Main::setConfig($player, "rank", "Saturne-Plus");
+                                Main::setConfig($player, $money_db, Main::onConfig($player, "money") - 30000);
+                                Main::setConfig($player, $rank_db, "Saturne-Plus");
                                 Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() .  PlayerForm::UP . "§5Saturne+§f !");
                                 $player->sendTitle(PlayerForm::WELL_DONE);
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
@@ -133,8 +135,8 @@ class PlayerForm
 
                         case "Saturne-Plus":
                             if($money >= 50000){
-                                Main::setConfig($player, "money", Main::onConfig($player, "money") - 50000);
-                                Main::setConfig($player, "rank", "Eris");
+                                Main::setConfig($player, $money_db, Main::onConfig($player, "money") - 50000);
+                                Main::setConfig($player, $rank_db, "Eris");
                                 Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "§fBravo à §4" . $player->getName() .  PlayerForm::UP . "§9Eris§f !");
                                 $player->sendTitle(PlayerForm::WELL_DONE);
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);

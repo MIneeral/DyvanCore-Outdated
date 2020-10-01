@@ -2,6 +2,8 @@
 
 namespace Mineeral\Entity;
 
+use pocketmine\utils\Config;
+
 use pocketmine\entity\Monster;
 use pocketmine\entity\EntityIds;
 
@@ -37,24 +39,18 @@ class Kill extends Monster
     public function onUpdate(int $currentTick) : bool
     {
 
-        $allkills = array();
-
-        /*foreach(Main::onAllConfig() as $p) {
-
-            $player = Main::getInstance()->getServer()->getPlayer($p);
-            $allkills[$player->getName()] = Main::onConfig($player, "kill");
-
-        }*/
+        $kill = new Config(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", Config::JSON);
+        $allkills = $kill->getAll();
 
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes avec le plus de kill(s) §c-\n";
 
-        /*arsort($allkills);
+        arsort($allkills);
         foreach($allkills as $name => $value){
             if($top > 10) break;
                 $nametag .= "§4#{$top} §c{$name} §favec §c{$value} §fkill(s)\n";
                 $top++;
-        }*/
+        }
 
         $this->setNameTag($nametag);
         return parent::onUpdate($currentTick);

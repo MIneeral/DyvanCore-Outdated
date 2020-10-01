@@ -2,6 +2,8 @@
 
 namespace Mineeral\Entity;
 
+use pocketmine\utils\Config;
+
 use pocketmine\entity\Monster;
 use pocketmine\entity\EntityIds;
 
@@ -36,24 +38,19 @@ class Death extends Monster
 
     public function onUpdate(int $currentTick) : bool
     {   
-        $alldeaths = array();
 
-        /*foreach(Main::onAllConfig() as $p) {
-
-            $player = Main::getInstance()->getServer()->getPlayer($p);
-            $alldeaths[$player->getName()] = Main::onConfig($player, "death");
-
-        }*/
+        $death = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
+        $alldeaths = $death->getAll();
 
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes les plus mort(s) §c-\n";
 
-        /*arsort($alldeaths);
+        arsort($alldeaths);
         foreach($alldeaths as $name => $value){
             if($top > 10) break;
                 $nametag .= "§4#{$top} §c{$name} §favec §c{$value} §fmort(s)\n";
                 $top++;
-        }*/
+        }
 
         $this->setNameTag($nametag);
         return parent::onUpdate($currentTick);

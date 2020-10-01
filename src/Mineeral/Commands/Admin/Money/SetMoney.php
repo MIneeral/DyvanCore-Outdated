@@ -4,6 +4,8 @@ namespace Mineeral\Commands\Admin\Money;
 
 use pocketmine\Player;
 
+use pocketmine\utils\Config;
+
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
@@ -30,8 +32,8 @@ class SetMoney extends Command{
                 if(Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
 
                     $p = Main::getInstance()->getServer()->getPlayer($args[0]);
-
-                    Main::setConfig($p, "int", "money", intval($args[1]));
+                    $money = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
+                    Main::setConfig($p, $money, intval($args[1]));
                     $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien set " . $p->getName() . " à §4" . $args[1] . "");
 
                 }

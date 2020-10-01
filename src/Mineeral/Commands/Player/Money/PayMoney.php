@@ -4,6 +4,8 @@ namespace Mineeral\Commands\Player\Money;
 
 use pocketmine\Player;
 
+use pocketmine\utils\Config;
+
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
@@ -32,8 +34,10 @@ class PayMoney extends Command{
 
                     $p = Main::getInstance()->getServer()->getPlayer($args[0]);
 
-                    Main::setConfig($sender, "int", "money", Main::onConfig($sender, "money") - intval($args[1]));
-                    Main::setConfig($p, "int", "money", Main::onConfig($p, "money") + intval($args[1]));
+                    $money = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
+
+                    Main::setConfig($sender, $money, Main::onConfig($sender, "money") - intval($args[1]));
+                    Main::setConfig($p, $money, Main::onConfig($p, "money") + intval($args[1]));
 
                     $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien payé §4" . $args[1] . "§r à". $p->getName());
                     $p->sendMessage(Main::PREFIX_IMPORTANT . "Tu as été payé §4" . $args[1] . "§r par". $sender->getName());
