@@ -156,6 +156,11 @@ class Main extends PluginBase
                 return $compound->getTagValue($key, IntTag::class);
             break;
 
+            case "time":
+                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
+                return $compound->getTagValue($key, IntTag::class);
+            break;
+
         }
 
         return true;

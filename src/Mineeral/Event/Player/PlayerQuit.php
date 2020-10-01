@@ -14,6 +14,7 @@ class PlayerQuit implements Listener
 
     public function PlayerQuitEvent(PlayerQuitEvent $event) : void 
     {
+        
         $player = $event->getPlayer();
         $time = EntityDamageByEntity::time($player, "get");
 
@@ -21,6 +22,8 @@ class PlayerQuit implements Listener
         
         $event->setQuitMessage("");
         Main::getInstance()->getServer()->broadcastPopup(Main::PREFIX_QUIT . $player->getName());
+
+        Main::setConfig($player, "int", "time", PlayerJoin::getTime($player) - time() + Main::onConfig($player, "time"));
 
     }
 }

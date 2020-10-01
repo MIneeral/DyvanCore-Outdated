@@ -11,6 +11,8 @@ use Mineeral\Main;
 
 class PlayerJoin implements Listener
 {
+    public static $time = [];
+
     public const RANKS = 
     [
         "Player" => "§e[P]",
@@ -36,6 +38,15 @@ class PlayerJoin implements Listener
         $player->setNameTag(PlayerJoin::RANKS[Main::onConfig($player, "rank")] . "§f " . $player->getName());
         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
 
+        PlayerJoin::$time[$player->getName()] = time();
+
+    }
+
+    public static function getTime(Player $player) : int
+    {
+
+        return PlayerJoin::$time[$player->getName()];
+
     }
 
     public static function newPlayer(Player $player) : void
@@ -49,7 +60,8 @@ class PlayerJoin implements Listener
             "kill",
             "death",
             "ban",
-            "tempban"
+            "tempban",
+            "time",
         ];
 
         foreach($nbt as $stat){
