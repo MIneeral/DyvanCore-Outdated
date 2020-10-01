@@ -13,66 +13,67 @@ use  Mineeral\Main;
 class AdminForm
 {
 
-    public const RANKS = 
-    [
-        "Player",
-        "Saturne",
-        "Saturne-Plus",
-        "Eris",
-        "Guide",
-        "Modo",
-        "Super-Modo",
-        "Admin",
-        "Owner"
-    ];
-
-    public const RANKS_TEXT = 
-    [
-        "Player" => "§e[Player]",
-        "Saturne" => "§d[Saturne]",
-        "Saturne-Plus" => "§5[Saturne+]",
-        "Eris" => "§9[Eris]",
-        "Guide" => "§a[Guide]",
-        "Modo" => "§c[Modo]",
-        "Super-Modo" => "§6[Super-Modo]",
-        "Admin" => "§3[Admin]",
-        "Owner" => "§4[Owner]"
-    ];
-
-    public static $list = array();
-
     public static function Ranks(Player $player) : bool
     {
 
+        $array = array();
+
+        $ranks = 
+        [
+            "Player",
+            "Saturne",
+            "Saturne-Plus",
+            "Eris",
+            "Guide",
+            "Modo",
+            "Super-Modo",
+            "Admin",
+            "Owner"
+        ];
+
+        $ranks_text = 
+        [
+            "Player" => "§e[Player]",
+            "Saturne" => "§d[Saturne]",
+            "Saturne-Plus" => "§5[Saturne+]",
+            "Eris" => "§9[Eris]",
+            "Guide" => "§a[Guide]",
+            "Modo" => "§c[Modo]",
+            "Super-Modo" => "§6[Super-Modo]",
+            "Admin" => "§3[Admin]",
+            "Owner" => "§4[Owner]"
+        ];
+
         foreach (Main::getInstance()->getServer()->getOnlinePlayers() as $p)
         {
-            array_push(AdminForm::$list, $p->getName());
+            array_push($array, $p->getName());
         }
 
-        $form = new CustomForm(function(Player $player, int $data = null){
+        $form = new CustomForm(function(Player $player, $data) use ($array, $ranks, $ranks_text){
 
             $result = $data;
     
             if($result == null){
     
-                unset(AdminForm::$list);
+                unset($array);
                 return true;
     
             } else {
 
-                $p = Main::getInstance()->getServer()->getPlayer(AdminForm::$list[$result[0]]);
+                $p = Main::getInstance()->getServer()->getPlayer($array[$result[0]]);
+                $rank = $ranks[$result[1]];
                 
-                unset(AdminForm::$list);
-                Main::setConfig($player, "string", "rank", $result[1]);
-                Main::getInstance()->getServer()->broadcastPopup(Main::PREFIX_IMPORTANT . $p->getName() . " vien de passer " . AdminForm::RANKS_TEXT[$result[1]]);
+                unset($array);
+                Main::setConfig($p, "string", "rank", $rank);
+                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . $p->getName() . " vien de passer " . $ranks_text[$rank]);
     
             }
     
         });
 
         $form->setTitle("§4§lRank");
-        $form->addDropdown("§bChoissisez le joueur", AdminForm::$list);
-        $form->addDropdown("§bChoissisez le rank", AdminForm::RANKS);
+        $form->addDropdown("§bChoissisez le joueur", $array);
+        $form->addDropdown("§bChoissisez le rank", $ranks);
         $form->sendToPlayer($player);
         return true;
 
