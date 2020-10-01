@@ -33,7 +33,7 @@ class TopKill extends Command{
         foreach(Main::onAllConfig() as $p) {
 
             $player = Main::getInstance()->getServer()->getPlayer($p);
-            $allkills[$p->getName()] = $player->namedtag->kill;
+            $allkills[$player->getName()] = $player->namedtag->kill;
 
         }
 
