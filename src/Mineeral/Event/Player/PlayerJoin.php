@@ -11,6 +11,18 @@ use Mineeral\Main;
 
 class PlayerJoin implements Listener
 {
+    public const RANKS = 
+    [
+        "Player" => "&e[P]",
+        "Saturne" => "&d[S]",
+        "Saturne-Plus" => "&5[S+]",
+        "Eris" => "&9[E]",
+        "Guide" => "&a[G]",
+        "Modo" => "&c[M]",
+        "Super-Modo" => "&6[SM]",
+        "Admin" => "&3[A]",
+        "Owner" => "&4[O]"
+    ];
 
     public function PlayerJoinEvent(PlayerJoinEvent $ev) : void 
     {
@@ -20,8 +32,8 @@ class PlayerJoin implements Listener
 
         if(!$player->hasPlayedBefore()) PlayerJoin::newPlayer($player);
 
-
         Main::getInstance()->getServer()->broadcastPopup(Main::getPrefix("join") . $player->getName());
+        $player->setNameTag(PlayerJoin::RANKS[Main::onConfig($player, "rank")] . "&f " . $player->getName());
         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
 
     }

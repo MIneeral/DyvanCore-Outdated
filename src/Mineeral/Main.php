@@ -28,6 +28,7 @@ use Mineeral\Commands\Player\Money;
 use Mineeral\Commands\Admin\Leaderboard;
 use Mineeral\Commands\Admin\Rank;
 
+use Mineeral\Event\Player\PlayerChat;
 use Mineeral\Event\Player\PlayerCommandPreprocess;
 use Mineeral\Event\Player\PlayerJoin;
 use Mineeral\Event\Player\PlayerQuit;
@@ -251,6 +252,7 @@ class Main extends PluginBase
     private static function getEvents() : bool
     {
 
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerChat(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerCommandPreprocess(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerJoin(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerQuit(), Main::getInstance());
