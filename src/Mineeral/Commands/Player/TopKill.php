@@ -37,7 +37,7 @@ class TopKill extends Command{
         $allkills = $kill->getAll();
 
         $top = 1;
-        $player->sendMessage(Main::GOOD . "§fTop §410§f des personnes qui ont le tuer de personnes !\n");
+        $player->sendMessage(Main::PREFIX_IMPORTANT . "Top §410§f des personnes qui ont le tuer de personnes !\n");
         
         arsort($allkills);
         foreach ($allkills as $name => $value){
