@@ -23,7 +23,7 @@ class SetMoney extends Command{
 
         if($sender instanceof Player){
 
-            if(!$args[0] || !$args[1]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /setmoney <player> <montant>");
+            if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /setmoney <player> <montant>");
 
             else {
 

@@ -24,7 +24,7 @@ class PayMoney extends Command{
 
         if($sender instanceof Player){
 
-            if(!$args[0] || !$args[1]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /pay <player> <montant>");
+            if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /pay <player> <montant>");
 
             else {
 

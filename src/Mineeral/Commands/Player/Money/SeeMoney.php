@@ -23,7 +23,7 @@ class SeeMoney extends Command{
 
         if($sender instanceof Player){
 
-            if(!$args[0]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /seemoney <player>");
+            if(!$args || !$args[0]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /seemoney <player>");
 
             else {
 
