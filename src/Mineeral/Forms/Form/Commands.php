@@ -6,11 +6,11 @@ use pocketmine\Player;
 
 use pocketmine\item\Item;
 
-use morcheysha77\Form\FormAPI\CustomForm;
-use morcheysha77\Form\FormAPI\ModalForm;
-use morcheysha77\Form\FormAPI\SimpleForm;
+use Mineeral\Forms\FormAPI\CustomForm;
+use Mineeral\Forms\FormAPI\ModalForm;
+use Mineeral\Forms\FormAPI\SimpleForm;
 
-use morcheysha77\Main;
+use  Mineeral\Main;
 
 class Commands
 {
