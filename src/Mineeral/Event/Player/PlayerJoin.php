@@ -24,11 +24,11 @@ class PlayerJoin implements Listener
         "Owner" => "&4[O]"
     ];
 
-    public function PlayerJoinEvent(PlayerJoinEvent $ev) : void 
+    public function PlayerJoinEvent(PlayerJoinEvent $event) : void 
     {
 
-        $player = $ev->getPlayer();
-        $ev->setJoinMessage("");
+        $player = $event->getPlayer();
+        $event->setJoinMessage("");
 
         if(!$player->hasPlayedBefore()) PlayerJoin::newPlayer($player);
 

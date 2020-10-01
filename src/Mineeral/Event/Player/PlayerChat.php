@@ -23,10 +23,10 @@ class PlayerChat implements Listener
         "Owner" => "&4[Owner]"
     ];
 
-    public function PlayerChatEvent(PlayerChatEvent $ev) : void 
+    public function PlayerChatEvent(PlayerChatEvent $event) : void 
     {
 
-        $player = $ev->getPlayer();
+        $player = $event->getPlayer();
         $event->setCancelled();
         Main::getInstance()->getServer()->broadcastMessage(PlayerChat::RANKS[Main::onConfig($player, "rank")] . " &f". $player->getName() ." : " . $message);
 

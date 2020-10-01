@@ -12,14 +12,14 @@ use Mineeral\Event\Entity\EntityDamageByEntity;
 class PlayerQuit implements Listener
 {
 
-    public function PlayerQuitEvent(PlayerQuitEvent $ev) : void 
+    public function PlayerQuitEvent(PlayerQuitEvent $event) : void 
     {
-        $player = $ev->getPlayer();
+        $player = $event->getPlayer();
         $time = EntityDamageByEntity::Time($player, "get");
 
         if(isset($time) && time() < $time) $player->kill();
         
-        $ev->setQuitMessage("");
+        $event->setQuitMessage("");
         Main::getInstance()->getServer()->broadcastPopup(Main::getPrefix("quit") . $player->getName());
 
     }
