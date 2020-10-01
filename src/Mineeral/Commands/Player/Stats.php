@@ -10,7 +10,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 
 use Mineeral\Main;
-use Mineeral\Forms\Form\Commands;
+use Mineeral\Forms\Form\PlayerForm;
 
 class Stats extends Command{
 
@@ -28,7 +28,7 @@ class Stats extends Command{
         $money = Main::onConfig($sender, "money");
 
         if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
-            Commands::Stats($sender, $rank, $money);
+        PlayerForm::Stats($sender, $rank, $money);
         return true;
     }
 }

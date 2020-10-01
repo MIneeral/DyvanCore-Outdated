@@ -25,7 +25,8 @@ use Mineeral\Commands\Player\Hub;
 use Mineeral\Commands\Player\Spawn;
 use Mineeral\Commands\Player\Money;
 
-use Mineeral\Commands\Staff\Leaderboard;
+use Mineeral\Commands\Admin\Leaderboard;
+use Mineeral\Commands\Admin\Rank;
 
 use Mineeral\Event\Player\PlayerCommandPreprocess;
 use Mineeral\Event\Player\PlayerJoin;

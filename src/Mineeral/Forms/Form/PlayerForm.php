@@ -12,7 +12,7 @@ use Mineeral\Forms\FormAPI\SimpleForm;
 
 use  Mineeral\Main;
 
-class Commands
+class PlayerForm
 {
 
     public static function Kits(Player $player) : bool

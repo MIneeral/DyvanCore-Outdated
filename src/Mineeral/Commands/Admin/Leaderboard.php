@@ -1,6 +1,6 @@
 <?php
 
-namespace Mineeral\Commands\Staff;
+namespace Mineeral\Commands\Admin;
 
 use pocketmine\Player;
 use pocketmine\entity\Entity;
@@ -17,7 +17,6 @@ class Leaderboard extends Command{
     public function __construct()
     {
         parent::__construct("leaderboard", "Permet de faire spawn le leaderboard !");
-        $this->setAliases(["leaderboard"]);
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
