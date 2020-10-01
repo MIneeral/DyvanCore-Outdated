@@ -47,7 +47,7 @@ class Main extends PluginBase
 
     private static $instance;
 
-    public const PREFIX = "§3[§6Dyvan§3]";
+    public const PREFIX = "§f[§c!§f]";
 
     public function onEnable() : void
     {
