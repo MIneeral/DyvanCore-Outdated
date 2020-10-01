@@ -27,24 +27,14 @@ class PlayerInteract implements Listener
         $inventory = $player->getInventory();
 
         if($item_id === Item::WHEAT){
-            if($player->getHealth() >= 17){
+            if($player->getHealth() >= 18){
 
                 if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
                     $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
                     $inventory->addItem(Item::get(281, 0, 1));
-                    $player->setHealth($player->getHealth() + 3);
-                    $player->sendPopup("+3");
-                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.3;
-    
-                } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
-    
-                    unset(PlayerInteract::$cooldown[$player->getName()]);
-                    $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
-                    $inventory->addItem(Item::get(281, 0, 1));
-                    $player->setHealth($player->getHealth() + 3);
-                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.3;
-    
+                    $player->setHealth($player->getHealth() + 2);
+                    $player->sendPopup("§c+2");
                 }
             }
         } else if($block_id === Item::SIGN_POST){
@@ -89,7 +79,7 @@ class PlayerInteract implements Listener
         $player->getArmorInventory()->setLeggings($leggings1);
         $player->getArmorInventory()->setBoots($boots1);
 
-        $player->sendMessage(Main::PREFIX_GOOD . "Vous venez de prendre le kit §4Basic");
+        $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic");
 
     }
 }
