@@ -65,15 +65,15 @@ class AdminForm
                 
                 unset($array);
                 Main::setConfig($p, "string", "rank", $rank);
-                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . $p->getName() . " vien de passer " . $ranks_text[$rank]);
+                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . $p->getName() . " vient de passer " . $ranks_text[$rank]);
     
             }
     
         });
 
-        $form->setTitle("§4§lRank");
-        $form->addDropdown("§bChoissisez le joueur", $array);
-        $form->addDropdown("§bChoissisez le rank", $ranks);
+        $form->setTitle("§c- §7Rank§c -");
+        $form->addDropdown("§cChoissisez le joueur", $array);
+        $form->addDropdown("§cChoissisez le rank", $ranks);
         $form->sendToPlayer($player);
         return true;
 
