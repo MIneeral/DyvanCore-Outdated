@@ -179,7 +179,8 @@ class Main extends PluginBase
     public static function setConfig(Player $player, Config $config, $value) : bool
     {   
 
-        $config->set($player->getName(), $value)->save();
+        $config->set($player->getName(), $value);
+        $config->save();
         return true;
 
     }
