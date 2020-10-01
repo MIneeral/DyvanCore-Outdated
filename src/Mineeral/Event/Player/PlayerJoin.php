@@ -22,7 +22,7 @@ class PlayerJoin implements Listener
         if(!$player->hasPlayedBefore()){
 
             Main::getInstance()->getServer()->broadcastPopup("§f[§c+§f] §a " . $player->getName());
-            $player->sendMessage("§f[§c!§f] Bienvenue sur §4Dyvan§f PvP-Box !");
+            $player->sendMessage("§f[§4!§f] Bienvenue sur §4Dyvan§f PvP-Box !");
             $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
 
             $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
@@ -37,7 +37,7 @@ class PlayerJoin implements Listener
 
         } else {
 
-            Main::getInstance()->getServer()->broadcastPopup("§f[§c+§f] §a " . $player->getName());
+            Main::getInstance()->getServer()->broadcastPopup("§f[§4+§f] §a " . $player->getName());
             $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
 
         }
