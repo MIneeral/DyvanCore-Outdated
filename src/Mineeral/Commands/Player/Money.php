@@ -12,7 +12,7 @@ class Money extends Command{
     public function __construct()
     {
 
-        parent::__construct("feed", "Vous permez d'être nourris !");
+        parent::__construct("money", "Vous permez de vie votre argent");
 
     }
     
