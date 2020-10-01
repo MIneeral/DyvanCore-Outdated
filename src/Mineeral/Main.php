@@ -3,12 +3,14 @@
 namespace Mineeral;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\Config;
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
+
+use pocketmine\Player;
 use pocketmine\entity\Entity;
 
-use onebone\economyapi\EconomyAPI;
+use pocketmine\utils\Config;
+
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 
 use Mineeral\Commands\Player\Feed;
 use Mineeral\Commands\Player\Stats;
