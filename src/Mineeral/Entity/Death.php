@@ -38,6 +38,13 @@ class Death extends Monster
     {   
         $alldeaths = array();
 
+        foreach(Main::onAllConfig() as $p) {
+
+            $player = Main::getInstance()->getServer()->getPlayer($p);
+            $alldeaths[$p->getName()] = $player->namedtag->death;
+
+        }
+
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes les plus mort(s) §c-\n";
 

@@ -2,9 +2,10 @@
 
 namespace Mineeral\Commands\Player;
 
-use pocketmine\command\CommandSender;
-use pocketmine\command\Command;
 use pocketmine\Player;
+
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
 
@@ -27,12 +28,20 @@ class TopDeath extends Command{
     public static function sendTopDeath(Player $player)
     {
 
-        $config = array();
+        $alldeaths = array();
+
+        foreach(Main::onAllConfig() as $p) {
+
+            $player = Main::getInstance()->getServer()->getPlayer($p);
+            $alldeaths[$p->getName()] = $player->namedtag->death;
+
+        }
+
         $top = 1;
         $player->sendMessage("§f[§c!§f]§f Top §410§f des personnes les plus morts !\n");
 
-        arsort($config);
-        foreach ($config as $name => $value){
+        arsort($alldeaths);
+        foreach ($alldeaths as $name => $value){
             if($top > 10)break;
                 $player->sendMessage("§8»§4 #{$top} §c{$name}§f avec §c{$value}§f mort(s)§8 »\n");
                 $top ++;

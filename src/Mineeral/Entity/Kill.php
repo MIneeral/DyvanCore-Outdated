@@ -38,6 +38,14 @@ class Kill extends Monster
     {
 
         $allkills = array();
+
+        foreach(Main::onAllConfig() as $p) {
+
+            $player = Main::getInstance()->getServer()->getPlayer($p);
+            $allkills[$p->getName()] = $player->namedtag->kill;
+
+        }
+
         $top = 1;
         $nametag = "§c- §fTop §410§f des personnes avec le plus de kill(s) §c-\n";
 

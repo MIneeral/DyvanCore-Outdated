@@ -2,10 +2,12 @@
 
 namespace Mineeral\Commands\Player;
 
-use Mineeral\Main;
-use pocketmine\command\CommandSender;
-use pocketmine\command\Command;
 use pocketmine\Player;
+
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+
+use Mineeral\Main;
 
 class TopKill extends Command{
 
@@ -26,12 +28,20 @@ class TopKill extends Command{
     public static function sendTopKill(Player $player)
     {
 
-        $config = array();
+        $allkills = array();
+
+        foreach(Main::onAllConfig() as $p) {
+
+            $player = Main::getInstance()->getServer()->getPlayer($p);
+            $allkills[$p->getName()] = $player->namedtag->kill;
+
+        }
+
         $top = 1;
         $player->sendMessage("§f[§c!§f]§f Top §410§f des personnes qui ont le tuer de personnes !\n");
         
-        arsort($config);
-        foreach ($config as $name => $value){
+        arsort($allkills);
+        foreach ($allkills as $name => $value){
             if($top > 10) break;
                 $player->sendMessage("§8»§4 #{$top} §c{$name}§f avec §c{$value}§f mort(s)§8 »\n");
                 $top ++;

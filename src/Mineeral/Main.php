@@ -93,38 +93,38 @@ class Main extends PluginBase
         switch($type){
 
             case "ip":
-                if(!$player->getNamedTag()->ip) return Main::setConfig($player, $type, $player->getAddress());
-                return $player->getNamedTag()->ip;
+                if(!$player->namedtag->ip) return Main::setConfig($player, $type, $player->getAddress());
+                return $player->namedtag->ip;
             break;
 
             case "rank":
-                if(!$player->getNamedTag()->rank) return Main::setConfig($player, $type, "Player");
-                return $player->getNamedTag()->rank;
+                if(!$player->namedtag->rank) return Main::setConfig($player, $type, "Player");
+                return $player->namedtag->rank;
             break;
 
             case "money":
-                if(!$player->getNamedTag()->money) return Main::setConfig($player, $type, 1000);
-                return $player->getNamedTag()->money;
+                if(!$player->namedtag->money) return Main::setConfig($player, $type, 1000);
+                return $player->namedtag->money;
             break;
 
             case "kill":
-                if(!$player->getNamedTag()->kill) return Main::setConfig($player, $type, 0);
-                return $player->getNamedTag()->kill;
+                if(!$player->namedtag->kill) return Main::setConfig($player, $type, 0);
+                return $player->namedtag->kill;
             break;
 
             case "death":
-                if(!$player->getNamedTag()->death) return Main::setConfig($player, $type, 0);
-                return $player->getNamedTag()->death;
+                if(!$player->namedtag->death) return Main::setConfig($player, $type, 0);
+                return $player->namedtag->death;
             break;
 
             case "ban":
-                if(!$player->getNamedTag()->ban) return Main::setConfig($player, $type, 0);
-                return $player->getNamedTag()->ban;
+                if(!$player->namedtag->ban) return Main::setConfig($player, $type, 0);
+                return $player->namedtag->ban;
             break;
 
             case "tempban":
-                if(!$player->getNamedTag()->tempban) return Main::setConfig($player, $type, 0);
-                return $player->getNamedTag()->tempban;
+                if(!$player->namedtag->tempban) return Main::setConfig($player, $type, 0);
+                return $player->namedtag->tempban;
             break;
 
         }
@@ -136,49 +136,49 @@ class Main extends PluginBase
         switch($type){
 
             case "ip":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->ip = new StringTag("IP", $value);
                 $player->setNamedTag($nbt);
                 return true;
             break;
 
             case "rank":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->rank = new StringTag("RANK", $value);
                 $player->setNamedTag($nbt);
                 return true;
             break;
 
             case "money":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->money = new IntTag("MONEY", $value);
                 $player->setNamedTag($nbt);
                 return true;
             break;
 
             case "kill":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->kill = new IntTag("KILL", $value);
                 $player->setNamedTag($nbt);
                 return true;
             break;
 
             case "death":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->death = new IntTag("DEATH", $value);
                 $player->setNamedTag($nbt);
                 return true;
             break;
 
             case "ban":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->ban = new IntTag("BAN", $value);
                 $player->setNamedTag($nbt);
                 return true;
             break;
 
             case "bantemp":
-                $nbt = $player->getNamedTag() ?? new CompoundTag("", []);
+                $nbt = $player->namedtag ?? new CompoundTag("", []);
                 $nbt->bantemp = new IntTag("BANTEMP", $value);
                 $player->setNamedTag($nbt);
                 return true;
