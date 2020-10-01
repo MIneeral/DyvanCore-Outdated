@@ -124,49 +124,49 @@ class Main extends PluginBase
 
             case "ip":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Ip.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, $player->getAddress());
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, $player->getAddress());
                 return $config->get($player->getName());
             break;
 
             case "rank":
                 $config = new Config(Main::getInstance()->getDataFolder() ."/Infos/Rank.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, "Player");
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, "Player");
                 return $config->get($player->getName());
             break;
 
             case "money":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 1000);
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 1000);
                 return $config->get($player->getName());
             break;
 
             case "kill":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
                 return $config->get($player->getName());
             break;
 
             case "death":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
                 return $config->get($player->getName());
             break;
 
             case "ban":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Ban.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
                 return $config->get($player->getName());
             break;
 
             case "tempban":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/TempBan.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
                 return $config->get($player->getName());
             break;
 
             case "time":
                 $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Time.json", Config::JSON);
-                if(!$config->exist($player->getName())) Main::setConfig($player, $config, 0);
+                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
                 return $config->get($player->getName());
             break;
 
