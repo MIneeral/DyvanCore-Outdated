@@ -9,6 +9,8 @@ use pocketmine\event\player\PlayerCommandPreprocessEvent;
 
 use Mineeral\Main;
 
+use Mineeral\Event\Entity\EntityDamageByEntity;
+
 class PlayerCommandPreprocess implements Listener
 {
 
@@ -16,15 +18,17 @@ class PlayerCommandPreprocess implements Listener
     {
 
         $player = $event->getPlayer();
+        $time = EntityDamageByEntity::Time($player, "get");
         $message = $event->getMessage();
+        $messages = strpos($message, '/');
 
-        $messages = explode("", $message);
+        if($messages === 0 || $messages === 1){
+            if(isset($time) && time() < $time) {
+   
+                $event->setCancelled();
+                $player->sendMessage(Main::getPrefix("important") . "Vous etes encore en combat !");
 
-        if($messages[0] == "/"){
-
-            $player->sendMessage(Main::getPrefix("important") . "Vous etes encore en combat !");
-            $event->setCancelled();
-
+            }
         }
     }
 }

@@ -12,6 +12,8 @@ use pocketmine\event\entity\EntityDamageEvent;
 
 use Mineeral\Main;
 
+use Mineeral\Event\Entity\EntityDamageByEntity;
+
 class PlayerDeath implements Listener
 {
 
@@ -36,8 +38,10 @@ class PlayerDeath implements Listener
 
                 Main::setConfig($damager, "int", "kill", Main::onConfig($damager, "kill") + 1);
                 Main::setConfig($damager, "int", "money", Main::onConfig($damager, "money") + 10);
-
                 Main::setConfig($player, "int", "death", Main::onConfig($player, "death") + 1);
+
+                EntityDamageByEntity::Time($damager, "del");
+                EntityDamageByEntity::Time($player, "del");
 
             }
         }
