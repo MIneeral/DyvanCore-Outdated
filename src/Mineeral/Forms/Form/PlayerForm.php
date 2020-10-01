@@ -6,6 +6,8 @@ use pocketmine\Player;
 
 use pocketmine\item\Item;
 
+use pocketmine\network\mcpe\protocol\LevelEventPacket;
+
 use Mineeral\Forms\FormAPI\CustomForm;
 use Mineeral\Forms\FormAPI\ModalForm;
 use Mineeral\Forms\FormAPI\SimpleForm;
