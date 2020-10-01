@@ -27,7 +27,7 @@ class Rank extends Command{
     {
         if($sender instanceof Player) {
 
-            if(!$sender->hasOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
+            if(!$sender->isOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
         
             AdminForm::Ranks($sender);
 

@@ -23,7 +23,7 @@ class Leaderboard extends Command{
     {
         if($sender instanceof Player) {
 
-            if(!$sender->hasOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
+            if(!$sender->isOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
             if(!isset($args[0])) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous devez préciser lequel (§akill§f/§adeath§f)");
             if(strtolower($args[0]) == "kill"){
 
