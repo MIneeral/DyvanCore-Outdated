@@ -85,7 +85,7 @@ class Main extends PluginBase
             break;
 
             case "important":
-                return "§c[§4!§c]§f ";
+                return "§f(§4!§f)§f ";
             break;
 
             case "good":
@@ -97,7 +97,7 @@ class Main extends PluginBase
             break;
 
             case "quit":
-                return "§f[§c-§f]§4 ";
+                return "§f[§4-§f]§4 ";
             break;
 
             case "kill":
