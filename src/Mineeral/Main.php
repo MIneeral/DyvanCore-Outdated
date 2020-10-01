@@ -23,10 +23,17 @@ use Mineeral\Commands\Player\TopDeath;
 use Mineeral\Commands\Player\TopKill;
 use Mineeral\Commands\Player\Hub;
 use Mineeral\Commands\Player\Spawn;
-use Mineeral\Commands\Player\Money;
 
 use Mineeral\Commands\Admin\Leaderboard;
 use Mineeral\Commands\Admin\Rank;
+
+use Mineeral\Commands\Player\Money\MyMoney;
+use Mineeral\Commands\Player\Money\PayMoney;
+use Mineeral\Commands\Player\Money\SeeMoney;
+
+use Mineeral\Commands\Admin\Money\GiveMoney;
+use Mineeral\Commands\Admin\Money\RemoveMoney;
+use Mineeral\Commands\Admin\Money\SetMoney;
 
 use Mineeral\Event\Player\PlayerChat;
 use Mineeral\Event\Player\PlayerCommandPreprocess;
@@ -38,11 +45,8 @@ use Mineeral\Event\Player\PlayerInteract;
 use Mineeral\Event\Entity\EntityDamageByEntity;
 use Mineeral\Event\Entity\ProjectileLaunch;
 
-use Mineeral\Event\Items\Soup;
-
 use Mineeral\Entity\Death;
 use Mineeral\Entity\Kill;
-
 
 class Main extends PluginBase
 {
@@ -210,17 +214,37 @@ class Main extends PluginBase
     private static function getCommands() : bool
     {
 
-        Main::getInstance()->getServer()->getCommandMap()->register("feed", new Feed());
-        Main::getInstance()->getServer()->getCommandMap()->register("kit", new Kits());
-        Main::getInstance()->getServer()->getCommandMap()->register("stats", new Stats());
-        Main::getInstance()->getServer()->getCommandMap()->register("money", new Money());
-        Main::getInstance()->getServer()->getCommandMap()->register("tk", new TopKill());
-        Main::getInstance()->getServer()->getCommandMap()->register("td", new TopDeath());
-        Main::getInstance()->getServer()->getCommandMap()->register("hub", new Hub());
-        Main::getInstance()->getServer()->getCommandMap()->register("spawn", new Spawn());
+        $commands = 
+        [
+            //Command Player
+            "feed" => new Feed(),
+            "kit" => new Kits(),
+            "stats" => new Stats(),
+            "tk" => new TopKill(),
+            "td" => new TopDeath(),
+            "hub" => new Hub(),
+            "spawn" => new Spawn(),
 
-        Main::getInstance()->getServer()->getCommandMap()->register("leaderboard", new Leaderboard());
-        Main::getInstance()->getServer()->getCommandMap()->register("rank", new Rank());
+            //Command Admin
+            "leaderboard" => new Leaderboard(),
+            "rank" => new Rank(),
+
+            //Command Money Player
+            "mymoney" => new MyMoney(),
+            "pay" => new PayMoney(),
+            "seemoney" => new SeeMoney(),
+
+            //Command Money Admin
+            "givemoney" => new GiveMoney(),
+            "removemoney" => new RemoveMoney(),
+            "setmoney" => new SetMoney(),
+        ];
+
+        foreach($commands as $key => $value){
+
+            Main::getInstance()->getServer()->getCommandMap()->register($key, $value);
+
+        }
 
         Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Commands are loaded");
         return true;
@@ -230,17 +254,26 @@ class Main extends PluginBase
     private static function getEvents() : bool
     {
 
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerChat(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerCommandPreprocess(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerJoin(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerQuit(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerDeath(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerInteract(), Main::getInstance());
+        $events = 
+        [
+            //Event Player
+            new PlayerChat(),
+            new PlayerCommandPreprocess(),
+            new PlayerJoin(),
+            new PlayerQuit(),
+            new PlayerDeath(),
+            new PlayerInteract(),
 
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new EntityDamageByEntity(), Main::getInstance());
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new ProjectileLaunch(), Main::getInstance());
+            //Event Entity
+            new EntityDamageByEntity(),
+            new ProjectileLaunch(),
+        ];
 
-        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Soup(), Main::getInstance());
+        foreach($events as $event) {
+
+            Main::getInstance()->getServer()->getPluginManager()->registerEvents($event, Main::getInstance());
+
+        }
 
         Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Events are loaded");
         return true;
