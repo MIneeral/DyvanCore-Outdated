@@ -19,7 +19,7 @@ class Leaderboard extends Command{
         parent::__construct("leaderboard", "Permet de faire spawn le leaderboard !");
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
+    public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if($sender instanceof Player) {
 
