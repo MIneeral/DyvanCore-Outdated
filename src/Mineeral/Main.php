@@ -27,6 +27,7 @@ use Mineeral\Commands\Player\Money;
 
 use Mineeral\Commands\Staff\Leaderboard;
 
+use Mineeral\Event\Player\PlayerCommandPreprocess;
 use Mineeral\Event\Player\PlayerJoin;
 use Mineeral\Event\Player\PlayerQuit;
 use Mineeral\Event\Player\PlayerDeath;
@@ -243,6 +244,7 @@ class Main extends PluginBase
     private static function getEvents() : bool
     {
 
+        Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerCommandPreprocess(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerJoin(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerQuit(), Main::getInstance());
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new PlayerDeath(), Main::getInstance());
