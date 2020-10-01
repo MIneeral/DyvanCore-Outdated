@@ -41,13 +41,9 @@ class PlayerDeath implements Listener
                 $kill = new Config(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", Config::JSON);
                 $death = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
                 $money = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
-                $kill_value = Main::onConfig($damager, "kill");
-                $death_value = Main::onConfig($player, "death");
-                if(!$kill->exists($damager->getName())) $kill_value = 0;
-                if(!$death->exists($player->getName())) $death_value = 0;
-                Main::setConfig($damager, $kill, $kill_value + 1);
+                Main::setConfig($damager, $kill, Main::onConfig($damager, "kill") + 1);
                 Main::setConfig($damager, $money, Main::onConfig($damager, "money") + 10);
-                Main::setConfig($player, $death, $death_value + 1);
+                Main::setConfig($player, $death, Main::onConfig($player, "death") + 1);
 
                 EntityDamageByEntity::time($damager, "del");
                 EntityDamageByEntity::time($player, "del");

@@ -27,9 +27,6 @@ class PlayerQuit implements Listener
         Main::getInstance()->getServer()->broadcastPopup(Main::PREFIX_QUIT . $player->getName());
 
         $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Time.json", Config::JSON);
-
-        $time_value = Main::onConfig($player, "time");
-        if(!$config->exists($damager->getName())) $time_value = 0;
         Main::setConfig($player, $config, PlayerJoin::getTime($player) - time() + Main::onConfig($player, "time"));
 
     }
