@@ -22,9 +22,19 @@ class PlayerInteract implements Listener
     {
 
         $block_id = $event->getBlock()->getId();
+        $item_id = $event->getItem()->getId();
         $player = $event->getPlayer();
+        $inventory = $player->getInventory();
 
-        if($block_id === Item::SIGN_POST){
+        if($item_id === Item::WHEAT){
+            if($player->getHealth() >= 17){
+
+                $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
+                $inventory->addItem(Item::get(281, 0, 1));
+                $player->setHealth($player->getHealth() + 3);
+
+            }
+        } else if($block_id === Item::SIGN_POST){
 
             if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
