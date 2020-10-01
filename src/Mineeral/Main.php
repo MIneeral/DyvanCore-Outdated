@@ -56,7 +56,7 @@ class Main extends PluginBase
     public const PREFIX_DEFAULT = "§f[§c!§f] ";
     public const PREFIX_CONSOLE = "§f[§cDyn§f]§a ";
 
-    public const PREFIX_IMPORTANT = Main::PREFIX_DEFAULTE . "§f";
+    public const PREFIX_IMPORTANT = Main::PREFIX_DEFAULT . "§f";
     public const PREFIX_GOOD = Main::PREFIX_DEFAULT . "§a";
     public const PREFIX_BAD = Main::PREFIX_DEFAULT . "§c";
 
