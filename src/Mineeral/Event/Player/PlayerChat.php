@@ -2,6 +2,8 @@
 
 namespace Mineeral\Event\Player;
 
+use pocketmine\Player;
+
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 
