@@ -15,6 +15,12 @@ use  Mineeral\Main;
 class PlayerForm
 {
 
+    private const NO_MONEY = Main::PREFIX_BAD . "Vous n'avez pas assez d'argent pour ameliorer votre rank !";
+    private const COMMING_SOON = Main::PREFIX_BAD . "Coming soon..";
+    private const UP = " §fqui vient d'améloirer son rank à ";
+    private const MAX_UP = Main::PREFIX_IMPORTANT . "Vous avez déjà un rank très haut !";
+    private const WELL_DONE = "§c-§4 Bravo §c-";
+
     public static function Kits(Player $player) : bool
     {
 
@@ -36,7 +42,7 @@ class PlayerForm
                     $chestplate1 = Item::get(311, 0, 1);
                     $leggings1 = Item::get(312, 0, 1);
                     $boots1 = Item::get(313, 0, 1);
-                    $player->sendMessage("§f[§c!§f] Vous venez de prendre le kit §4Basic");
+                    $player->sendMessage(Main::PREFIX_GOOD . "Vous venez de prendre le kit §4Basic");
                     $player->getInventory()->clearAll();
                     $player->getArmorInventory()->clearAll();
                     $player->getInventory()->addItem($sword1);
@@ -50,15 +56,15 @@ class PlayerForm
                 break;
 
                 case 1;
-                    $player->sendMessage("§f[§c!§f] §4Coming soon..");
+                    $player->sendMessage(PlayerForm::COMMING_SOON);
                 break;
                 
                 case 2;
-                    $player->sendMessage("§f[§c!§f] §4Coming soon..");
+                    $player->sendMessage(PlayerForm::COMMING_SOON);
                 break;
 
                 case 3;
-                    $player->sendMessage("§f[§c!§f] §4Coming soon..");
+                    $player->sendMessage(PlayerForm::COMMING_SOON);
                 break;
             }
         });
@@ -93,15 +99,15 @@ class PlayerForm
 
                                 Main::setConfig($player, "money", Main::onConfig($player, "money") - 10000);
                                 Main::setConfig($player, "rank", "Saturne");
-                                Main::getInstance()->getServer()->broadcastMessage("§f[§c!§f]§r §fBravo à §4" . $player->getName() . "§f qui vient d'améloirer son rank à §dSaturne§f !");
-                                $player->sendTitle("§c-§4 Bravo §c-");
+                                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . PlayerForm::UP . "§dSaturne§f !");
+                                $player->sendTitle(PlayerForm::WELL_DONE);
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
                                 return true;
     
                             } else {
     
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_FALL);
-                                $player->sendMessage("§f[§c!§f]§r §cVous n'avez pas assez d'argent pour ameliorer votre rank!");
+                                $player->sendMessage(PlayerForm::NO_MONEY);
                                 return true;
     
                             }
@@ -111,13 +117,13 @@ class PlayerForm
                             if($money >= 30000){
                                 Main::setConfig($player, "money", Main::onConfig($player, "money") - 30000);
                                 Main::setConfig($player, "rank", "Saturne-Plus");
-                                Main::getInstance()->getServer()->broadcastMessage("§f[§c!§f]§r §fBravo à §4" . $player->getName() . "§f qui vient d'améloirer son rank à §5Saturne+§f !");
-                                $player->sendTitle("§c-§4 Bravo §c-");
+                                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() .  PlayerForm::UP . "§5Saturne+§f !");
+                                $player->sendTitle(PlayerForm::WELL_DONE);
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
                                 return true;
                             } else {
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_FALL);
-                                $player->sendMessage("§f[§c!§f]§r §cVous n'avez pas assez d'argent pour ameliorer votre rank!");
+                                $player->sendMessage(PlayerForm::NO_MONEY);
                                 return true;
                             }
                         break;
@@ -126,19 +132,19 @@ class PlayerForm
                             if($money >= 50000){
                                 Main::setConfig($player, "money", Main::onConfig($player, "money") - 50000);
                                 Main::setConfig($player, "rank", "Eris");
-                                Main::getInstance()->getServer()->broadcastMessage("§f[§c!§f]§r §fBravo à §4" . $player->getName() . "§f qui vient d'améloirer son rank à §9Eris§f !");
-                                $player->sendTitle("§c-§4 Bravo §c-");
+                                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "§fBravo à §4" . $player->getName() .  PlayerForm::UP . "§9Eris§f !");
+                                $player->sendTitle(PlayerForm::WELL_DONE);
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
                                 return true;
                             } else {
                                 $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_FALL);
-                                $player->sendMessage("§f[§c!§f]§r §cVous n'avez pas assez d'argent pour ameliorer votre rank!");
+                                $player->sendMessage(PlayerForm::NO_MONEY);
                                 return true;
                             }
                         break;
 
                         default:
-                            $player->sendMessage("§f§l[§3!§f]§r §fVous avez déjà un rank très haut !");
+                            $player->sendMessage(PlayerForm::MAX_UP);
                             return true;
                         break;
                     }

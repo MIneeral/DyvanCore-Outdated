@@ -18,10 +18,10 @@ class Hub extends Command{
     
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::PREFIX_GOOD . "§fCommande utilisable seulement en jeu !");
 
         $sender->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
-        $sender->sendMessage(Main::getPrefix("good") . "Vous avez bien était téléporter au hub");
+        $sender->sendMessage(Main::PREFIX_GOOD . "Vous avez bien était téléporter au hub");
 
     }
 }

@@ -27,7 +27,7 @@ class Stats extends Command{
         $rank = Main::onConfig($sender, "rank");
         $money = Main::onConfig($sender, "money");
 
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
         PlayerForm::Stats($sender, $rank, $money);
         return true;
     }

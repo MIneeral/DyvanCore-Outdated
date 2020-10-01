@@ -64,7 +64,7 @@ class AdminForm
                 
                 unset(AdminForm::$list);
                 Main::setConfig($player, "string", "rank", $result[1]);
-                Main::getInstance()->getServer()->broadcastPopup(Main::getPrefix("important") . $p->getName() . " vien de passer " . AdminForm::RANKS_TEXT[$result[1]]);
+                Main::getInstance()->getServer()->broadcastPopup(Main::PREFIX_IMPORTANT . $p->getName() . " vien de passer " . AdminForm::RANKS_TEXT[$result[1]]);
     
             }
     

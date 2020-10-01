@@ -20,13 +20,13 @@ class EntityDamageByEntity implements Listener
 
         if($event->getDamager() instanceof Player && $event->getEntity() instanceof Player){
 
-            EntityDamageByEntity::Time($event->getDamager(), "set", EntityDamageByEntity::TIME + time());
-            EntityDamageByEntity::Time($event->getEntity(), "set", EntityDamageByEntity::TIME + time());
+            EntityDamageByEntity::time($event->getDamager(), "set", EntityDamageByEntity::TIME + time());
+            EntityDamageByEntity::time($event->getEntity(), "set", EntityDamageByEntity::TIME + time());
 
         }
     }
 
-    public static function Time(Player $player, string $type, int $time = 0) : int
+    public static function time(Player $player, string $type, int $time = 0) : int
     {
         switch($type){
             case "set":
