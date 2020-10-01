@@ -16,11 +16,13 @@ class Money extends Command{
 
     }
     
-    public function execute(CommandSender $sender, string $commandLabel, array $args){
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
+    {
 
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        if($sender instanceof Player) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous avez §4" . Main::onConfig($sender, "money") . "");
+        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
 
-        $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous avez §4" . Main::onConfig($sender, "money") . "");
+        return true;
 
     }
 }

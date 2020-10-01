@@ -19,10 +19,13 @@ class TopKill extends Command{
 
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args)
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::GOOD .  "§fCommande utilisable seulement en jeu !");
-        return TopKill::sendTopKill($sender);
+        if($sender instanceof Player) TopKill::sendTopKill($sender);
+        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+
+        return true;
+        
     }
 
     public static function sendTopKill(Player $player)

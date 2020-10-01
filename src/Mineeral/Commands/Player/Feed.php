@@ -17,14 +17,19 @@ class Feed extends Command{
 
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args)
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
 
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::PREFIX_IMPORTANT .  "Commande utilisable seulement en jeu !");
+        if($sender instanceof Player) {
 
-        $sender->addFood(20);
-        $sender->sendPopup(Main::PREFIX_GOOD . "Vous avez bien été nourris§c -");
-        $sender->getLevel()->broadcastLevelEvent($sender->add(0, $sender->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_USE);
+            $sender->addFood(20);
+            $sender->sendPopup(Main::PREFIX_GOOD . "Vous avez bien été nourris§c -");
+            $sender->getLevel()->broadcastLevelEvent($sender->add(0, $sender->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_USE);
+
+        }
+        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+
+        return true;
 
     }
 }

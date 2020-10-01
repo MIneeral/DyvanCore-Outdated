@@ -21,14 +21,16 @@ class Stats extends Command{
 
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args)
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
 
         $rank = Main::onConfig($sender, "rank");
         $money = Main::onConfig($sender, "money");
 
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
-        PlayerForm::Stats($sender, $rank, $money);
+        if($sender instanceof Player) PlayerForm::Stats($sender, $rank, $money);
+        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+
         return true;
+
     }
 }

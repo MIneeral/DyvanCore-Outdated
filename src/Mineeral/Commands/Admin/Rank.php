@@ -25,10 +25,15 @@ class Rank extends Command{
 
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
-        if(!$sender instanceof Player) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
-        if(!$sender->hasOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
+        if($sender instanceof Player) {
+
+            if(!$sender->hasOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
         
-        AdminForm::Ranks($sender);
+            AdminForm::Ranks($sender);
+
+        }
+        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+
         return true;
     }
 }
