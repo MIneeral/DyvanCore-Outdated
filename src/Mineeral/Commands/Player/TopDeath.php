@@ -35,7 +35,7 @@ class TopDeath extends Command{
         foreach(Main::onAllConfig() as $p) {
 
             $player = Main::getInstance()->getServer()->getPlayer($p);
-            $alldeaths[$player->getName()] = $player->namedtag->death;
+            $alldeaths[$player->getName()] = Main::onConfig($player, "death");
 
         }
 

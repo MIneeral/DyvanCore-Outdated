@@ -25,7 +25,7 @@ class TopKill extends Command{
         else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
 
         return true;
-        
+
     }
 
     public static function sendTopKill(Player $player)
@@ -36,7 +36,7 @@ class TopKill extends Command{
         foreach(Main::onAllConfig() as $p) {
 
             $player = Main::getInstance()->getServer()->getPlayer($p);
-            $allkills[$player->getName()] = $player->namedtag->kill;
+            $allkills[$player->getName()] = Main::onConfig($player, "kill");
 
         }
 

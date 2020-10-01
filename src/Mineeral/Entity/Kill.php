@@ -42,7 +42,7 @@ class Kill extends Monster
         foreach(Main::onAllConfig() as $p) {
 
             $player = Main::getInstance()->getServer()->getPlayer($p);
-            $allkills[$player->getName()] = $player->namedtag->kill;
+            $allkills[$player->getName()] = Main::onConfig($player, "kill");
 
         }
 
