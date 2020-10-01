@@ -71,6 +71,7 @@ class PlayerInteract implements Listener
     
         $player->getInventory()->addItem($sword1);
         $player->getInventory()->addItem($soup1);
+        $player->getInventory()->addItem($soup1);
         $player->getInventory()->setItem(7, $gapple);
         $player->getInventory()->setItem(8, $pearl);
 
@@ -79,7 +80,7 @@ class PlayerInteract implements Listener
         $player->getArmorInventory()->setLeggings($leggings1);
         $player->getArmorInventory()->setBoots($boots1);
 
-        $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic");
+        $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic§f !");
 
     }
 }
