@@ -46,11 +46,12 @@ class PlayerForm
                     $chestplate1 = Item::get(311, 0, 1);
                     $leggings1 = Item::get(312, 0, 1);
                     $boots1 = Item::get(313, 0, 1);
-                    $player->sendMessage(Main::PREFIX_GOOD . "Vous venez de prendre le kit §4Basic");
+                    $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic");
                     $player->getInventory()->clearAll();
                     $player->getArmorInventory()->clearAll();
                     $player->getInventory()->addItem($sword1);
                     $player->getInventory()->addItem($soup1);
+                    $player->getInventory()->addItem($soup1)
                     $player->getInventory()->setItem(7, $gapple);
                     $player->getInventory()->setItem(8, $pearl);
                     $player->getArmorInventory()->setHelmet($helmet1);
