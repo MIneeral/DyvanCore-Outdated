@@ -93,10 +93,6 @@ class Main extends PluginBase
 
     }
 
-    /**
-    * TODO FIX ERROR
-    */
-
     public static function onConfig(Player $player, string $key)
     {
 
