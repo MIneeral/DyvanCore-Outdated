@@ -26,7 +26,7 @@ class PlayerCommandPreprocess implements Listener
             if(isset($time) && time() < $time) {
    
                 $event->setCancelled();
-                $player->sendMessage(Main::getPrefix("important") . "Vous etes encore en combat !");
+                $player->sendMessage(Main::getPrefix("important") . "Vous êtes encore en combat !");
 
             }
         }

@@ -47,6 +47,7 @@ class Main extends PluginBase
 
     private static $instance;
 
+<<<<<<< HEAD
     public const PREFIX_CONSOLE = "§3[§6Dyn§3]§a ";
     public const PREFIX_IMPORTANT = "§4[!]§f ";
     public const PREFIX_GOOD = "§f[§4!§f] ";
@@ -54,6 +55,9 @@ class Main extends PluginBase
     public const PREFIX_QUIT = "§f[§c-§f]§4 ";
     public const PREFIX_KILL = "§c»§4 ";
     public const PREFIX_DEFAULT = "§3[§6Dyn§3] ";
+=======
+    public const PREFIX = "§f[§cDyn§f]";
+>>>>>>> 1df69841dbe2d8c7c261a2f992c5c4dbee4ef472
 
     public function onEnable() : void
     {
@@ -91,11 +95,19 @@ class Main extends PluginBase
             break;
 
             case "important":
+<<<<<<< HEAD
                 return Main::PREFIX_IMPORTANT;
             break;
 
             case "good":
                 return Main::PREFIX_GOOD;
+=======
+                return "§f(§4!§f)§f ";
+            break;
+
+            case "good":
+                return "§f[§c!§f] ";
+>>>>>>> 1df69841dbe2d8c7c261a2f992c5c4dbee4ef472
             break;
 
             case "join":
@@ -103,7 +115,11 @@ class Main extends PluginBase
             break;
 
             case "quit":
+<<<<<<< HEAD
                 return Main::PREFIX_QUIT;
+=======
+                return "§f[§4-§f]§4 ";
+>>>>>>> 1df69841dbe2d8c7c261a2f992c5c4dbee4ef472
             break;
 
             case "kill":
