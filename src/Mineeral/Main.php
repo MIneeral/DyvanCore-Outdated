@@ -47,13 +47,13 @@ class Main extends PluginBase
 
     private static $instance;
 
-    public const PREFIX_CONSOLE = "§3[§6Dyvan§3]§a ";
+    public const PREFIX_CONSOLE = "§3[§6Dyn§3]§a ";
     public const PREFIX_IMPORTANT = "§4[!]§f ";
     public const PREFIX_GOOD = "§f[§4!§f] ";
     public const PREFIX_JOIN = "§f[§4+§f]§a ";
     public const PREFIX_QUIT = "§f[§c-§f]§4 ";
     public const PREFIX_KILL = "§c»§4 ";
-    public const PREFIX_DEFAULT = "§3[§6Dyvan§3] ";
+    public const PREFIX_DEFAULT = "§3[§6Dyn§3] ";
 
     public function onEnable() : void
     {
