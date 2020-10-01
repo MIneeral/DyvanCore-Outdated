@@ -73,13 +73,14 @@ class PlayerForm
 
         $form->setTitle("§c- §fKits§c-");
         $form->setContent("§c» §fVoici les différents Kits disponibles");
-
         $form->addButton("§7Basic\n§e[Joueur]", 0, "textures/items/gold_sword");
         $form->addButton("§7Superior\n§d[Saturne]", 0, "textures/items/iron_sword");
         $form->addButton("§7Mythical\n§5[Saturne+]", 0, "textures/items/diamond_sword");
         $form->addButton("§7Legendary\n§9[Eris]", 0, "textures/items/netherite_sword");
-
         $form->sendToPlayer($player);
+
+        return true;
+        
     }
 
     public static function Stats(Player $player, $rank, $money) : bool 
