@@ -11,6 +11,8 @@ class PlayerChat implements Listener
 {
     private static $time = [];
 
+    private const TIME = 3;
+
     private const RANKS = 
     [
         "Player" => "§e[Player]",
@@ -34,11 +36,18 @@ class PlayerChat implements Listener
                 " §f". $event->getPlayer()->getName() . " : " . $event->getMessage()
             );
             $event->setCancelled();
+            PlayerChat::$time[$event->getPlayer()->getName()] = time() + PlayerChat::TIME;
 
         } else {
+            
+            if(PlayerChat::$time[$event->getPlayer()->getName()] - time() < PlayerChat::TIME){
 
-            $player->sendMessage(Main::PREFIX_BAD . "Merci de ne pas spam de message !");
+                $event->getPlayer()->sendMessage(Main::PREFIX_BAD . "Merci de ne pas spam de message !");
+
+            }
+
             $event->setCancelled();
+
         }
     }
 }
