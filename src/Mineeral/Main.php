@@ -12,6 +12,12 @@ use pocketmine\utils\Config;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\StringTag;
+
 use Mineeral\Commands\Player\Feed;
 use Mineeral\Commands\Player\Stats;
 use Mineeral\Commands\Player\Kits;
@@ -89,100 +95,65 @@ class Main extends PluginBase
 
     }
 
-    public static function onConfig(Player $player, string $type)
+    /**
+    * TODO FIX ERROR
+    */
+
+    public static function onConfig(Player $player, string $key)
     {
 
-        switch($type){
+        switch($key){
 
             case "ip":
-                if(!$player->namedtag->ip) return Main::setConfig($player, $type, $player->getAddress());
-                return $player->namedtag->ip;
+                if($player->namedtag->getString($key) === null) Main::setConfig($player, "string", $key, $player->getAddress());
+                return $player->namedtag->getString($key);
             break;
 
             case "rank":
-                if(!$player->namedtag->rank) return Main::setConfig($player, $type, "Player");
-                return $player->namedtag->rank;
+                if($player->namedtag->getString($key) === null) Main::setConfig($player, "string", $key, "Player");
+                return $player->namedtag->getString($key);
             break;
 
             case "money":
-                if(!$player->namedtag->money) return Main::setConfig($player, $type, 1000);
-                return $player->namedtag->money;
+                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 1000);
+                return $player->namedtag->getInt($key);
             break;
 
             case "kill":
-                if(!$player->namedtag->kill) return Main::setConfig($player, $type, 0);
-                return $player->namedtag->kill;
+                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
+                return $player->namedtag->getInt($key);
             break;
 
             case "death":
-                if(!$player->namedtag->death) return Main::setConfig($player, $type, 0);
-                return $player->namedtag->death;
+                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
+                return $player->namedtag->getInt($key);
             break;
 
             case "ban":
-                if(!$player->namedtag->ban) return Main::setConfig($player, $type, 0);
-                return $player->namedtag->ban;
+                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
+                return $player->namedtag->getInt($key);
             break;
 
             case "tempban":
-                if(!$player->namedtag->tempban) return Main::setConfig($player, $type, 0);
-                return $player->namedtag->tempban;
+                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
+                return $player->namedtag->getInt($key);
             break;
 
         }
     }
 
-    public static function setConfig(Player $player, string $type, $value) : bool
+    public static function setConfig(Player $player,string $type, string $key, $value) : bool
     {
 
         switch($type){
 
-            case "ip":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->ip = new StringTag("IP", $value);
-                $player->setNamedTag($nbt);
+            case "string":
+                $player->namedtag->setString($key, $value);
                 return true;
             break;
 
-            case "rank":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->rank = new StringTag("RANK", $value);
-                $player->setNamedTag($nbt);
-                return true;
-            break;
-
-            case "money":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->money = new IntTag("MONEY", $value);
-                $player->setNamedTag($nbt);
-                return true;
-            break;
-
-            case "kill":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->kill = new IntTag("KILL", $value);
-                $player->setNamedTag($nbt);
-                return true;
-            break;
-
-            case "death":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->death = new IntTag("DEATH", $value);
-                $player->setNamedTag($nbt);
-                return true;
-            break;
-
-            case "ban":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->ban = new IntTag("BAN", $value);
-                $player->setNamedTag($nbt);
-                return true;
-            break;
-
-            case "bantemp":
-                $nbt = $player->namedtag ?? new CompoundTag("", []);
-                $nbt->bantemp = new IntTag("BANTEMP", $value);
-                $player->setNamedTag($nbt);
+            case "int":
+                $player->namedtag->setInt($key, $value);
                 return true;
             break;
 
@@ -243,17 +214,13 @@ class Main extends PluginBase
 
     }
 
-    /**
-     * TODO FIX ERROR
-     */
-
     private static function getEntity() : bool
     {
 
-        /*Entity::registerEntity(Kill::class, true);
+        Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Entity are loaded");*/
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Entity are loaded");
         return true;
 
     }

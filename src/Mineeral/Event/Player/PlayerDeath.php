@@ -37,9 +37,8 @@ class PlayerDeath implements Listener
                 EconomyAPI::getInstance()->addMoney($damager, "10");
                 $damager->setHealth(20);
 
-                Main::setConfig($damager, "kill", Main::onConfig($damager, "kill") + 1);
-
-                Main::setConfig($player, "death", Main::onConfig($player, "death") + 1);
+                Main::setConfig($damager, "int", "kill", Main::onConfig($damager, "kill") + 1);
+                Main::setConfig($player, "int", "death", Main::onConfig($player, "death") + 1);
 
             }
         }
