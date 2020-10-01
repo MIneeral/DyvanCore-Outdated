@@ -34,10 +34,11 @@ class PlayerDeath implements Listener
                 $dname = $damager->getName();
                 $event->setDeathMessage("§c» §4" . $name . " §fa été tué par§4 ". $dname);
                 $player->teleport($this->getServer()->getLevelByName("Arene")->getSafeSpawn());
-                EconomyAPI::getInstance()->addMoney($damager, "10");
                 $damager->setHealth(20);
 
                 Main::setConfig($damager, "int", "kill", Main::onConfig($damager, "kill") + 1);
+                Main::setConfig($damager, "int", "money", Main::onConfig($damager, "money") + 10);
+                
                 Main::setConfig($player, "int", "death", Main::onConfig($player, "death") + 1);
 
             }

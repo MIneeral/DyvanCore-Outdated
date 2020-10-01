@@ -3,10 +3,7 @@
 namespace Mineeral\Event\Player;
 
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\network\mcpe\protocol\ActorEventPacket;
-use pocketmine\network\mcpe\protocol\LevelEventPacket;
 
 use Mineeral\Main;
 
