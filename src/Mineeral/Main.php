@@ -287,11 +287,11 @@ class Main extends PluginBase
 
     private static function getEntity() : bool
     {
-
+        /*
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Entity are loaded");
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Entity are loaded");*/
         return true;
 
     }
