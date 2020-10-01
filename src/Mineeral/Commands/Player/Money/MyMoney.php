@@ -14,7 +14,7 @@ class MyMoney extends Command{
     public function __construct()
     {
 
-        parent::__construct("mymoney", "Vous permez de voir votre argent");
+        parent::__construct("money", "Vous permez de voir votre argent");
 
     }
     
