@@ -2,6 +2,8 @@
 
 namespace Mineeral\Commands\Player;
 
+use pocketmine\Player;
+
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
