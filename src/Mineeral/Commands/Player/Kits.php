@@ -21,7 +21,7 @@ class Kits extends Command{
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
             Commands::Kits($sender);
         return true;
 

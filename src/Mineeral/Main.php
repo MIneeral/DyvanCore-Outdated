@@ -46,7 +46,7 @@ class Main extends PluginBase
 
     private static $instance;
 
-    public const PREFIX = "§3[§6Dyvan§3] §a";
+    public const PREFIX = "§3[§6Dyvan§3]";
 
     public function onEnable() : void
     {
@@ -58,9 +58,9 @@ class Main extends PluginBase
         Main::getEvents();
         Main::getEntity();
 
-        $msg = Main::PREFIX . "ServerCore is not operationnal";
+        $msg = Main::getPrefix("console") . "ServerCore is not operationnal";
 
-        if(Main::getCommands() === true && Main::getEvents() === true && Main::getEntity() === true && Main::loadLevel() === true) $msg = Main::PREFIX . "ServerCore is operational";
+        if(Main::getCommands() === true && Main::getEvents() === true && Main::getEntity() === true && Main::loadLevel() === true) $msg = Main::getPrefix("console") . "ServerCore is operational";
         else Main::getInstance()->getServer()->shutdown();
 
         Main::getInstance()->getServer()->getLogger()->info($msg);
@@ -72,6 +72,42 @@ class Main extends PluginBase
 
         return self::$instance;
 
+    }
+
+    public static function getPrefix(string $type) : string
+    {
+
+        switch($type){
+
+            case "console":
+                return Main::PREFIX . "§a ";
+            break;
+
+            case "important":
+                return "§4[!]§f ";
+            break;
+
+            case "good":
+                return "§f[§4!§f] ";
+            break;
+
+            case "join":
+                return "§f[§4+§f]§a ";
+            break;
+
+            case "quit":
+                return "§f[§c-§f]§4 ";
+            break;
+
+            case "kill":
+                return Main::PREFIX . "§c»§4 ";
+            break;
+
+            default:
+                return Main::PREFIX . " ";
+            break;
+
+        }
     }
 
     public static function loadLevel() : bool
@@ -88,7 +124,7 @@ class Main extends PluginBase
             }
         }  
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Levels are loaded");
+        Main::getInstance()->getServer()->getLogger()->info(Main::getPrefix("console") . " all Levels are loaded");
         return true;
 
     }
@@ -199,7 +235,7 @@ class Main extends PluginBase
         Main::getInstance()->getServer()->getCommandMap()->register("spawn", new Spawn());
         Main::getInstance()->getServer()->getCommandMap()->register("money", new Money());
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Commands are loaded");
+        Main::getInstance()->getServer()->getLogger()->info(Main::getPrefix("console") . " all Commands are loaded");
         return true;
 
     }
@@ -217,7 +253,7 @@ class Main extends PluginBase
 
         Main::getInstance()->getServer()->getPluginManager()->registerEvents(new Soup(), Main::getInstance());
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Events are loaded");
+        Main::getInstance()->getServer()->getLogger()->info(Main::getPrefix("console") . " all Events are loaded");
         return true;
 
     }
@@ -228,7 +264,7 @@ class Main extends PluginBase
         Entity::registerEntity(Kill::class, true);
         Entity::registerEntity(Death::class, true);
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX . " all Entity are loaded");
+        Main::getInstance()->getServer()->getLogger()->info(Main::getPrefix("console") . " all Entity are loaded");
         return true;
 
     }

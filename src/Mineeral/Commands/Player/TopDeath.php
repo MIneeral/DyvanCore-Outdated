@@ -38,7 +38,7 @@ class TopDeath extends Command{
         }
 
         $top = 1;
-        $player->sendMessage("§f[§c!§f]§f Top §410§f des personnes les plus morts !\n");
+        $player->sendMessage(Main::getPrefix("important") . "Top §410§f des personnes les plus morts !\n");
 
         arsort($alldeaths);
         foreach ($alldeaths as $name => $value){

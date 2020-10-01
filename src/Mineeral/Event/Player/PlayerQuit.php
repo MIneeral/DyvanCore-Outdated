@@ -15,7 +15,7 @@ class PlayerQuit implements Listener
 
         $player = $ev->getPlayer();
         $ev->setQuitMessage("");
-        Main::getInstance()->getServer()->broadcastPopup("§f[§c-§f] §4 " . $player->getName());
+        Main::getInstance()->getServer()->broadcastPopup(Main::getPrefix("quit") . $player->getName());
 
     }
 }

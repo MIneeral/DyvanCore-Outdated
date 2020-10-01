@@ -21,7 +21,7 @@ class TopKill extends Command{
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
         return TopKill::sendTopKill($sender);
     }
 
@@ -38,7 +38,7 @@ class TopKill extends Command{
         }
 
         $top = 1;
-        $player->sendMessage("§f[§c!§f]§f Top §410§f des personnes qui ont le tuer de personnes !\n");
+        $player->sendMessage(Main::getPrefix("important") . "Top §410§f des personnes qui ont le tuer de personnes !\n");
         
         arsort($allkills);
         foreach ($allkills as $name => $value){

@@ -21,7 +21,7 @@ class PlayerJoin implements Listener
         if(!$player->hasPlayedBefore()) PlayerJoin::newPlayer($player);
 
 
-        Main::getInstance()->getServer()->broadcastPopup("§f[§4+§f] §a " . $player->getName());
+        Main::getInstance()->getServer()->broadcastPopup(Main::getPrefix("join") . $player->getName());
         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
 
     }
@@ -46,7 +46,7 @@ class PlayerJoin implements Listener
 
         }
 
-        $player->sendMessage("§f[§4!§f] Bienvenue sur §4Dyvan§f PvP-Box !");
+        $player->sendMessage(Main::getPrefix("good") . "Bienvenue sur §4Dyvan§f PvP-Box !");
 
     }
 }

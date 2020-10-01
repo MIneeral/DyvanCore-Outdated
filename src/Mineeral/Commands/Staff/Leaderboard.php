@@ -22,9 +22,9 @@ class Leaderboard extends Command{
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
-        if(!$sender->hasPermission("staff.leaderboard")) return $sender->sendMessage("§4[!]§f Vous n'avez pas la permission d'utiliser cette commande !");
-        if(!isset($args[0])) return $sender->sendMessage("§4[!] §fVous devez préciser lequel (§akill§f/§adeath§f)");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
+        if(!$sender->hasOp()) return $sender->sendMessage(Main::getPrefix("important") . "Vous n'avez pas la permission d'utiliser cette commande !");
+        if(!isset($args[0])) return $sender->sendMessage(Main::getPrefix("important") . "Vous devez préciser lequel (§akill§f/§adeath§f)");
         if(strtolower($args[0]) == "kill"){
 
             $position = new Position($sender->x, $sender->y+1.5, $sender->z, $sender->level);

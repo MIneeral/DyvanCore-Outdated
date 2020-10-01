@@ -20,10 +20,10 @@ class Feed extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
 
-        if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
 
         $sender->addFood(20);
-        $sender->sendPopup("§c-§f Vous avez bien été nourris§c -");
+        $sender->sendPopup(Main::getPrefix("good") . "Vous avez bien été nourris§c -");
         $sender->getLevel()->broadcastLevelEvent($sender->add(0, $sender->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_USE);
 
     }

@@ -9,6 +9,9 @@ use pocketmine\item\Item;
 
 use pocketmine\inventory\Inventory;
 
+
+use Mineeral\Main;
+
 class PlayerInteract implements Listener
 {   
 
@@ -62,7 +65,7 @@ class PlayerInteract implements Listener
         $player->getArmorInventory()->setLeggings($leggings1);
         $player->getArmorInventory()->setBoots($boots1);
 
-        $player->sendMessage("§f[§c!§f] Vous venez de prendre le kit §4Basic");
+        $player->sendMessage(Main::getPrefix("good") . "Vous venez de prendre le kit §4Basic");
 
     }
 }

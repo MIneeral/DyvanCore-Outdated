@@ -12,8 +12,6 @@ use pocketmine\network\mcpe\protocol\LevelEventPacket;
 use Mineeral\Main;
 use Mineeral\Forms\Form\Commands;
 
-use onebone\economyapi\EconomyAPI;
-
 class Stats extends Command{
 
     public function __construct()
@@ -29,7 +27,7 @@ class Stats extends Command{
         $rank = Main::onConfig($sender, "rank");
         $money = Main::onConfig($sender, "money");
 
-        if(!$sender instanceof Player) return $sender->sendMessage("Commande utilisable seulement en jeu !");
+        if(!$sender instanceof Player) return $sender->sendMessage(Main::getPrefix("important") . "Commande utilisable seulement en jeu !");
             Commands::Stats($sender, $rank, $money);
         return true;
     }

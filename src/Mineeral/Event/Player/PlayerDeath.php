@@ -10,8 +10,6 @@ use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 
-use onebone\economyapi\EconomyAPI;
-
 use Mineeral\Main;
 
 class PlayerDeath implements Listener
@@ -32,13 +30,13 @@ class PlayerDeath implements Listener
             if($damager instanceof Player) {
 
                 $dname = $damager->getName();
-                $event->setDeathMessage("§c» §4" . $name . " §fa été tué par§4 ". $dname);
+                $event->setDeathMessage(Main::getPrefix("kill") . $name . " §fa été tué par§4 ". $dname);
                 $player->teleport($this->getServer()->getLevelByName("Arene")->getSafeSpawn());
                 $damager->setHealth(20);
 
                 Main::setConfig($damager, "int", "kill", Main::onConfig($damager, "kill") + 1);
                 Main::setConfig($damager, "int", "money", Main::onConfig($damager, "money") + 10);
-                
+
                 Main::setConfig($player, "int", "death", Main::onConfig($player, "death") + 1);
 
             }
