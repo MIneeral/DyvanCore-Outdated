@@ -25,16 +25,16 @@ class PlayerInteract implements Listener
 
         if($block_id === Item::SIGN_POST){
 
-            if(!isset(Sign::$cooldown[$player->getName()])) {
+            if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
-                Sign::onSign($player);
-                Sign::$cooldown[$player->getName()] = time() + 1;
+                PlayerInteract::onSign($player);
+                PlayerInteract::$cooldown[$player->getName()] = time() + 1;
 
-            } else if (time() > Sign::$cooldown[$player->getName()]){
+            } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
 
-                unset(Sign::$cooldown[$player->getName()]);
-                Sign::onSign($player);
-                Sign::$cooldown[$player->getName()] = time() + 1;
+                unset(PlayerInteract::$cooldown[$player->getName()]);
+                PlayerInteract::onSign($player);
+                PlayerInteract::$cooldown[$player->getName()] = time() + 1;
 
             }
         }
