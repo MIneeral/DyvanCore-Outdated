@@ -2,13 +2,14 @@
 
 namespace Mineeral\Event\Player;
 
+use pocketmine\Player;
+
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 
 use pocketmine\item\Item;
 
 use pocketmine\inventory\Inventory;
-
 
 use Mineeral\Main;
 
