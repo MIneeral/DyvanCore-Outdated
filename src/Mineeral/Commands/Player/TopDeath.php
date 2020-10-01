@@ -32,21 +32,21 @@ class TopDeath extends Command{
 
         $alldeaths = array();
 
-        foreach(Main::onAllConfig() as $p) {
+        /*foreach(Main::onAllConfig() as $p) {
 
             $player = Main::getInstance()->getServer()->getPlayer($p);
             $alldeaths[$player->getName()] = Main::onConfig($player, "death");
 
-        }
+        }*/
 
         $top = 1;
         $player->sendMessage(Main::PREFIX_IMPORTANT . "Top §410§f des personnes les plus morts !\n");
 
-        arsort($alldeaths);
+        /*arsort($alldeaths);
         foreach ($alldeaths as $name => $value){
             if($top > 10)break;
                 $player->sendMessage("§8»§4 #{$top} §c{$name}§f avec §c{$value}§f mort(s)§8 »\n");
                 $top ++;
-        }
+        }*/
     }
 }

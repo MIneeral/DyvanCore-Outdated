@@ -33,21 +33,21 @@ class TopKill extends Command{
 
         $allkills = array();
 
-        foreach(Main::onAllConfig() as $p) {
+        /*foreach(Main::onAllConfig() as $p) {
 
             $player = Main::getInstance()->getServer()->getPlayer($p);
             $allkills[$player->getName()] = Main::onConfig($player, "kill");
 
-        }
+        }*/
 
         $top = 1;
         $player->sendMessage(Main::GOOD . "§fTop §410§f des personnes qui ont le tuer de personnes !\n");
         
-        arsort($allkills);
+        /*arsort($allkills);
         foreach ($allkills as $name => $value){
             if($top > 10) break;
                 $player->sendMessage("§8»§4 #{$top} §c{$name}§f avec §c{$value}§f mort(s)§8 »\n");
                 $top ++;
-        }
+        }*/
     }
 }
