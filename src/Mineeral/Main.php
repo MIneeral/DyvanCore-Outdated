@@ -13,10 +13,8 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\DoubleTag;
-use pocketmine\nbt\tag\FloatTag;
-use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\IntTag;
 
 use Mineeral\Commands\Player\Feed;
 use Mineeral\Commands\Player\Stats;
@@ -102,61 +100,75 @@ class Main extends PluginBase
     public static function onConfig(Player $player, string $key)
     {
 
+        if(!$player->namedtag->hasTag("info", CompoundTag::class)) Main::setConfig($player, "compound", "info");
+
+        $compound = $player->namedtag->getCompoundTag("info");
+
         switch($key){
 
             case "ip":
-                if($player->namedtag->getString($key) === null) Main::setConfig($player, "string", $key, $player->getAddress());
-                return $player->namedtag->getString($key);
+                if(!$compound->hasTag($key, StringTag::class)) Main::setConfig($player, "string", $key, $player->getAddress());
+                return $compound->getTagValue($key, StringTag::class);
             break;
 
             case "rank":
-                if($player->namedtag->getString($key) === null) Main::setConfig($player, "string", $key, "Player");
-                return $player->namedtag->getString($key);
+                if(!$compound->hasTag($key, StringTag::class)) Main::setConfig($player, "string", $key, "Player");
+                return $compound->getTagValue($key, StringTag::class);
             break;
 
             case "money":
-                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 1000);
-                return $player->namedtag->getInt($key);
+                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 1000);
+                return $compound->getTagValue($key, IntTag::class);
             break;
 
             case "kill":
-                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
-                return $player->namedtag->getInt($key);
+                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
+                return $compound->getTagValue($key, IntTag::class);
             break;
 
             case "death":
-                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
-                return $player->namedtag->getInt($key);
+                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
+                return $compound->getTagValue($key, IntTag::class);
             break;
 
             case "ban":
-                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
-                return $player->namedtag->getInt($key);
+                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
+                return $compound->getTagValue($key, IntTag::class);
             break;
 
             case "tempban":
-                if($player->namedtag->getInt($key) === null) Main::setConfig($player, "int", $key, 0);
-                return $player->namedtag->getInt($key);
+                if(!$compound->hasTag($key, IntTag::class)) Main::setConfig($player, "int", $key, 0);
+                return $compound->getTagValue($key, IntTag::class);
             break;
 
         }
     }
 
-    public static function setConfig(Player $player,string $type, string $key, $value) : bool
-    {
+    public static function setConfig(Player $player,string $type, string $key, $value = null) : bool
+    {   
+        if($key === "info"){
 
-        switch($type){
+            $player->namedtag->setTag(new CompoundTag($key), false);
+            return true;
 
-            case "string":
-                $player->namedtag->setString($key, $value);
-                return true;
-            break;
+        } else {
 
-            case "int":
-                $player->namedtag->setInt($key, $value);
-                return true;
-            break;
+            if(!$player->namedtag->hasTag("info", CompoundTag::class)) Main::setConfig($player, "compound", "info");
+            $compound = $player->namedtag->getCompoundTag("info");
 
+            switch($type){
+    
+                case "string":
+                    $compound->setString($key, $value);
+                    return true;
+                break;
+    
+                case "int":
+                    $compound->setInt($key, $value);
+                    return true;
+                break;
+    
+            }
         }
     }
 
