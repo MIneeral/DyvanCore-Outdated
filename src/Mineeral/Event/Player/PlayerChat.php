@@ -28,7 +28,7 @@ class PlayerChat implements Listener
 
         $player = $event->getPlayer();
         $event->setCancelled();
-        Main::getInstance()->getServer()->broadcastMessage(PlayerChat::RANKS[Main::onConfig($player, "rank")] . " &f". $player->getName() ." : " . $message);
+        Main::getInstance()->getServer()->broadcastMessage(PlayerChat::RANKS[Main::onConfig($player, "rank")] . " &f". $player->getName() ." : " . $event->getMessage());
 
     }
 }
