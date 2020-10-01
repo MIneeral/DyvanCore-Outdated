@@ -26,17 +26,20 @@ class EntityDamageByEntity implements Listener
         }
     }
 
-    public static function Time(Player $player, string $type, int $time = 0)
+    public static function Time(Player $player, string $type, int $time = 0) : int
     {
         switch($type){
             case "set":
-                EntityDamageByEntity::$cooldown[$player->getName()] = $time;
+                return EntityDamageByEntity::$cooldown[$player->getName()] = $time;
             break;
             case "get":
+                if(!isset(EntityDamageByEntity::$cooldown[$player->getName()])) return 0;
                 EntityDamageByEntity::$cooldown[$player->getName()];
+                return 1;
             break;
             case "del":
                 unset(EntityDamageByEntity::$cooldown[$player->getName()]);
+                return 1;
             break;
         }
     }
