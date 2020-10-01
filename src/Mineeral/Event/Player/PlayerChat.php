@@ -9,8 +9,9 @@ use Mineeral\Main;
 
 class PlayerChat implements Listener
 {
+    private static $time = [];
 
-    public const RANKS = 
+    private const RANKS = 
     [
         "Player" => "§e[Player]",
         "Saturne" => "§d[Saturne]",
@@ -25,11 +26,19 @@ class PlayerChat implements Listener
 
     public function PlayerChatEvent(PlayerChatEvent $event)
     {
-        Main::getInstance()->getServer()->broadcastMessage(
-            PlayerChat::RANKS[Main::onConfig($event->getPlayer(), "rank")] . 
-            " §f". $event->getPlayer()->getName() . " : " . $event->getMessage()
-        );
 
-        $event->setCancelled();
+        if(!isset(PlayerChat::$time[$event->getPlayer()->getName()]) || time() >= PlayerChat::$time[$event->getPlayer()->getName()]){
+
+            Main::getInstance()->getServer()->broadcastMessage(
+                PlayerChat::RANKS[Main::onConfig($event->getPlayer(), "rank")] . 
+                " §f". $event->getPlayer()->getName() . " : " . $event->getMessage()
+            );
+            $event->setCancelled();
+
+        } else {
+
+            $player->sendMessage(Main::PREFIX_BAD . "Merci de ne pas spam de message !");
+            $event->setCancelled();
+        }
     }
 }
