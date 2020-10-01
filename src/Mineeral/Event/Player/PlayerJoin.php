@@ -32,6 +32,8 @@ class PlayerJoin implements Listener
             $nbt->money = new IntTag("MONEY", 1000);
             $nbt->kill = new IntTag("KILL", 0);
             $nbt->death = new IntTag("DEATH", 0);
+            $nbt->ban = new IntTag("BAN", 0);
+            $nbt->bantemp = new IntTag("BANTEMP", 0);
 
             $player->setNamedTag($nbt);
 
