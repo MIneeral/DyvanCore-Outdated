@@ -27,7 +27,9 @@ class SetMoney extends Command{
 
             else {
 
-                if($p = Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
+                if(Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
+
+                    $p = Main::getInstance()->getServer()->getPlayer($args[0]);
 
                     Main::setConfig($p, "int", "money", intval($args[1]));
                     $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien set " . $p->getName() . " à §4" . Main::onConfig($p, "money") . "");

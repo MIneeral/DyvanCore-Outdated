@@ -27,7 +27,9 @@ class SeeMoney extends Command{
 
             else {
 
-                if($p = Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
+                if(Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
+
+                    $p = Main::getInstance()->getServer()->getPlayer($args[0]);
 
                     $sender->sendMessage(Main::PREFIX_IMPORTANT . $p->getName() . " a §4" . Main::onConfig($p, "money") . "");
 

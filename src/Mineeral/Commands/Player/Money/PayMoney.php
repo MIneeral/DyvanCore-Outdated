@@ -28,7 +28,9 @@ class PayMoney extends Command{
 
             else {
 
-                if($p = Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
+                if(Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
+
+                    $p = Main::getInstance()->getServer()->getPlayer($args[0]);
 
                     Main::setConfig($sender, "int", "money", Main::onConfig($sender, "money") - intval($args[1]));
                     Main::setConfig($p, "int", "money", Main::onConfig($p, "money") + intval($args[1]));

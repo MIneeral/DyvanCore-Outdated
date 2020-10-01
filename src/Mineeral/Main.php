@@ -230,7 +230,7 @@ class Main extends PluginBase
             "rank" => new Rank(),
 
             //Command Money Player
-            "mymoney" => new MyMoney(),
+            "money" => new MyMoney(),
             "pay" => new PayMoney(),
             "seemoney" => new SeeMoney(),
 
