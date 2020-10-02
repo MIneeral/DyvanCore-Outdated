@@ -64,14 +64,17 @@ class PlayerInteract implements Listener
                     }
                 break;
 
+                /**
+                 * TODO Fix ENDER_PEARL because it's glitch
+                 */
                 case Item::ENDER_PEARL:
                     if(isset(PlayerInteract::$cooldown[$player->getName()]) && time() < PlayerInteract::$cooldown[$player->getName()]) {
-    
+                        
                         $event->setCancelled();
         
                     } else {
                         
-                        $event->setCancelled(false);
+                        if($event->isCancelled())$event->setCancelled(false);
                         PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
         
                     }
@@ -87,24 +90,24 @@ class PlayerInteract implements Listener
         $inventory->clearAll();
         $armor->clearAll();
 
-        $sword1 = Item::get(276, 0, 1);
-        $soup1 = Item::get(Item::WHEAT, 0, 64);
-        $gapple = Item::get(322, 0, 8);
-        $pearl = Item::get(Item::ENDER_PEARL,0,16);
-        $helmet1 = Item::get(310, 0, 1);
-        $chestplate1 = Item::get(311, 0, 1);
-        $leggings1 = Item::get(312, 0, 1);
-        $boots1 = Item::get(313, 0, 1);
+        $diamond_sword = Item::get(Item::DIAMOND_SWORD, 0, 1);
+        $wheat = Item::get(Item::WHEAT, 0, 64);
+        $golden_apple = Item::get(Item::GOLDEN_APPLE, 0, 8);
+        $ender_pearl = Item::get(Item::ENDER_PEARL,0,16);
+        $diamond_helmet = Item::get(Item::DIAMOND_HELMET, 0, 1);
+        $diamond_chestplate = Item::get(Item::DIAMOND_CHESTPLATE, 0, 1);
+        $diamond_leggings = Item::get(Item::DIAMOND_LEGGINGS, 0, 1);
+        $diamond_boots = Item::get(Item::DIAMOND_BOOTS, 0, 1);
     
-        $inventory->addItem($sword1);
-        $inventory->addItem($soup1);
-        $inventory->setItem(7, $gapple);
-        $inventory->setItem(8, $pearl);
+        $inventory->addItem($diamond_sword);
+        $inventory->addItem($wheat);
+        $inventory->setItem(7, $golden_apple);
+        $inventory->setItem(8, $ender_pearl);
 
-        $armor->setHelmet($helmet1);
-        $armor->setChestplate($chestplate1);
-        $armor->setLeggings($leggings1);
-        $armor->setBoots($boots1);
+        $armor->setHelmet($diamond_helmet);
+        $armor->setChestplate($diamond_chestplate);
+        $armor->setLeggings($diamond_leggings);
+        $armor->setBoots($diamond_boots);
 
         $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic§f !");
 
