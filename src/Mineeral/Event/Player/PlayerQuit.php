@@ -4,6 +4,8 @@ namespace Mineeral\Event\Player;
 
 use pocketmine\Player;
 
+use pocketmine\utils\Config;
+
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerQuitEvent;
 
