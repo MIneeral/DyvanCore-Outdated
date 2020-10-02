@@ -39,7 +39,6 @@ use Mineeral\Event\Player\PlayerDeath;
 use Mineeral\Event\Player\PlayerInteract;
 
 use Mineeral\Event\Entity\EntityDamageByEntity;
-use Mineeral\Event\Entity\ProjectileLaunch;
 
 use Mineeral\Entity\Death;
 use Mineeral\Entity\Kill;
@@ -97,22 +96,121 @@ class Main extends PluginBase
         return self::$instance;
 
     }
-
-    public static function loadLevel() : bool
+    
+    private static function loadLevel() : bool
     {
+        $count = 0;
 
         foreach(scandir(Main::getInstance()->getServer()->getDataPath() . "/worlds/") as $world){
 
             if($world !== "." && $world !== ".." ){
                 if(!(Main::getInstance()->getServer()->isLevelLoaded($world))){
 
+                    $count = $count + 1;
                     Main::getInstance()->getServer()->loadLevel($world);
 
                 }
             }
         }  
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Levels are loaded");
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Levels are loaded");
+        return true;
+
+    }
+
+    private static function getCommands() : bool
+    {
+
+        $commands = 
+        [
+            //Command Player
+            "feed" => new Feed(),
+            "kit" => new Kits(),
+            "stats" => new Stats(),
+            "tk" => new TopKill(),
+            "td" => new TopDeath(),
+            "hub" => new Hub(),
+            "spawn" => new Spawn(),
+
+            //Command Admin
+            "leaderboard" => new Leaderboard(),
+            "rank" => new Rank(),
+
+            //Command Money Player
+            "money" => new MyMoney(),
+            "pay" => new PayMoney(),
+            "seemoney" => new SeeMoney(),
+
+            //Command Money Admin
+            "givemoney" => new GiveMoney(),
+            "removemoney" => new RemoveMoney(),
+            "setmoney" => new SetMoney(),
+        ];
+
+        $count = 0;
+
+        foreach($commands as $key => $value){
+            
+            $count = $count + 1;
+            Main::getInstance()->getServer()->getCommandMap()->register($key, $value);
+
+        }
+
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Commands are loaded");
+        return true;
+
+    }
+
+    private static function getEvents() : bool
+    {
+
+        $events = 
+        [
+            //Event Player
+            new PlayerChat(),
+            new PlayerCommandPreprocess(),
+            new PlayerJoin(),
+            new PlayerQuit(),
+            new PlayerDeath(),
+            new PlayerInteract(),
+
+            //Event Entity
+            new EntityDamageByEntity(),
+        ];
+
+        $count = 0;
+
+        foreach($events as $event) {
+
+            $count = $count + 1;
+            Main::getInstance()->getServer()->getPluginManager()->registerEvents($event, Main::getInstance());
+
+        }
+
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Events are loaded");
+        return true;
+
+    }
+
+    private static function getEntity() : bool
+    {
+        $entity = 
+        [
+            //Entity LearderBoard
+            Kill::class,
+            Death::class,
+        ];
+
+        $count = 0;
+
+        foreach($entity as $e) {
+
+            $count = $count + 1;
+            Entity::registerEntity($e, true);
+
+        }
+
+        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Entity are loaded");
         return true;
 
     }
@@ -181,104 +279,6 @@ class Main extends PluginBase
 
         $config->set($player->getName(), $value);
         $config->save();
-        return true;
-
-    }
-
-    public static function onAllConfig() : array 
-    {
-        $array = array();
-
-        foreach(scandir(Main::getInstance()->getServer()->getDataPath() . "/players/") as $player){
-
-            if($player !== "." && $player !== ".."){
-
-                $p = explode(".", $player);
-                array_push($array, $p[0]);
-
-            }
-        }
-
-        return $array;
-    }
-
-
-    private static function getCommands() : bool
-    {
-
-        $commands = 
-        [
-            //Command Player
-            "feed" => new Feed(),
-            "kit" => new Kits(),
-            "stats" => new Stats(),
-            "tk" => new TopKill(),
-            "td" => new TopDeath(),
-            "hub" => new Hub(),
-            "spawn" => new Spawn(),
-
-            //Command Admin
-            "leaderboard" => new Leaderboard(),
-            "rank" => new Rank(),
-
-            //Command Money Player
-            "money" => new MyMoney(),
-            "pay" => new PayMoney(),
-            "seemoney" => new SeeMoney(),
-
-            //Command Money Admin
-            "givemoney" => new GiveMoney(),
-            "removemoney" => new RemoveMoney(),
-            "setmoney" => new SetMoney(),
-        ];
-
-        foreach($commands as $key => $value){
-
-            Main::getInstance()->getServer()->getCommandMap()->register($key, $value);
-
-        }
-
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Commands are loaded");
-        return true;
-
-    }
-
-    private static function getEvents() : bool
-    {
-
-        $events = 
-        [
-            //Event Player
-            new PlayerChat(),
-            new PlayerCommandPreprocess(),
-            new PlayerJoin(),
-            new PlayerQuit(),
-            new PlayerDeath(),
-            new PlayerInteract(),
-
-            //Event Entity
-            new EntityDamageByEntity(),
-            new ProjectileLaunch(),
-        ];
-
-        foreach($events as $event) {
-
-            Main::getInstance()->getServer()->getPluginManager()->registerEvents($event, Main::getInstance());
-
-        }
-
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Events are loaded");
-        return true;
-
-    }
-
-    private static function getEntity() : bool
-    {
-        
-        Entity::registerEntity(Kill::class, true);
-        Entity::registerEntity(Death::class, true);
-
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " all Entity are loaded");
         return true;
 
     }
