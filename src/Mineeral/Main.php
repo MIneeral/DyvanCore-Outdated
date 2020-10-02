@@ -64,20 +64,20 @@ class Main extends PluginBase
 
         Main::$instance = $this;
 
-        Main::loadLevel();
-        Main::getCommands();
-        Main::getEvents();
-        Main::getEntity();
+        $info = 
+        [
+            Main::loadLevel(),
+            Main::getCommands(),
+            Main::getEvents(),
+            Main::getEntity(),
+            Main::loadServer(),
+        ];
 
-        $msg = Main::PREFIX_CONSOLE . "ServerCore is not operationnal";
+        foreach($info as $message){
+ 
+            Main::getInstance()->getServer()->getLogger()->info($message);
 
-        if(Main::getCommands() === true && Main::getEvents() === true && Main::getEntity() === true && Main::loadLevel() === true){
-            $msg = Main::PREFIX_CONSOLE . "ServerCore is operational";
-        } else {
-            Main::getInstance()->getServer()->shutdown();
         }
-
-        Main::getInstance()->getServer()->getLogger()->info($msg);
 
         @mkdir(Main::getInstance()->getDataFolder());
         @mkdir(Main::getInstance()->getDataFolder()."/Infos");
@@ -93,11 +93,27 @@ class Main extends PluginBase
     public static function getInstance() : Main
     {
 
-        return self::$instance;
+        return Main::$instance;
+
+    }
+
+    private static function loadServer() : string 
+    {
+
+        if(gettype(Main::getCommands()) === "string" && gettype(Main::getEvents()) === "string" && gettype(Main::getEntity()) === "string" && gettype(Main::loadLevel()) === "string"){
+
+            return Main::PREFIX_CONSOLE . "ServerCore is operational";
+
+        } else {
+
+            Main::getInstance()->getServer()->shutdown();
+            return Main::PREFIX_CONSOLE . "ServerCore is not operationnal";
+
+        }
 
     }
     
-    private static function loadLevel() : bool
+    private static function loadLevel() : string
     {
         $count = 0;
 
@@ -113,12 +129,11 @@ class Main extends PluginBase
             }
         }  
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Levels are loaded");
-        return true;
+        return Main::PREFIX_CONSOLE . " " . $count . " Levels are loaded";
 
     }
 
-    private static function getCommands() : bool
+    private static function getCommands() : string
     {
 
         $commands = 
@@ -156,12 +171,11 @@ class Main extends PluginBase
 
         }
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Commands are loaded");
-        return true;
+        return Main::PREFIX_CONSOLE . " " . $count . " Commands are loaded";
 
     }
 
-    private static function getEvents() : bool
+    private static function getEvents() : string
     {
 
         $events = 
@@ -187,12 +201,11 @@ class Main extends PluginBase
 
         }
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Events are loaded");
-        return true;
+        return Main::PREFIX_CONSOLE . " " . $count . " Events are loaded";
 
     }
 
-    private static function getEntity() : bool
+    private static function getEntity() : string
     {
         $entity = 
         [
@@ -210,8 +223,7 @@ class Main extends PluginBase
 
         }
 
-        Main::getInstance()->getServer()->getLogger()->info(Main::PREFIX_CONSOLE . " " . $count . " Entity are loaded");
-        return true;
+        return Main::PREFIX_CONSOLE . " " . $count . " Entity are loaded";
 
     }
 
