@@ -15,7 +15,7 @@ class PlayerChat implements Listener
 
     private const TIME = 3;
 
-    private const RANKS = 
+    public const RANKS = 
     [
         "Player" => "§e[Player]",
         "Saturne" => "§d[Saturne]",
