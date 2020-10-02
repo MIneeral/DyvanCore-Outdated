@@ -139,8 +139,16 @@ class PlayerForm
             }
         });
 
+        $msg = "\n\n";
+
+        foreach($ranks as $rank){
+
+            $msg .= $ranks[$rank]["prefix"] . ": §7" . $ranks[$rank]["money"] . "\n";
+
+        }
+
         $form->setTitle("§8- §fStats §8-");
-        $form->setContent("§fRank:§7 " . $rank . "\n§fKills: §7" . Main::onConfig($player, "kill") . "\n§fDeaths: §7" . Main::onConfig($player, "death") . "\n§fMoney: §7" . $money . "\n\n§8» §fVoici les prix des ranks payants:\n\n§fSaturne: §710000\n§fSaturne+:§7 30000\n§fEris:§7 50000\n\n§8» §fRappel 1 kill est égal à §710\n");
+        $form->setContent("§fRank:§7 " . $rank . "\n§fKills: §7" . Main::onConfig($player, "kill") . "\n§fDeaths: §7" . Main::onConfig($player, "death") . "\n§fMoney: §7" . $money . "\n\n§8» §fVoici les prix des ranks payants:" . $msg . "\n§8» §fRappel 1 kill est égal à §710\n");
         $form->addButton("Améliorer\n" . PlayerChat::RANKS[$rank], 0, "textures/blocks/netherite_block");
         $form->sendToPlayer($player);
 
