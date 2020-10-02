@@ -39,6 +39,7 @@ use Mineeral\Event\Player\PlayerDeath;
 use Mineeral\Event\Player\PlayerInteract;
 
 use Mineeral\Event\Entity\EntityDamageByEntity;
+use Mineeral\Event\Entity\EntityDamage;
 
 use Mineeral\Entity\Death;
 use Mineeral\Entity\Kill;
@@ -190,6 +191,7 @@ class Main extends PluginBase
 
             //Event Entity
             new EntityDamageByEntity(),
+            new EntityDamage(),
         ];
 
         $count = 0;
