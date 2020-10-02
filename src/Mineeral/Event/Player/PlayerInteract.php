@@ -19,6 +19,10 @@ class PlayerInteract implements Listener
 
     private static $cooldown = array();
 
+    private const TIME_SIGN_POST = 1;
+    private const TIME_WHEAT = 0.1;
+    private const TIME_ENDER_PEARL = 10;
+
     public function onInteract(PlayerInteractEvent $event) : void 
     {
 
@@ -28,35 +32,50 @@ class PlayerInteract implements Listener
         $inventory = $player->getInventory();
         $armor = $player->getArmorInventory();
 
-        if($item_id === Item::WHEAT){
-            if($player->getHealth() >= 18){
-
-                if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
-
-                    PlayerInteract::onHeal($player, $inventory);
-                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.1;
-    
-                } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
-    
-                    unset(PlayerInteract::$cooldown[$player->getName()]);
-                    PlayerInteract::onHeal($player, $inventory);
-                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.1;
-    
-                }
-            }
-        } else if($block_id === Item::SIGN_POST){
-
+        if($block_id === Item::SIGN_POST){
             if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
                 PlayerInteract::onSign($player, $inventory, $armor);
-                PlayerInteract::$cooldown[$player->getName()] = time() + 1;
+                PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
 
             } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
 
-                unset(PlayerInteract::$cooldown[$player->getName()]);
                 PlayerInteract::onSign($player, $inventory, $armor);
-                PlayerInteract::$cooldown[$player->getName()] = time() + 1;
+                PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
 
+            }
+        } else {
+
+            switch($item_id){
+
+                case Item::WHEAT:
+                    if($player->getHealth() >= 18){
+                        if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
+        
+                            PlayerInteract::onHeal($player, $inventory);
+                            PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
+            
+                        } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
+            
+                            PlayerInteract::onHeal($player, $inventory);
+                            PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
+            
+                        }
+                    }
+                break;
+
+                case Item::ENDER_PEARL:
+                    if(isset(PlayerInteract::$cooldown[$player->getName()]) && time() < PlayerInteract::$cooldown[$player->getName()]) {
+    
+                        $event->setCancelled();
+        
+                    } else {
+        
+                        PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
+        
+                    }
+                break;
+                
             }
         }
     }
