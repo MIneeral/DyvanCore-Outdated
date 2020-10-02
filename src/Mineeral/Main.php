@@ -232,68 +232,75 @@ class Main extends PluginBase
     public static function onConfig(Player $player, string $key)
     {
 
-        switch($key){
+        $keys = 
+        [
+            "ip" =>
+            [
+                "file" => "Ip",
+                "default" => $player->getAddress(),
+            ],
 
-            case "ip":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Ip.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, $player->getAddress());
-                return $config->get($player->getName());
-            break;
+            "rank" =>
+            [
+                "file" => "Rank",
+                "default" => "Player",
+            ],
 
-            case "rank":
-                $config = new Config(Main::getInstance()->getDataFolder() ."/Infos/Rank.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, "Player");
-                return $config->get($player->getName());
-            break;
+            "money" =>
+            [
+                "file" => "Money",
+                "default" => "1000",
+            ],
 
-            case "money":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 1000);
-                return $config->get($player->getName());
-            break;
+            "kill" =>
+            [
+                "file" => "Kill",
+                "default" => 0,
+            ],
 
-            case "kill":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
-                return $config->get($player->getName());
-            break;
+            "death" =>
+            [
+                "file" => "Death",
+                "default" => 0,
+            ],
 
-            case "death":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
-                return $config->get($player->getName());
-            break;
+            "ban" =>
+            [
+                "file" => "Ban",
+                "default" => 0,
+            ],
 
-            case "ban":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Ban.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
-                return $config->get($player->getName());
-            break;
+            "tempban" =>
+            [
+                "file" => "TempBan",
+                "default" => 0,
+            ],
 
-            case "tempban":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/TempBan.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
-                return $config->get($player->getName());
-            break;
+            "time" =>
+            [
+                "file" => "Time",
+                "default" => 0,
+            ],
+        ];
 
-            case "time":
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Time.json", Config::JSON);
-                if(!$config->exists($player->getName())) Main::setConfig($player, $config, 0);
-                return $config->get($player->getName());
-            break;
+        if(in_array($key, $keys)){
 
-        }
+            $k = $keys[$key];
+            $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/" . $k["file"] . ".json", Config::JSON);
+            if(!$config->exists($player->getName())) Main::setConfig($player, $config, $k["default"]);
+            return $config->get($player->getName());
 
-        return true;
-
+        } else return true;
     }
 
     public static function setConfig(Player $player, Config $config, $value) : bool
     {   
+        if($player instanceof Player && $value !== null) {
 
-        $config->set($player->getName(), $value);
-        $config->save();
-        return true;
+            $config->set($player->getName(), $value);
+            $config->save();
+            return true;
 
+        } else return false;
     }
 }
