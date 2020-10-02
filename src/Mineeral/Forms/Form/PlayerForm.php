@@ -117,11 +117,11 @@ class PlayerForm
                 case 0:
                     if(in_array($rank, $ranks)){
 
-                        $rank = $ranks[$rank];
+                        $r = $ranks[$rank];
 
-                        Main::setConfig($player, $money_db, Main::onConfig($player, "money") - $rank["money"]);
-                        Main::setConfig($player, $rank_db, $rank["rank"]);
-                        Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . PlayerForm::UP . $rank["prefix"] . "§f !");
+                        Main::setConfig($player, $money_db, Main::onConfig($player, "money") - $r["money"]);
+                        Main::setConfig($player, $rank_db, $r["rank"]);
+                        Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . PlayerForm::UP . $r["prefix"] . "§f !");
                         $player->sendTitle(PlayerForm::WELL_DONE);
                         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
                         return true;
@@ -141,14 +141,14 @@ class PlayerForm
 
         $msg = "\n\n";
 
-        foreach($ranks as $rank){
+        foreach($ranks as $key => $value){
 
-            $msg .= $ranks[$rank]["prefix"] . ": §7" . $ranks[$rank]["money"] . "\n";
+            $msg = $msg . "§f" . $value["rank"] . ": §7" . $value["money"] . "\n";
 
         }
 
         $form->setTitle("§8- §fStats §8-");
-        $form->setContent("§fRank:§7 " . $rank . "\n§fKills: §7" . Main::onConfig($player, "kill") . "\n§fDeaths: §7" . Main::onConfig($player, "death") . "\n§fMoney: §7" . $money . "\n\n§8» §fVoici les prix des ranks payants:" . $msg . "\n§8» §fRappel 1 kill est égal à §710\n");
+        $form->setContent("§fRank: §7" . $rank . "\n§fKills: §7" . Main::onConfig($player, "kill") . "\n§fDeaths: §7" . Main::onConfig($player, "death") . "\n§fMoney: §7" . $money . "\n\n§8» §fVoici les prix des ranks payants:" . $msg . "\n§8» §fRappel 1 kill est égal à §710\n");
         $form->addButton("Améliorer\n" . PlayerChat::RANKS[$rank], 0, "textures/blocks/netherite_block");
         $form->sendToPlayer($player);
 
