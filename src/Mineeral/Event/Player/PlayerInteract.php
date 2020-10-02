@@ -31,10 +31,15 @@ class PlayerInteract implements Listener
 
                 if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
-                    $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
-                    $inventory->addItem(Item::get(281, 0, 1));
-                    $player->setHealth($player->getHealth() + 2);
-                    $player->sendPopup("§c+2");
+                    PlayerInteract::onHeal($player);
+                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.1;
+    
+                } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
+    
+                    unset(PlayerInteract::$cooldown[$player->getName()]);
+                    PlayerInteract::onHeal($player);
+                    PlayerInteract::$cooldown[$player->getName()] = time() + 0.1;
+    
                 }
             }
         } else if($block_id === Item::SIGN_POST){
@@ -81,6 +86,16 @@ class PlayerInteract implements Listener
         $player->getArmorInventory()->setBoots($boots1);
 
         $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic§f !");
+
+    }
+
+    private static function onHeal(Player $player) : void 
+    {
+
+        $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
+        $inventory->addItem(Item::get(281, 0, 1));
+        $player->setHealth($player->getHealth() + 2);
+        $player->sendPopup("§c+2");
 
     }
 }
