@@ -14,7 +14,8 @@ use Mineeral\Forms\FormAPI\CustomForm;
 use Mineeral\Forms\FormAPI\ModalForm;
 use Mineeral\Forms\FormAPI\SimpleForm;
 
-use  Mineeral\Main;
+use Mineeral\Main;
+use Mineeral\Event\Player\PlayerChat;
 
 class PlayerForm
 {
@@ -51,7 +52,6 @@ class PlayerForm
                     $player->getArmorInventory()->clearAll();
                     $player->getInventory()->addItem($sword1);
                     $player->getInventory()->addItem($soup1);
-                    $player->getInventory()->addItem($soup1)
                     $player->getInventory()->setItem(7, $gapple);
                     $player->getInventory()->setItem(8, $pearl);
                     $player->getArmorInventory()->setHelmet($helmet1);
@@ -60,15 +60,7 @@ class PlayerForm
                     $player->getArmorInventory()->setBoots($boots1);
                 break;
 
-                case 1;
-                    $player->sendMessage(PlayerForm::COMMING_SOON);
-                break;
-                
-                case 2;
-                    $player->sendMessage(PlayerForm::COMMING_SOON);
-                break;
-
-                case 3;
+                default:
                     $player->sendMessage(PlayerForm::COMMING_SOON);
                 break;
             }
@@ -88,8 +80,32 @@ class PlayerForm
 
     public static function Stats(Player $player, $rank, $money, Config $rank_db, Config $money_db) : bool 
     {
+        $ranks = 
+        [
+            "Player" => 
+            [
+                "rank" => "Saturne",
+                "money" => 10000,
+                "prefix" => "§dSaturne"
+            ],
 
-        $form = new SimpleForm(function (Player $player, int $data = null) use ($rank, $money, $rank_db, $money_db){
+            "Saturne" => 
+            [
+                "rank" => "Saturne-Plus",
+                "money" => 30000,
+                "prefix" => "§5Saturne+"
+            ],
+
+            "Saturne-Plus" => 
+            [
+                "rank" => "Eris",
+                "money" => 50000,
+                "prefix" => "§9Eris"
+            ],
+
+        ];
+
+        $form = new SimpleForm(function (Player $player, int $data = null) use ($rank, $ranks, $money, $rank_db, $money_db){
 
             $result = $data;
 
@@ -99,60 +115,22 @@ class PlayerForm
 
             switch($result){
                 case 0:
-                    switch($rank) {
-                        case "Player":
-                            if($money >= 10000){
+                    if(in_array($rank, $ranks)){
 
-                                Main::setConfig($player, $money_db, Main::onConfig($player, "money") - 10000);
-                                Main::setConfig($player, $rank_db, "Saturne");
-                                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . PlayerForm::UP . "§dSaturne§f !");
-                                $player->sendTitle(PlayerForm::WELL_DONE);
-                                $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
-                                return true;
-    
-                            } else {
-    
-                                $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_FALL);
-                                $player->sendMessage(PlayerForm::NO_MONEY);
-                                return true;
-    
-                            }
-                        break;
+                        $rank = $ranks[$rank];
 
-                        case "Saturne":
-                            if($money >= 30000){
-                                Main::setConfig($player, $money_db, Main::onConfig($player, "money") - 30000);
-                                Main::setConfig($player, $rank_db, "Saturne-Plus");
-                                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() .  PlayerForm::UP . "§5Saturne+§f !");
-                                $player->sendTitle(PlayerForm::WELL_DONE);
-                                $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
-                                return true;
-                            } else {
-                                $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_FALL);
-                                $player->sendMessage(PlayerForm::NO_MONEY);
-                                return true;
-                            }
-                        break;
+                        Main::setConfig($player, $money_db, Main::onConfig($player, "money") - $rank["money"]);
+                        Main::setConfig($player, $rank_db, $rank["rank"]);
+                        Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . PlayerForm::UP . $rank["prefix"] . "§f !");
+                        $player->sendTitle(PlayerForm::WELL_DONE);
+                        $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
+                        return true;
 
-                        case "Saturne-Plus":
-                            if($money >= 50000){
-                                Main::setConfig($player, $money_db, Main::onConfig($player, "money") - 50000);
-                                Main::setConfig($player, $rank_db, "Eris");
-                                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . "§fBravo à §4" . $player->getName() .  PlayerForm::UP . "§9Eris§f !");
-                                $player->sendTitle(PlayerForm::WELL_DONE);
-                                $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
-                                return true;
-                            } else {
-                                $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_FALL);
-                                $player->sendMessage(PlayerForm::NO_MONEY);
-                                return true;
-                            }
-                        break;
+                    } else {
 
-                        default:
-                            $player->sendMessage(PlayerForm::MAX_UP);
-                            return true;
-                        break;
+                        $player->sendMessage(PlayerForm::MAX_UP);
+                        return true;
+
                     }
                 break;
 
@@ -161,9 +139,9 @@ class PlayerForm
             }
         });
 
-        $form->setTitle("§c- §fStats §c-");
-        $form->setContent("§fVotre rank actuel est:§4 " . $rank . "\n§fVous avez: §4" . $money . "\n§fUn kill = §410\n§c» §fVoici les prix des ranks payants\n\n§fSaturne: §410000\n§fSaturne+:§4 30000\n§fEris:§4 50000\n\n§c» §fVous pouvez aussi en payer un depuis la boutique disponible sur le Discord : §bhttps://discord.gg/cGPvEmu");
-        $form->addButton("Améliorer son rank\n§c(" . $rank . ")", 0);
+        $form->setTitle("§8- §fStats §8-");
+        $form->setContent("§fRank:§7 " . $rank . "\n§fKills: §7" . Main::onConfig($player, "kill") . "\n§fDeaths: §7" . Main::onConfig($player, "death") . "\n§fMoney: §7" . $money . "\n\n§8» §fVoici les prix des ranks payants:\n\n§fSaturne: §710000\n§fSaturne+:§7 30000\n§fEris:§7 50000\n\n§8» §fRappel 1 kill est égal à §710\n");
+        $form->addButton("Améliorer\n" . PlayerChat::RANKS[$rank], 0, "textures/blocks/netherite_block");
         $form->sendToPlayer($player);
 
         return true;
