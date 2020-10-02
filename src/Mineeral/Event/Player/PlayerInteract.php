@@ -10,6 +10,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\item\Item;
 
 use pocketmine\inventory\Inventory;
+use pocketmine\inventory\ArmorInventory;
 
 use Mineeral\Main;
 
@@ -25,19 +26,20 @@ class PlayerInteract implements Listener
         $item_id = $event->getItem()->getId();
         $player = $event->getPlayer();
         $inventory = $player->getInventory();
+        $armor = $player->getArmorInventory();
 
         if($item_id === Item::WHEAT){
             if($player->getHealth() >= 18){
 
                 if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
-                    PlayerInteract::onHeal($player);
+                    PlayerInteract::onHeal($player, $inventory);
                     PlayerInteract::$cooldown[$player->getName()] = time() + 0.1;
     
                 } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
     
                     unset(PlayerInteract::$cooldown[$player->getName()]);
-                    PlayerInteract::onHeal($player);
+                    PlayerInteract::onHeal($player, $inventory);
                     PlayerInteract::$cooldown[$player->getName()] = time() + 0.1;
     
                 }
@@ -46,24 +48,24 @@ class PlayerInteract implements Listener
 
             if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
 
-                PlayerInteract::onSign($player);
+                PlayerInteract::onSign($player, $inventory, $armor);
                 PlayerInteract::$cooldown[$player->getName()] = time() + 1;
 
             } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
 
                 unset(PlayerInteract::$cooldown[$player->getName()]);
-                PlayerInteract::onSign($player);
+                PlayerInteract::onSign($player, $inventory, $armor);
                 PlayerInteract::$cooldown[$player->getName()] = time() + 1;
 
             }
         }
     }
 
-    private static function onSign(Player $player) : void 
+    private static function onSign(Player $player, Inventory $inventory, ArmorInventory $armor) : void 
     {
 
-        $player->getInventory()->clearAll();
-        $player->getArmorInventory()->clearAll();
+        $inventory->clearAll();
+        $armor->clearAll();
 
         $sword1 = Item::get(276, 0, 1);
         $soup1 = Item::get(Item::WHEAT, 0, 64);
@@ -74,22 +76,22 @@ class PlayerInteract implements Listener
         $leggings1 = Item::get(312, 0, 1);
         $boots1 = Item::get(313, 0, 1);
     
-        $player->getInventory()->addItem($sword1);
-        $player->getInventory()->addItem($soup1);
-        $player->getInventory()->addItem($soup1);
-        $player->getInventory()->setItem(7, $gapple);
-        $player->getInventory()->setItem(8, $pearl);
+        $inventory->addItem($sword1);
+        $inventory->addItem($soup1);
+        $inventory->addItem($soup1);
+        $inventory->setItem(7, $gapple);
+        $inventory->setItem(8, $pearl);
 
-        $player->getArmorInventory()->setHelmet($helmet1);
-        $player->getArmorInventory()->setChestplate($chestplate1);
-        $player->getArmorInventory()->setLeggings($leggings1);
-        $player->getArmorInventory()->setBoots($boots1);
+        $armor->setHelmet($helmet1);
+        $armor->setChestplate($chestplate1);
+        $armor->setLeggings($leggings1);
+        $armor->setBoots($boots1);
 
         $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic§f !");
 
     }
 
-    private static function onHeal(Player $player) : void 
+    private static function onHeal(Player $player, Inventory $inventory) : void 
     {
 
         $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
