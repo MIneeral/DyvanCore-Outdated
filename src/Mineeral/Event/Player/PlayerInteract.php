@@ -70,12 +70,13 @@ class PlayerInteract implements Listener
                         $event->setCancelled();
         
                     } else {
-        
+                        
+                        $event->setCancelled(false);
                         PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
         
                     }
                 break;
-                
+
             }
         }
     }
@@ -96,7 +97,6 @@ class PlayerInteract implements Listener
         $boots1 = Item::get(313, 0, 1);
     
         $inventory->addItem($sword1);
-        $inventory->addItem($soup1);
         $inventory->addItem($soup1);
         $inventory->setItem(7, $gapple);
         $inventory->setItem(8, $pearl);
