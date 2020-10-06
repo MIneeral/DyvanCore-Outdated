@@ -12,6 +12,7 @@ use pocketmine\command\CommandSender;
 use Mineeral\Main;
 
 use Mineeral\Constants\Prefix;
+use Mineeral\Constants\Command;
 
 class TopDeath extends Cmd{
 
@@ -26,7 +27,7 @@ class TopDeath extends Cmd{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         if($sender instanceof Player) TopDeath::sendTopDeath($sender);
-        else $sender->sendMessage(Message::ONLY_GAME);
+        else $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
     }
