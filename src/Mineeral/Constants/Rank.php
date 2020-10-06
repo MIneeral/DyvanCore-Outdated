@@ -66,7 +66,5 @@ interface Rank
             "money" => 50000,
             "prefix" => "§9Eris"
         ],
-
     ];
-
 }
