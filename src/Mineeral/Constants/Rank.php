@@ -1,12 +1,8 @@
 <?php
 
-namespace Mineeral\Utils;
+namespace Mineeral\Constants;
 
-use pocketmine\Player;
-
-use  Mineeral\Main;
-
-class Rank
+interface Rank
 {
 
     public const RANK = 

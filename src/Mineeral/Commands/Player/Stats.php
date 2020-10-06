@@ -4,19 +4,21 @@ namespace Mineeral\Commands\Player;
 
 use pocketmine\Player;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\command\CommandSender;
 
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Message;
+
+use Mineeral\Constants\Command;
+
 use Mineeral\Forms\Form\PlayerForm;
 
-class Stats extends Command{
+class Stats extends Cmd{
 
     public function __construct()
     {
@@ -34,7 +36,7 @@ class Stats extends Command{
         $money_db = new C(Main::getInstance()->getDataFolder() . "/Infos/Money.json", C::JSON);
 
         if($sender instanceof Player) PlayerForm::Stats($sender, $rank, $money, $rank_db, $money_db);
-        else $sender->sendMessage(Message::ONLY_GAME);
+        else $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

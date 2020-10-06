@@ -2,7 +2,7 @@
 
 namespace Mineeral\Entity;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
 use pocketmine\entity\Monster;
 use pocketmine\entity\EntityIds;

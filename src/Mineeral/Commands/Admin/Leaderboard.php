@@ -5,15 +5,17 @@ namespace Mineeral\Commands\Admin;
 use pocketmine\Player;
 use pocketmine\entity\Entity;
 
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\command\CommandSender;
 
 use pocketmine\level\Position;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
 
-class Leaderboard extends Command{
+use Mineeral\Constants\Prefix;
+use Mineeral\Constants\Command;
+
+class Leaderboard extends Cmd{
 
     public function __construct()
     {
@@ -24,8 +26,8 @@ class Leaderboard extends Command{
     {
         if($sender instanceof Player) {
 
-            if(!$sender->isOp()) return $sender->sendMessage(Message::NO_PERM);
-            if(!isset($args[0])) return $sender->sendMessage(Message::PREFIX_IMPORTANT . "Vous devez préciser lequel (§akill§f/§adeath§f)");
+            if(!$sender->isOp()) return $sender->sendMessage(Command::NO_PERM);
+            if(!isset($args[0])) return $sender->sendMessage(Prefix::IMPORTANT . "Vous devez préciser lequel (§akill§f/§adeath§f)");
             if(strtolower($args[0]) == "kill"){
 
                 $position = new Position($sender->x, $sender->y+1.5, $sender->z, $sender->level);
@@ -43,7 +45,7 @@ class Leaderboard extends Command{
 
             }
 
-        } else return $sender->sendMessage(Message::ONLY_GAME);
+        } else return $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

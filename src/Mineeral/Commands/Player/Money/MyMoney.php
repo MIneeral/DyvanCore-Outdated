@@ -4,14 +4,16 @@ namespace Mineeral\Commands\Player\Money;
 
 use pocketmine\Player;
 
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Message;
 
-class MyMoney extends Command{
+use Mineeral\Constants\Prefix;
+use Mineeral\Constants\Command;
+
+class MyMoney extends Cmd{
 
     public function __construct()
     {
@@ -23,8 +25,8 @@ class MyMoney extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         
-        if($sender instanceof Player) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous avez §4" . Config::onConfig($sender, "money") . "");
-        else $sender->sendMessage(Message::ONLY_GAME);
+        if($sender instanceof Player) $sender->sendMessage(Prefix::IMPORTANT . "Vous avez §4" . Config::onConfig($sender, "money") . "");
+        else $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

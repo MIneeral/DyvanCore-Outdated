@@ -4,15 +4,16 @@ namespace Mineeral\Commands\Player;
 
 use pocketmine\Player;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
 
-class TopKill extends Command{
+use Mineeral\Constants\Prefix;
+
+class TopKill extends Cmd{
 
     public function __construct()
     {
@@ -38,7 +39,7 @@ class TopKill extends Command{
         $allkills = $kill->getAll();
 
         $top = 1;
-        $player->sendMessage(Message::PREFIX_IMPORTANT . "Top §410§f des personnes avec le plus de kill(s) !\n");
+        $player->sendMessage(Prefix::IMPORTANT . "Top §410§f des personnes avec le plus de kill(s) !\n");
         
         arsort($allkills);
         foreach ($allkills as $name => $value){

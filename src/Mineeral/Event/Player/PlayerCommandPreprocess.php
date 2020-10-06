@@ -8,7 +8,9 @@ use pocketmine\Player;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
+
+use Mineeral\Constants\Event;
+
 use Mineeral\Event\Entity\EntityDamageByEntity;
 
 class PlayerCommandPreprocess implements Listener
@@ -22,7 +24,7 @@ class PlayerCommandPreprocess implements Listener
 
         if($event->getMessage()[0] === "/" and isset($time) and time() < $time){
 
-            $player->sendMessage(Message::FIGHT);
+            $player->sendMessage(Event::FIGHT);
             $event->setCancelled();
 
         }

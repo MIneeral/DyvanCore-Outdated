@@ -9,8 +9,9 @@ use pocketmine\event\player\PlayerChatEvent;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Rank;
-use Mineeral\Utils\Message;
+
+use Mineeral\Constants\Rank;
+use Mineeral\Constants\Event;
 
 class PlayerChat implements Listener
 {
@@ -34,7 +35,7 @@ class PlayerChat implements Listener
             
             if(PlayerChat::$time[$event->getPlayer()->getName()] - time() < PlayerChat::TIME){
 
-                $event->getPlayer()->sendMessage(Message::NO_SPAM);
+                $event->getPlayer()->sendMessage(Event::NO_SPAM);
 
             }
 

@@ -5,12 +5,13 @@ namespace Mineeral\Commands\Player;
 use pocketmine\Player;
 
 use pocketmine\command\CommandSender;
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
 
-class Store extends Command{
+use Mineeral\Constants\Command;
+
+class Store extends Cmd{
 
     public function __construct()
     {
@@ -23,7 +24,7 @@ class Store extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         if($sender instanceof Player) $msg = 0;
-        else $sender->sendMessage(Message::ONLY_GAME);
+        else $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

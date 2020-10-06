@@ -4,7 +4,7 @@ namespace Mineeral\Forms\Form;
 
 use pocketmine\Player;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
 use pocketmine\item\Item;
 
@@ -16,9 +16,9 @@ use Mineeral\Forms\FormAPI\SimpleForm;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Rank;
-use Mineeral\Utils\Message;
-use Mineeral\Event\Player\PlayerChat;
+
+use Mineeral\Constants\Rank;
+use Mineeral\Constants\Form;
 
 class PlayerForm
 {
@@ -44,7 +44,7 @@ class PlayerForm
                     $chestplate1 = Item::get(311, 0, 1);
                     $leggings1 = Item::get(312, 0, 1);
                     $boots1 = Item::get(313, 0, 1);
-                    $player->sendMessage(Message::BASIC_KIT);
+                    $player->sendMessage(Form::BASIC_KIT);
                     $player->getInventory()->clearAll();
                     $player->getArmorInventory()->clearAll();
                     $player->getInventory()->addItem($sword1);
@@ -58,7 +58,7 @@ class PlayerForm
                 break;
 
                 default:
-                    $player->sendMessage(Message::COMMING_SOON);
+                    $player->sendMessage(Form::COMMING_SOON);
                 break;
             }
         });
@@ -94,14 +94,14 @@ class PlayerForm
 
                         Config::setConfig($player, $money_db, Config::onConfig($player, "money") - $r["money"]);
                         Config::setConfig($player, $rank_db, $r["rank"]);
-                        Main::getInstance()->getServer()->broadcastMessage(Message::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . Message::UP . $r["prefix"] . "§f !");
-                        $player->sendTitle(Message::WELL_DONE);
+                        Main::getInstance()->getServer()->broadcastMessage(Form::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . Form::UP . $r["prefix"] . "§f !");
+                        $player->sendTitle(Form::WELL_DONE);
                         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM);
                         return true;
 
                     } else {
 
-                        $player->sendMessage(Message::MAX_UP);
+                        $player->sendMessage(Form::MAX_UP);
                         return true;
 
                     }

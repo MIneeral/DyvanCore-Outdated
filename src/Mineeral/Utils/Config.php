@@ -6,12 +6,13 @@ use pocketmine\Player;
 
 use pocketmine\utils\Config as C;
 
-use  Mineeral\Main;
+use Mineeral\Main;
+use Mineeral\Constants\Prefix;
 
-class Config
+class Config implements Prefix
 {
 
-    public static function onStart()
+    public static function load()
     {
 
         $commands = 
@@ -36,7 +37,7 @@ class Config
 
         }
 
-        return Main::PREFIX_CONSOLE . " " . $count . " Config are loaded";
+        return PREFIX::CONSOLE . " " . $count . " Config are loaded";
 
     }
 

@@ -4,13 +4,14 @@ namespace Mineeral\Commands\Player;
 
 use pocketmine\Player;
 
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
 
-class Spawn extends Command{
+use Mineeral\Constants\Command;
+
+class Spawn extends Cmd{
 
     public function __construct()
     {
@@ -24,10 +25,10 @@ class Spawn extends Command{
         if($sender instanceof Player) {
 
             $sender->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
-            $sender->sendMessage(Message::TELEPORT . "au spawn");
+            $sender->sendMessage(Command::TELEPORT . "au spawn");
 
         }
-        else return $sender->sendMessage(Message::ONLY_GAME);
+        else return $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

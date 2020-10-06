@@ -10,7 +10,8 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Rank;
+
+use Mineeral\Constants\Rank;
 
 class EntityDamageByEntity implements Listener
 {   

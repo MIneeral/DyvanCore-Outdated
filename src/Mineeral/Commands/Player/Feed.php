@@ -5,13 +5,14 @@ namespace Mineeral\Commands\Player;
 use pocketmine\Player;
 
 use pocketmine\command\CommandSender;
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
 
-class Feed extends Command{
+use Mineeral\Constants\Command;
+
+class Feed extends Cmd{
 
     public function __construct()
     {
@@ -26,11 +27,11 @@ class Feed extends Command{
         if($sender instanceof Player) {
 
             $sender->addFood(20);
-            $sender->sendPopup(Message::FEED);
+            $sender->sendPopup(Command::FEED);
             $sender->getLevel()->broadcastLevelEvent($sender->add(0, $sender->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_USE);
 
         }
-        else $sender->sendMessage(Message::ONLY_GAME);
+        else $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

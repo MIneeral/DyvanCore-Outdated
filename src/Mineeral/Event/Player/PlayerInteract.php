@@ -13,7 +13,7 @@ use pocketmine\inventory\Inventory;
 use pocketmine\inventory\ArmorInventory;
 
 use Mineeral\Main;
-use Mineeral\Utils\Message;
+use Mineeral\Constants\Event;
 
 class PlayerInteract implements Listener
 {   
@@ -109,7 +109,7 @@ class PlayerInteract implements Listener
         $armor->setLeggings($diamond_leggings);
         $armor->setBoots($diamond_boots);
 
-        $player->sendMessage(Message::BASIC_KIT);
+        $player->sendMessage(Event::BASIC_KIT);
 
     }
 

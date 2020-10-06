@@ -5,7 +5,7 @@ namespace Mineeral\Event\Player;
 use pocketmine\event\Listener;
 use pocketmine\Player;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
 use pocketmine\event\player\PlayerDeathEvent;
 
@@ -14,7 +14,9 @@ use pocketmine\event\entity\EntityDamageEvent;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Message;
+
+use Mineeral\Constants\Event;
+
 use Mineeral\Event\Entity\EntityDamageByEntity;
 
 class PlayerDeath implements Listener
@@ -35,7 +37,7 @@ class PlayerDeath implements Listener
             if($damager instanceof Player) {
 
                 $dname = $damager->getName();
-                $event->setDeathMessage(Message::KILL . $name . "§f a été tué par §4". $dname);
+                $event->setDeathMessage(Event::KILL . $name . "§f a été tué par §4". $dname);
                 $player->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
                 $damager->setHealth(20);
 

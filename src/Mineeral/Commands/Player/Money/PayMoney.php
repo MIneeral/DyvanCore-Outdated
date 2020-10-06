@@ -4,16 +4,18 @@ namespace Mineeral\Commands\Player\Money;
 
 use pocketmine\Player;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
-use pocketmine\command\Command;
+use pocketmine\command\Command as Cmd;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Message;
 
-class PayMoney extends Command{
+use Mineeral\Constants\Prefix;
+use Mineeral\Constants\Command;
+
+class PayMoney extends Cmd{
 
     public function __construct()
     {
@@ -28,7 +30,7 @@ class PayMoney extends Command{
 
         if($sender instanceof Player){
 
-            if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /pay <player> <montant>");
+            if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Prefix::IMPORTANT . "Usage : /pay <player> <montant>");
 
             else {
 
@@ -41,14 +43,14 @@ class PayMoney extends Command{
                     Config::setConfig($sender, $money, Main::onConfig($sender, "money") - intval($args[1]));
                     Config::setConfig($p, $money, Main::onConfig($p, "money") + intval($args[1]));
 
-                    $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien payé §4" . $args[1] . "§r à". $p->getName());
-                    $p->sendMessage(Main::PREFIX_IMPORTANT . "Tu as été payé §4" . $args[1] . "§r par". $sender->getName());
+                    $sender->sendMessage(Prefix::IMPORTANT . "Tu as bien payé §4" . $args[1] . "§r à". $p->getName());
+                    $p->sendMessage(Prefix::IMPORTANT . "Tu as été payé §4" . $args[1] . "§r par". $sender->getName());
 
                 }
-                else $sender->sendMessage(Message::NO_PLAYER);
+                else $sender->sendMessage(Command::NO_PLAYER);
             }
         }
-        else $sender->sendMessage(Message::ONLY_GAME);
+        else $sender->sendMessage(Command::ONLY_GAME);
 
         return true;
 

@@ -4,7 +4,7 @@ namespace Mineeral\Forms\Form;
 
 use pocketmine\Player;
 
-use pocketmine\utils\C;
+use pocketmine\utils\Config as C;
 
 use Mineeral\Forms\FormAPI\CustomForm;
 use Mineeral\Forms\FormAPI\ModalForm;
@@ -12,7 +12,10 @@ use Mineeral\Forms\FormAPI\SimpleForm;
 
 use Mineeral\Main;
 use Mineeral\Utils\Config;
-use Mineeral\Utils\Rank;
+
+use Mineeral\Constants\Prefix;
+use Mineeral\Constants\Rank;
+
 
 class AdminForm
 {
@@ -44,7 +47,7 @@ class AdminForm
                 unset($array);
                 $config = new C(Main::getInstance()->getDataFolder() . "/Infos/Rank.json", C::JSON);
                 Config::setConfig($p, $config, $rank);
-                Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . $p->getName() . " vient de passer " . $ranks_text[$rank]);
+                Main::getInstance()->getServer()->broadcastMessage(Prefix::IMPORTANT . $p->getName() . " vient de passer " . $ranks_text[$rank]);
     
             }
     
