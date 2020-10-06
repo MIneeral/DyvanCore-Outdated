@@ -18,10 +18,10 @@ class EntityDamageByEntity implements Listener
     private const TIME = 10;
     public static $cooldown = [];
 
-    public function EntityDamageByEntity(EntityDamageByEntityEvent $ev) : void 
+    public function EntityDamageByEntity(EntityDamageByEntityEvent $event) : void 
     {
 
-        $ev->setKnockBack(0.4);
+        $event->setKnockBack(0.4);
 
         $damager = $event->getDamager();
         $entity = $event->getEntity();

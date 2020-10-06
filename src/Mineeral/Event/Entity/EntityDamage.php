@@ -22,7 +22,7 @@ class EntityDamage implements Listener
     private const POS_Y_2 = 115;
     private const POS_Z_2 = 24;
 
-    public function EntityDamage(EntityDamageEvent $ev) : void 
+    public function EntityDamage(EntityDamageEvent $event) : void 
     {
         $level = $event->getEntity()->getLevel()->getName();
         $pos = $event->getEntity()->getPosition();
