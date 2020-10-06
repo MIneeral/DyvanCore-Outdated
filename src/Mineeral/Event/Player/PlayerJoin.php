@@ -26,7 +26,7 @@ class PlayerJoin implements Listener
         $event->setJoinMessage("");
 
         if(!$player->hasPlayedBefore()) PlayerJoin::newPlayer($player);
-        if(isset(Rank::RANK_NAMETAG[Main::onConfig($player, "rank")])) $player->setNameTag(Rank::RANK_NAMETAG[Main::onConfig($player, "rank")] . " §f" . $player->getName());
+        if(isset(Rank::RANK_NAMETAG[Config::onConfig($player, "rank")])) $player->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($player, "rank")] . " §f" . $player->getName());
 
         Main::getInstance()->getServer()->broadcastPopup(Event::JOIN . $player->getName());
         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
