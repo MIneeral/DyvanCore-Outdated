@@ -13,6 +13,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 
 class EntityDamage implements Listener
 {   
+    private const LEVEL = "Arene";
 
     private const POS_X_1 = -26;
     private const POS_Y_1 = 163;
@@ -24,7 +25,7 @@ class EntityDamage implements Listener
 
     public function EntityDamage(EntityDamageEvent $event) : void 
     {
-        $level = $event->getEntity()->getLevel()->getName();
+        $level = $event->getEntity()->getLevel();
         $pos = $event->getEntity()->getPosition();
 
         if($event->getEntity() instanceof Player) {
@@ -36,17 +37,34 @@ class EntityDamage implements Listener
     
             }
 
-            if(EntityDamage::getArene($level, $pos, EntityDamage::POS_X_1, EntityDamage::POS_X_2, EntityDamage::POS_Y_1, EntityDamage::POS_Y_2, EntityDamage::POS_Z_1, EntityDamage::POS_Z_2) === true) $event->setCancelled();
+            $params = 
+            [
+                // Level Name
+                $level->getName(),
+                EntityDamage::LEVEL,
+                // InstanceOf Position
+                $pos,
+                // float
+                EntityDamage::POS_X_1,
+                EntityDamage::POS_X_2,
+                // float
+                EntityDamage::POS_Y_1,
+                EntityDamage::POS_Y_2,
+                // float
+                EntityDamage::POS_Z_1,
+                EntityDamage::POS_Z_2,
+            ];
+
+            if(EntityDamage::getArea(...$params) === true) $event->setCancelled();
         }
     }
 
-    public static function getArene(Level $level, Position $pos, $pos_x_1, $pos_x_2, $pos_y_1, $pos_y_2, $pos_z_1, $pos_z_2) {
-
+    public static function getArea(String $level_1, String $level_2, Position $pos, float $pos_x_1, float $pos_x_2, float $pos_y_1, float $pos_y_2, float $pos_z_1, float $pos_z_2) {
 
         if(EntityDamage::getX($pos->getX(), $pos_x_1, $pos_x_2) === true){
             if(EntityDamage::getY($pos->getY(), $pos_y_1, $pos_y_2) === true){
                 if(EntityDamage::getZ($pos->getZ(), $pos_z_1, $pos_z_2) === true){
-                    if(EntityDamage::getLevel($level) === true){
+                    if(EntityDamage::getLevel($level_1, $level_2) === true){
 
                         return true;
 
