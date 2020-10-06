@@ -8,13 +8,13 @@ use pocketmine\Player;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 
 use Mineeral\Main;
-
+use Mineeral\Utils\Message;
 use Mineeral\Event\Entity\EntityDamageByEntity;
 
 class PlayerCommandPreprocess implements Listener
 {
 
-    public function PlayerDeath(PlayerCommandPreprocessEvent $event) : void 
+    public function PlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent $event) : void 
     {
         $player = $event->getPlayer();
 
@@ -22,7 +22,7 @@ class PlayerCommandPreprocess implements Listener
 
         if($event->getMessage()[0] === "/" and isset($time) and time() < $time){
 
-            $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous êtes encore en combat !");
+            $player->sendMessage(Message::FIGHT);
             $event->setCancelled();
 
         }

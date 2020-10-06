@@ -2,7 +2,7 @@
 
 namespace Mineeral\Entity;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use pocketmine\entity\Monster;
 use pocketmine\entity\EntityIds;
@@ -39,7 +39,7 @@ class Death extends Monster
     public function onUpdate(int $currentTick) : bool
     {   
 
-        $death = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
+        $death = new C(Main::getInstance()->getDataFolder() . "/Infos/Death.json", C::JSON);
         $alldeaths = $death->getAll();
 
         $top = 1;

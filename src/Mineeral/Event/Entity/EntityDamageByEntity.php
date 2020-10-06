@@ -8,6 +8,10 @@ use pocketmine\event\Listener;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 
+use Mineeral\Main;
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Rank;
+
 class EntityDamageByEntity implements Listener
 {   
     private const TIME = 10;
@@ -18,10 +22,16 @@ class EntityDamageByEntity implements Listener
 
         $ev->setKnockBack(0.4);
 
-        if($event->getDamager() instanceof Player && $event->getEntity() instanceof Player){
+        $damager = $event->getDamager();
+        $entity = $event->getEntity();
 
-            EntityDamageByEntity::time($event->getDamager(), "set", EntityDamageByEntity::TIME + time());
-            EntityDamageByEntity::time($event->getEntity(), "set", EntityDamageByEntity::TIME + time());
+        if($damager instanceof Player && $entity instanceof Player){
+
+            if(isset(Rank::RANK_NAMETAG[Config::onConfig($damager, "rank")])) $damager->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($damager, "rank")] . " §f" . $damager->getName());
+            if(isset(Rank::RANK_NAMETAG[Config::onConfig($entity, "rank")])) $entity->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($entity, "rank")] . " §f" . $entity->getName());
+
+            EntityDamageByEntity::time($damager, "set", EntityDamageByEntity::TIME + time());
+            EntityDamageByEntity::time($entity, "set", EntityDamageByEntity::TIME + time());
 
         }
     }

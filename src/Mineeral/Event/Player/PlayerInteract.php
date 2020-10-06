@@ -13,6 +13,7 @@ use pocketmine\inventory\Inventory;
 use pocketmine\inventory\ArmorInventory;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class PlayerInteract implements Listener
 {   
@@ -23,7 +24,7 @@ class PlayerInteract implements Listener
     private const TIME_WHEAT = 0.1;
     private const TIME_ENDER_PEARL = 10;
 
-    public function onInteract(PlayerInteractEvent $event) : void 
+    public function PlayerInteractEvent(PlayerInteractEvent $event) : void 
     {
 
         $block_id = $event->getBlock()->getId();
@@ -74,7 +75,6 @@ class PlayerInteract implements Listener
         
                     } else {
                         
-                        if($event->isCancelled())$event->setCancelled(false);
                         PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
         
                     }
@@ -109,7 +109,7 @@ class PlayerInteract implements Listener
         $armor->setLeggings($diamond_leggings);
         $armor->setBoots($diamond_boots);
 
-        $player->sendMessage(Main::PREFIX_IMPORTANT . "Vous venez de prendre le kit §4Basic§f !");
+        $player->sendMessage(Message::BASIC_KIT);
 
     }
 

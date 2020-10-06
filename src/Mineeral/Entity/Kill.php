@@ -2,7 +2,7 @@
 
 namespace Mineeral\Entity;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use pocketmine\entity\Monster;
 use pocketmine\entity\EntityIds;
@@ -39,7 +39,7 @@ class Kill extends Monster
     public function onUpdate(int $currentTick) : bool
     {
 
-        $kill = new Config(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", Config::JSON);
+        $kill = new C(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", C::JSON);
         $allkills = $kill->getAll();
 
         $top = 1;

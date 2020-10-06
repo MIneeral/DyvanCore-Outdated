@@ -8,6 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class Spawn extends Command{
 
@@ -23,10 +24,10 @@ class Spawn extends Command{
         if($sender instanceof Player) {
 
             $sender->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
-            $sender->sendMessage(Main::PREFIX_IMPORTANT . " Vous avez bien était téléporter au spawn");
+            $sender->sendMessage(Message::TELEPORT . "au spawn");
 
         }
-        else return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else return $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

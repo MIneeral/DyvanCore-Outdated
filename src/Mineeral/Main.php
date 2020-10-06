@@ -7,7 +7,7 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\Player;
 use pocketmine\entity\Entity;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -44,21 +44,13 @@ use Mineeral\Event\Entity\EntityDamage;
 use Mineeral\Entity\Death;
 use Mineeral\Entity\Kill;
 
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Message;
+
 class Main extends PluginBase
 {
 
     private static $instance;
-
-    public const PREFIX_DEFAULT = "§f[§c!§f] ";
-    public const PREFIX_CONSOLE = "§f[§cDyn§f]§a ";
-
-    public const PREFIX_IMPORTANT = Main::PREFIX_DEFAULT . "§f";
-    public const PREFIX_GOOD = Main::PREFIX_DEFAULT . "§a";
-    public const PREFIX_BAD = Main::PREFIX_DEFAULT . "§c";
-
-    public const PREFIX_JOIN = "§f[§4+§f]§a ";
-    public const PREFIX_QUIT = "§f[§4-§f]§4 ";
-    public const PREFIX_KILL = "§c»§4 ";
 
     public function onEnable() : void
     {
@@ -72,6 +64,7 @@ class Main extends PluginBase
             Main::getEvents(),
             Main::getEntity(),
             Main::loadServer(),
+            Config::onStart(),
         ];
 
         foreach($info as $message){
@@ -79,16 +72,6 @@ class Main extends PluginBase
             Main::getInstance()->getServer()->getLogger()->info($message);
 
         }
-
-        @mkdir(Main::getInstance()->getDataFolder());
-        @mkdir(Main::getInstance()->getDataFolder()."/Infos");
-        new Config(Main::getInstance()->getDataFolder() ."/Infos/Ip.json", Config::JSON);
-        new Config(Main::getInstance()->getDataFolder() ."/Infos/Rank.json", Config::JSON);
-        new Config(Main::getInstance()->getDataFolder() ."/Infos/Money.json", Config::JSON);
-        new Config(Main::getInstance()->getDataFolder() ."/Infos/Kill.json", Config::JSON);
-        new Config(Main::getInstance()->getDataFolder() ."/Infos/Death.json", Config::JSON);
-        new Config(Main::getInstance()->getDataFolder() ."/Infos/Ban.json", Config::JSON);
-
     }
 
     public static function getInstance() : Main
@@ -103,12 +86,12 @@ class Main extends PluginBase
 
         if(gettype(Main::getCommands()) === "string" && gettype(Main::getEvents()) === "string" && gettype(Main::getEntity()) === "string" && gettype(Main::loadLevel()) === "string"){
 
-            return Main::PREFIX_CONSOLE . "ServerCore is operational";
+            return Message::PREFIX_CONSOLE . "ServerCore is operational";
 
         } else {
 
             Main::getInstance()->getServer()->shutdown();
-            return Main::PREFIX_CONSOLE . "ServerCore is not operationnal";
+            return Message::PREFIX_CONSOLE . "ServerCore is not operationnal";
 
         }
 
@@ -130,7 +113,7 @@ class Main extends PluginBase
             }
         }  
 
-        return Main::PREFIX_CONSOLE . " " . $count . " Levels are loaded";
+        return Message::PREFIX_CONSOLE . " " . $count . " Levels are loaded";
 
     }
 
@@ -172,7 +155,7 @@ class Main extends PluginBase
 
         }
 
-        return Main::PREFIX_CONSOLE . " " . $count . " Commands are loaded";
+        return Message::PREFIX_CONSOLE . " " . $count . " Commands are loaded";
 
     }
 
@@ -203,7 +186,7 @@ class Main extends PluginBase
 
         }
 
-        return Main::PREFIX_CONSOLE . " " . $count . " Events are loaded";
+        return Message::PREFIX_CONSOLE . " " . $count . " Events are loaded";
 
     }
 
@@ -225,82 +208,7 @@ class Main extends PluginBase
 
         }
 
-        return Main::PREFIX_CONSOLE . " " . $count . " Entity are loaded";
+        return Message::PREFIX_CONSOLE . " " . $count . " Entity are loaded";
 
-    }
-
-    public static function onConfig(Player $player, string $key)
-    {
-
-        $keys = 
-        [
-            "ip" =>
-            [
-                "file" => "Ip",
-                "default" => $player->getAddress(),
-            ],
-
-            "rank" =>
-            [
-                "file" => "Rank",
-                "default" => "Player",
-            ],
-
-            "money" =>
-            [
-                "file" => "Money",
-                "default" => "1000",
-            ],
-
-            "kill" =>
-            [
-                "file" => "Kill",
-                "default" => 0,
-            ],
-
-            "death" =>
-            [
-                "file" => "Death",
-                "default" => 0,
-            ],
-
-            "ban" =>
-            [
-                "file" => "Ban",
-                "default" => 0,
-            ],
-
-            "tempban" =>
-            [
-                "file" => "TempBan",
-                "default" => 0,
-            ],
-
-            "time" =>
-            [
-                "file" => "Time",
-                "default" => 0,
-            ],
-        ];
-
-        if(in_array($key, $keys)){
-
-            $k = $keys[$key];
-            $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/" . $k["file"] . ".json", Config::JSON);
-            if(!$config->exists($player->getName())) Main::setConfig($player, $config, $k["default"]);
-            return $config->get($player->getName());
-
-        } else return true;
-    }
-
-    public static function setConfig(Player $player, Config $config, $value) : bool
-    {   
-        if($player instanceof Player && $value !== null) {
-
-            $config->set($player->getName(), $value);
-            $config->save();
-            return true;
-
-        } else return false;
     }
 }

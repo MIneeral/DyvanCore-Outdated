@@ -8,6 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 use Mineeral\Forms\Form\PlayerForm;
 
 class Kits extends Command{
@@ -22,7 +23,7 @@ class Kits extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         if($sender instanceof Player) PlayerForm::Kits($sender);
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
         
         return true;
 

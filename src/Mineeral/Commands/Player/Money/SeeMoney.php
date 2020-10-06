@@ -8,6 +8,8 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Message;
 
 class SeeMoney extends Command{
 
@@ -30,14 +32,13 @@ class SeeMoney extends Command{
                 if(Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
 
                     $p = Main::getInstance()->getServer()->getPlayer($args[0]);
-
-                    $sender->sendMessage(Main::PREFIX_IMPORTANT . $p->getName() . " a §4" . Main::onConfig($p, "money") . "");
+                    $sender->sendMessage(Message::PREFIX_IMPORTANT . $p->getName() . " a §4" . Config::onConfig($p, "money") . "");
 
                 }
-                else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Le joueur n'existe pas !");
+                else $sender->sendMessage(Message::NO_PLAYER);
             }
         }
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

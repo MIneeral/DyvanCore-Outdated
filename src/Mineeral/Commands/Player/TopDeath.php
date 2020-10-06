@@ -4,12 +4,13 @@ namespace Mineeral\Commands\Player;
 
 use pocketmine\Player;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class TopDeath extends Command{
 
@@ -24,7 +25,7 @@ class TopDeath extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         if($sender instanceof Player) TopDeath::sendTopDeath($sender);
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
     }
@@ -32,11 +33,11 @@ class TopDeath extends Command{
     public static function sendTopDeath(Player $player)
     {
         
-        $death = new Config(Main::getInstance()->getDataFolder() . "/Infos/Death.json", Config::JSON);
+        $death = new C(Main::getInstance()->getDataFolder() . "/Infos/Death.json", C::JSON);
         $alldeaths = $death->getAll();
 
         $top = 1;
-        $player->sendMessage(Main::PREFIX_IMPORTANT . "Top §410§f des personnes les plus morts !\n");
+        $player->sendMessage(Message::PREFIX_IMPORTANT . "Top §410§f des personnes les plus mort(s) !\n");
 
         arsort($alldeaths);
         foreach ($alldeaths as $name => $value){

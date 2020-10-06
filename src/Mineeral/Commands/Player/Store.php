@@ -8,6 +8,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class Store extends Command{
 
@@ -22,7 +23,7 @@ class Store extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         if($sender instanceof Player) $msg = 0;
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

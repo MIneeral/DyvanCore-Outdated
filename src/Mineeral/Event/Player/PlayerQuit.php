@@ -4,14 +4,15 @@ namespace Mineeral\Event\Player;
 
 use pocketmine\Player;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerQuitEvent;
 
 use Mineeral\Main;
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Message;
 use Mineeral\Event\Player\PlayerJoin;
-
 use Mineeral\Event\Entity\EntityDamageByEntity;
 
 class PlayerQuit implements Listener
@@ -26,10 +27,10 @@ class PlayerQuit implements Listener
         if(isset($time) && time() < $time) $player->kill();
         
         $event->setQuitMessage("");
-        Main::getInstance()->getServer()->broadcastPopup(Main::PREFIX_QUIT . $player->getName());
+        Main::getInstance()->getServer()->broadcastPopup(Message::QUIT . $player->getName());
 
-        $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Time.json", Config::JSON);
-        Main::setConfig($player, $config, PlayerJoin::getTime($player) - time() + Main::onConfig($player, "time"));
+        $config = new C(Main::getInstance()->getDataFolder() . "/Infos/Time.json", C::JSON);
+        Config::setConfig($player, $config, PlayerJoin::getTime($player) - time() + Config::onConfig($player, "time"));
 
     }
 }

@@ -4,13 +4,15 @@ namespace Mineeral\Forms\Form;
 
 use pocketmine\Player;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use Mineeral\Forms\FormAPI\CustomForm;
 use Mineeral\Forms\FormAPI\ModalForm;
 use Mineeral\Forms\FormAPI\SimpleForm;
 
-use  Mineeral\Main;
+use Mineeral\Main;
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Rank;
 
 class AdminForm
 {
@@ -19,32 +21,6 @@ class AdminForm
     {
 
         $array = array();
-
-        $ranks = 
-        [
-            "Player",
-            "Saturne",
-            "Saturne-Plus",
-            "Eris",
-            "Guide",
-            "Modo",
-            "Super-Modo",
-            "Admin",
-            "Owner"
-        ];
-
-        $ranks_text = 
-        [
-            "Player" => "§e[Player]",
-            "Saturne" => "§d[Saturne]",
-            "Saturne-Plus" => "§5[Saturne+]",
-            "Eris" => "§9[Eris]",
-            "Guide" => "§a[Guide]",
-            "Modo" => "§c[Modo]",
-            "Super-Modo" => "§6[Super-Modo]",
-            "Admin" => "§3[Admin]",
-            "Owner" => "§4[Owner]"
-        ];
 
         foreach (Main::getInstance()->getServer()->getOnlinePlayers() as $p)
         {
@@ -63,11 +39,11 @@ class AdminForm
             } else {
 
                 $p = Main::getInstance()->getServer()->getPlayer($array[$result[0]]);
-                $rank = $ranks[$result[1]];
+                $rank = Rank::RANK[$result[1]];
                 
                 unset($array);
-                $config = new Config(Main::getInstance()->getDataFolder() . "/Infos/Rank.json", Config::JSON);
-                Main::setConfig($p, $config, $rank);
+                $config = new C(Main::getInstance()->getDataFolder() . "/Infos/Rank.json", C::JSON);
+                Config::setConfig($p, $config, $rank);
                 Main::getInstance()->getServer()->broadcastMessage(Main::PREFIX_IMPORTANT . $p->getName() . " vient de passer " . $ranks_text[$rank]);
     
             }

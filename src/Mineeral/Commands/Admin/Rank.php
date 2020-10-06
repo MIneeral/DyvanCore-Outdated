@@ -11,6 +11,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\level\Position;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 use Mineeral\Forms\Form\AdminForm;
 
 class Rank extends Command{
@@ -27,12 +28,12 @@ class Rank extends Command{
     {
         if($sender instanceof Player) {
 
-            if(!$sender->isOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
+            if(!$sender->isOp()) return $sender->sendMessage(Message::NO_PERM);
         
             AdminForm::Ranks($sender);
 
         }
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
     }

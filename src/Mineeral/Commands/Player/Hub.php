@@ -8,6 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class Hub extends Command{
 
@@ -23,10 +24,10 @@ class Hub extends Command{
         if($sender instanceof Player) {
 
             $sender->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
-            $sender->sendMessage(Main::PREFIX_GOOD . "Vous avez bien était téléporter au hub");
+            $sender->sendMessage(Message::TELEPORT . "au hub");
 
         }
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

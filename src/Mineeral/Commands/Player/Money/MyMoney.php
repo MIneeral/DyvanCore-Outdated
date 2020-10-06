@@ -8,6 +8,8 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Message;
 
 class MyMoney extends Command{
 
@@ -21,8 +23,8 @@ class MyMoney extends Command{
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
     {
         
-        if($sender instanceof Player) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous avez §4" . Main::onConfig($sender, "money") . "");
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        if($sender instanceof Player) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous avez §4" . Config::onConfig($sender, "money") . "");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

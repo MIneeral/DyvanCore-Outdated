@@ -11,6 +11,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\level\Position;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class Leaderboard extends Command{
 
@@ -23,8 +24,8 @@ class Leaderboard extends Command{
     {
         if($sender instanceof Player) {
 
-            if(!$sender->isOp()) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous n'avez pas la permission d'utiliser cette commande !");
-            if(!isset($args[0])) return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Vous devez préciser lequel (§akill§f/§adeath§f)");
+            if(!$sender->isOp()) return $sender->sendMessage(Message::NO_PERM);
+            if(!isset($args[0])) return $sender->sendMessage(Message::PREFIX_IMPORTANT . "Vous devez préciser lequel (§akill§f/§adeath§f)");
             if(strtolower($args[0]) == "kill"){
 
                 $position = new Position($sender->x, $sender->y+1.5, $sender->z, $sender->level);
@@ -42,7 +43,7 @@ class Leaderboard extends Command{
 
             }
 
-        } else return $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        } else return $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

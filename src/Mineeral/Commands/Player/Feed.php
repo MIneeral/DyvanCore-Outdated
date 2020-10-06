@@ -9,6 +9,7 @@ use pocketmine\command\Command;
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 
 use Mineeral\Main;
+use Mineeral\Utils\Message;
 
 class Feed extends Command{
 
@@ -25,11 +26,11 @@ class Feed extends Command{
         if($sender instanceof Player) {
 
             $sender->addFood(20);
-            $sender->sendPopup(Main::PREFIX_GOOD . "Vous avez bien été nourris§c -");
+            $sender->sendPopup(Message::FEED);
             $sender->getLevel()->broadcastLevelEvent($sender->add(0, $sender->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_USE);
 
         }
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 

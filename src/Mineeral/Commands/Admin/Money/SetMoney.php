@@ -4,12 +4,14 @@ namespace Mineeral\Commands\Admin\Money;
 
 use pocketmine\Player;
 
-use pocketmine\utils\Config;
+use pocketmine\utils\C;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
 use Mineeral\Main;
+use Mineeral\Utils\Config;
+use Mineeral\Utils\Message;
 
 class SetMoney extends Command{
 
@@ -25,22 +27,22 @@ class SetMoney extends Command{
 
         if($sender instanceof Player){
 
-            if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Main::PREFIX_IMPORTANT . "Usage : /setmoney <player> <montant>");
+            if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Message::PREFIX_IMPORTANT . "Usage : /setmoney <player> <montant>");
 
             else {
 
                 if(Main::getInstance()->getServer()->getPlayer($args[0]) instanceof Player){
 
                     $p = Main::getInstance()->getServer()->getPlayer($args[0]);
-                    $money = new Config(Main::getInstance()->getDataFolder() . "/Infos/Money.json", Config::JSON);
-                    Main::setConfig($p, $money, intval($args[1]));
-                    $sender->sendMessage(Main::PREFIX_IMPORTANT . "Tu as bien set " . $p->getName() . " à §4" . $args[1] . "");
+                    $money = new C(Main::getInstance()->getDataFolder() . "/Infos/Money.json", C::JSON);
+                    Config::setConfig($p, $money, intval($args[1]));
+                    $sender->sendMessage(Message::PREFIX_IMPORTANT . "Tu as bien set " . $p->getName() . " à §4" . $args[1] . "");
 
                 }
-                else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Le joueur n'existe pas !");
+                else $sender->sendMessage(Message::NO_PLAYER);
             }
         }
-        else $sender->sendMessage(Main::PREFIX_IMPORTANT . "Commande utilisable seulement en jeu !");
+        else $sender->sendMessage(Message::ONLY_GAME);
 
         return true;
 
