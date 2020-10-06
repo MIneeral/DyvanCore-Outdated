@@ -12,7 +12,7 @@ use Mineeral\Constants\Prefix;
 class Config implements Prefix
 {
 
-    public static function load()
+    public static function load() : string
     {
 
         $commands = 

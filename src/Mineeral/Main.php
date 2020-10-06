@@ -49,16 +49,14 @@ class Main extends PluginBase implements Prefix
     private static function loadServer() : string 
     {
 
-        if(gettype(Main::getCommands()) === "string" && gettype(Main::getEvents()) === "string" && gettype(Main::getEntity()) === "string" && gettype(Main::loadLevel()) === "string"){
-
-            return Prefix::CONSOLE . "ServerCore is operational";
-
-        } else {
+        if(gettype(Level::load()) === "string" && gettype(Command::load()) === "string" 
+        && gettype(Event::load()) === "string" && gettype(Entity::load()) === "string" 
+        && gettype(Config::load()) === "string") return Prefix::CONSOLE . "ServerCore is operational";
+        else {
 
             Main::getInstance()->getServer()->shutdown();
             return Prefix::CONSOLE . "ServerCore is not operationnal";
 
         }
-
     }
 }
