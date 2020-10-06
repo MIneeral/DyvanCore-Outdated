@@ -27,6 +27,7 @@ class Feed extends Cmd{
         if($sender instanceof Player) {
 
             $sender->addFood(20);
+            $sender->addSaturation(20);
             $sender->sendPopup(Command::FEED);
             $sender->getLevel()->broadcastLevelEvent($sender->add(0, $sender->getEyeHeight()), LevelEventPacket::EVENT_SOUND_ANVIL_USE);
 
