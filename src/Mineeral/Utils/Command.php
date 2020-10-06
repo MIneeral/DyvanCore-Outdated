@@ -26,7 +26,9 @@ use Mineeral\Commands\Admin\Money\SetMoney;
 
 class Command implements Prefix
 {
-
+    /**
+     * @return string
+     */
     public static function load()
     {
         $commands = 

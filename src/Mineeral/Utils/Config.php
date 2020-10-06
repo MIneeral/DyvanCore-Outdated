@@ -11,7 +11,9 @@ use Mineeral\Constants\Prefix;
 
 class Config implements Prefix
 {
-
+    /**
+     * @return string
+     */
     public static function load() : string
     {
 

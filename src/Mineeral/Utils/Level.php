@@ -7,7 +7,9 @@ use Mineeral\Constants\Prefix;
 
 class Level implements Prefix
 {
-
+    /**
+     * @return string
+     */
     public static function load()
     {
 

@@ -22,7 +22,10 @@ use Mineeral\Constants\Form;
 
 class PlayerForm
 {
-
+    /**
+     * @param Player $player
+     * @return bool
+     */
     public static function Kits(Player $player) : bool
     {
 
@@ -75,6 +78,14 @@ class PlayerForm
         
     }
 
+    /**
+     * @param Player $player
+     * @param string $rank
+     * @param int $money
+     * @param Config $rank_db
+     * @param Config $money_db
+     * @return bool
+     */
     public static function Stats(Player $player, $rank, $money, C $rank_db, C $money_db) : bool 
     {
 
@@ -128,5 +139,4 @@ class PlayerForm
         return true;
 
     }
-
 }

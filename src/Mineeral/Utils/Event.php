@@ -17,7 +17,9 @@ use Mineeral\Event\Entity\EntityDamage;
 
 class Event implements Prefix
 {
-
+    /**
+     * @return string
+     */
     public static function load()
     {
 

@@ -12,7 +12,9 @@ use Mineeral\Entity\Death;
 
 class Entity implements Prefix
 {
-
+    /**
+     * @return string
+     */
     public static function load()
     {
 

@@ -20,6 +20,10 @@ use Mineeral\Constants\Rank;
 class AdminForm
 {
 
+    /**
+     * @param Player $player
+     * @return bool
+     */
     public static function Ranks(Player $player) : bool
     {
 

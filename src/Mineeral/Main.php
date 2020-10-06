@@ -39,6 +39,9 @@ class Main extends PluginBase implements Prefix
         }
     }
 
+    /**
+     * @return Main
+     */
     public static function getInstance() : Main
     {
 
@@ -46,6 +49,9 @@ class Main extends PluginBase implements Prefix
 
     }
 
+    /**
+     * @return string
+     */
     private static function loadServer() : string 
     {
 
