@@ -19,7 +19,9 @@ use Mineeral\Constants\Form;
 class PlayerInteract implements Listener
 {   
 
-    private static $cooldown = array();
+    private static $cooldown_sign = [];
+    private static $cooldown_wheat = [];
+    private static $cooldown_ender_pearl = [];
 
     private const TIME_SIGN_POST = 1;
     private const TIME_WHEAT = 0.1;
@@ -35,15 +37,15 @@ class PlayerInteract implements Listener
         $armor = $player->getArmorInventory();
 
         if($block_id === Item::SIGN_POST){
-            if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
+            if(!isset(PlayerInteract::$cooldown_sign[$player->getName()])) {
 
                 PlayerInteract::onSign($player, $inventory, $armor);
-                PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
+                PlayerInteract::$cooldown_sign[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
 
-            } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
+            } else if (time() > PlayerInteract::$cooldown_sign[$player->getName()]){
 
                 PlayerInteract::onSign($player, $inventory, $armor);
-                PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
+                PlayerInteract::$cooldown_sign[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
 
             }
         } else {
@@ -52,15 +54,15 @@ class PlayerInteract implements Listener
 
                 case Item::WHEAT:
                     if($player->getHealth() >= 18){
-                        if(!isset(PlayerInteract::$cooldown[$player->getName()])) {
+                        if(!isset(PlayerInteract::$cooldown_wheat[$player->getName()])) {
         
                             PlayerInteract::onHeal($player, $inventory);
-                            PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
+                            PlayerInteract::$cooldown_wheat[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
             
-                        } else if (time() > PlayerInteract::$cooldown[$player->getName()]){
+                        } else if (time() > PlayerInteract::$cooldown_wheat[$player->getName()]){
             
                             PlayerInteract::onHeal($player, $inventory);
-                            PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
+                            PlayerInteract::$cooldown_wheat[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
             
                         }
                     }
@@ -70,14 +72,15 @@ class PlayerInteract implements Listener
                  * TODO Fix ENDER_PEARL because it's glitch
                  */
                 case Item::ENDER_PEARL:
-                    if(isset(PlayerInteract::$cooldown[$player->getName()]) && time() < PlayerInteract::$cooldown[$player->getName()]) {
-                        
+                    if(isset(PlayerInteract::$cooldown_ender_pearl[$player->getName()]) && PlayerInteract::$cooldown_ender_pearl[$player->getName()] > time()) {
+
                         $event->setCancelled();
-        
+                        $player->sendPopup("TGM il y a un cooldown !");
+
                     } else {
-                        
-                        PlayerInteract::$cooldown[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
-        
+
+                        PlayerInteract::$cooldown_ender_pearl[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
+
                     }
                 break;
 
