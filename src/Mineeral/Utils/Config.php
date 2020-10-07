@@ -17,6 +17,9 @@ class Config implements Prefix
     public static function load() : string
     {
 
+        @mkdir(Main::getInstance()->getDataFolder());
+        @mkdir(Main::getInstance()->getDataFolder()."/Infos");
+
         $commands = 
         [
             new C(Main::getInstance()->getDataFolder() ."/Infos/Ip.json", C::JSON),
@@ -26,9 +29,6 @@ class Config implements Prefix
             new C(Main::getInstance()->getDataFolder() ."/Infos/Death.json", C::JSON),
             new C(Main::getInstance()->getDataFolder() ."/Infos/Ban.json", C::JSON),
         ];
-
-        @mkdir(Main::getInstance()->getDataFolder());
-        @mkdir(Main::getInstance()->getDataFolder()."/Infos");
 
         $count = 0;
 
@@ -107,7 +107,7 @@ class Config implements Prefix
         } else return false;
     }
 
-    public static function setConfig(Player $player, Config $config, $value) : bool
+    public static function setConfig(Player $player, C $config, $value) : bool
     {   
         if($player instanceof Player && $value !== null) {
 
