@@ -61,7 +61,7 @@ class Main extends PluginBase implements Prefix
         else {
 
             Main::getInstance()->getServer()->shutdown();
-            return Prefix::CONSOLE . "ServerCore is not operationnal";
+            return Prefix::CONSOLE . "Dyvan is not operationnal";
 
         }
     }
