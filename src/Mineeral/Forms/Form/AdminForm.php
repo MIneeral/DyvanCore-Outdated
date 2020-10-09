@@ -34,7 +34,7 @@ class AdminForm
             array_push($array, $p->getName());
         }
 
-        $form = new CustomForm(function(Player $player, $data) use ($array, $ranks, $ranks_text){
+        $form = new CustomForm(function(Player $player, $data) use ($array){
 
             $result = $data;
     
@@ -47,19 +47,20 @@ class AdminForm
 
                 $p = Main::getInstance()->getServer()->getPlayer($array[$result[0]]);
                 $rank = Rank::RANK[$result[1]];
-                
-                unset($array);
                 $config = new C(Main::getInstance()->getDataFolder() . "/Infos/Rank.json", C::JSON);
+
+                unset($array);
                 Config::setConfig($p, $config, $rank);
-                Main::getInstance()->getServer()->broadcastMessage(Prefix::IMPORTANT . $p->getName() . " vient de passer " . $ranks_text[$rank]);
-    
+                Main::getInstance()->getServer()->broadcastMessage(Prefix::IMPORTANT . $p->getName() . " vient de passer " . Rank::RANK_TEXT[$rank]);
+                
+                return true;
             }
     
         });
 
         $form->setTitle("§c- §7Rank§c -");
         $form->addDropdown("§cChoissisez le joueur", $array);
-        $form->addDropdown("§cChoissisez le rank", $ranks);
+        $form->addDropdown("§cChoissisez le rank", Rank::RANK);
         $form->sendToPlayer($player);
         return true;
 
