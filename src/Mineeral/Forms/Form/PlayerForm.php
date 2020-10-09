@@ -82,11 +82,11 @@ class PlayerForm
      * @param Player $player
      * @param string $rank
      * @param int $money
-     * @param Config $rank_db
-     * @param Config $money_db
+     * @param C $rank_db
+     * @param C $money_db
      * @return bool
      */
-    public static function Stats(Player $player, $rank, $money, C $rank_db, C $money_db) : bool 
+    public static function Stats(Player $player, string $rank, int $money, C $rank_db, C $money_db) : bool 
     {
 
         $form = new SimpleForm(function (Player $player, int $data = null) use ($rank, $money, $rank_db, $money_db){
@@ -125,7 +125,7 @@ class PlayerForm
 
         $msg = "\n\n";
 
-        foreach($ranks as $key => $value){
+        foreach(Rank::RANK_UP as $key => $value){
 
             $msg = $msg . "§f" . $value["rank"] . ": §7" . $value["money"] . "\n";
 
