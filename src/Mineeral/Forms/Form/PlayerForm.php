@@ -19,6 +19,7 @@ use Mineeral\Utils\Config;
 
 use Mineeral\Constants\Rank;
 use Mineeral\Constants\Form;
+use Mineeral\Constants\Prefix;
 
 class PlayerForm
 {
@@ -109,11 +110,11 @@ class PlayerForm
             switch($result){
                 case 0:
                     if(isset($r)){
-
+                        if(Config::onConfig($player, "money") < $r["money"]) $player->sendMessage(Form::NO_MONEY_RANK);
                         Config::setConfig($player, $money_db, Config::onConfig($player, "money") - $r["money"]);
                         Config::setConfig($player, $rank_db, $r["rank"]);
-                        Main::getInstance()->getServer()->broadcastMessage(Form::PREFIX_IMPORTANT . "Bravo à §4" . $player->getName() . Form::UP . $r["prefix"] . "§f !");
-                        $player->sendTitle(Form::WELL_DONE);
+                        Main::getInstance()->getServer()->broadcastMessage(Prefix::IMPORTANT . "Bravo à §4" . $player->getName() . Form::UP . $r["prefix"] . "§f !");
+                        $player->sendMessage(Form::WELL_DONE);
                         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_TOTEM); 
                         return true;
 

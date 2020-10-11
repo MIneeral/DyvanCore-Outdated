@@ -29,6 +29,7 @@ class SetMoney extends Cmd{
 
         if($sender instanceof Player){
 
+            if(!$sender->isOp()) return $sender->sendMessage(Command::NO_PERM);
             if(!$args || !$args[0] || !$args[1]) $sender->sendMessage(Prefix::IMPORTANT . "Usage : /setmoney <player> <montant>");
 
             else {

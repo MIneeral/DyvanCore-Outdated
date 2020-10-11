@@ -16,7 +16,6 @@ use Mineeral\Constants\Event;
 class PlayerChat implements Listener
 {
     private static $time = [];
-
     private const TIME = 3;
 
     public function PlayerChatEvent(PlayerChatEvent $event)

@@ -8,6 +8,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 
 use pocketmine\item\Item;
+use pocketmine\block\Block;
 
 use pocketmine\inventory\Inventory;
 use pocketmine\inventory\ArmorInventory;
@@ -20,7 +21,6 @@ class PlayerInteract implements Listener
 {   
 
     private static $cooldown_sign = [];
-    private static $cooldown_wheat = [];
     private static $cooldown_ender_pearl = [];
 
     private const TIME_SIGN_POST = 1;
@@ -36,55 +36,55 @@ class PlayerInteract implements Listener
         $inventory = $player->getInventory();
         $armor = $player->getArmorInventory();
 
-        if($block_id === Item::SIGN_POST){
-            if(!isset(PlayerInteract::$cooldown_sign[$player->getName()])) {
+        switch($item_id){
 
-                PlayerInteract::onSign($player, $inventory, $armor);
-                PlayerInteract::$cooldown_sign[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
+            case Item::WHEAT:
+                if($player->getHealth() < 18.5){
+                    
+                    $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
+                    $inventory->addItem(Item::get(281, 0, 1));
+                    $player->setHealth($player->getHealth() + 2);
+                    $player->sendPopup("§c+2");
 
-            } else if (time() > PlayerInteract::$cooldown_sign[$player->getName()]){
+                }
+            break;
 
-                PlayerInteract::onSign($player, $inventory, $armor);
-                PlayerInteract::$cooldown_sign[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
+            /**
+             * TODO Fix ENDER_PEARL because it's glitch
+             */
+            /*case Item::ENDER_PEARL:
+                if(isset(PlayerInteract::$cooldown_ender_pearl[$player->getName()]) && PlayerInteract::$cooldown_ender_pearl[$player->getName()] > time()) {
 
-            }
-        } else {
+                    $event->setCancelled();
+                    $player->sendPopup("TGM il y a un cooldown !");
 
-            switch($item_id){
+                } else {
 
-                case Item::WHEAT:
-                    if($player->getHealth() >= 18){
-                        if(!isset(PlayerInteract::$cooldown_wheat[$player->getName()])) {
-        
-                            PlayerInteract::onHeal($player, $inventory);
-                            PlayerInteract::$cooldown_wheat[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
-            
-                        } else if (time() > PlayerInteract::$cooldown_wheat[$player->getName()]){
-            
-                            PlayerInteract::onHeal($player, $inventory);
-                            PlayerInteract::$cooldown_wheat[$player->getName()] = time() + PlayerInteract::TIME_WHEAT;
-            
-                        }
-                    }
-                break;
+                    PlayerInteract::$cooldown_ender_pearl[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
 
-                /**
-                 * TODO Fix ENDER_PEARL because it's glitch
-                 */
-                case Item::ENDER_PEARL:
-                    if(isset(PlayerInteract::$cooldown_ender_pearl[$player->getName()]) && PlayerInteract::$cooldown_ender_pearl[$player->getName()] > time()) {
+                }
+            break;*/
 
-                        $event->setCancelled();
-                        $player->sendPopup("TGM il y a un cooldown !");
+        } switch($block_id){
 
-                    } else {
+            case Block::SIGN_POST:
+                if(!isset(PlayerInteract::$cooldown_sign[$player->getName()])) {
 
-                        PlayerInteract::$cooldown_ender_pearl[$player->getName()] = time() + PlayerInteract::TIME_ENDER_PEARL;
+                    PlayerInteract::onSign($player, $inventory, $armor);
+                    PlayerInteract::$cooldown_sign[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
+    
+                } else if (time() > PlayerInteract::$cooldown_sign[$player->getName()]){
+    
+                    PlayerInteract::onSign($player, $inventory, $armor);
+                    PlayerInteract::$cooldown_sign[$player->getName()] = time() + PlayerInteract::TIME_SIGN_POST;
+    
+                }
+            break;
 
-                    }
-                break;
+            case Block::ENDER_CHEST && Block::ENCHANTING_TABLE:
+                $event->setCancelled();
+            break;
 
-            }
         }
     }
 
@@ -114,16 +114,6 @@ class PlayerInteract implements Listener
         $armor->setBoots($diamond_boots);
 
         $player->sendMessage(Form::BASIC_KIT);
-
-    }
-
-    private static function onHeal(Player $player, Inventory $inventory) : void 
-    {
-
-        $inventory->removeItem(Item::get(Item::WHEAT, 0, 1));
-        $inventory->addItem(Item::get(281, 0, 1));
-        $player->setHealth($player->getHealth() + 2);
-        $player->sendPopup("§c+2");
 
     }
 }

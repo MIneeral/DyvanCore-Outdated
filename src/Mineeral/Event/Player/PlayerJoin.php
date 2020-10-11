@@ -30,6 +30,8 @@ class PlayerJoin implements Listener
 
         Main::getInstance()->getServer()->broadcastPopup(Event::JOIN . $player->getName());
         $player->getLevel()->broadcastLevelEvent($player->add(0, $player->getEyeHeight()), LevelEventPacket::EVENT_SOUND_GHAST_SHOOT);
+        $player->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
+        $player->setGamemode(2);
 
         PlayerJoin::$time[$player->getName()] = time();
 

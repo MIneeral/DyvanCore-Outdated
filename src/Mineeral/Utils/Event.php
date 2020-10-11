@@ -5,9 +5,6 @@ namespace Mineeral\Utils;
 use Mineeral\Main;
 use Mineeral\Constants\Prefix;
 
-use Mineeral\Event\Block\BlockBreak;
-use Mineeral\Event\Block\BlockPlace;
-
 use Mineeral\Event\Entity\EntityDamageByEntity;
 use Mineeral\Event\Entity\EntityDamage;
 
@@ -17,6 +14,7 @@ use Mineeral\Event\Player\PlayerDeath;
 use Mineeral\Event\Player\PlayerInteract;
 use Mineeral\Event\Player\PlayerJoin;
 use Mineeral\Event\Player\PlayerQuit;
+use Mineeral\Event\Player\PlayerRespawn;
 
 class Event implements Prefix
 {
@@ -28,10 +26,6 @@ class Event implements Prefix
 
         $events = 
         [
-            // Event Block
-            new BlockBreak(),
-            new BlockPlace(),
-
             // Event Entity
             new EntityDamageByEntity(),
             new EntityDamage(),
@@ -43,6 +37,7 @@ class Event implements Prefix
             new PlayerInteract(),
             new PlayerJoin(),
             new PlayerQuit(),
+            new PlayerRespawn(),
         ];
 
         $count = 0;

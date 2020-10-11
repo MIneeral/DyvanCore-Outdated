@@ -22,7 +22,7 @@ use Mineeral\Event\Entity\EntityDamageByEntity;
 class PlayerDeath implements Listener
 {
 
-    public function PlayerDeathEvent(PlayerDeathEvent $event) : void 
+    public function PlayerDeathEvent(PlayerDeathEvent $event)
     {
 
         $event->setDrops([]);
@@ -34,24 +34,31 @@ class PlayerDeath implements Listener
 
             $damager = $player->getLastDamageCause()->getDamager();
         
-            if($damager instanceof Player) {
+            if($damager instanceof Player && $player instanceof Player) {
 
                 $dname = $damager->getName();
                 $event->setDeathMessage(Event::KILL . $name . "§f a été tué par §4". $dname);
                 $player->teleport(Main::getInstance()->getServer()->getLevelByName("Arene")->getSafeSpawn());
                 $damager->setHealth(20);
 
-                $kill = new C(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", C::JSON);
-                $death = new C(Main::getInstance()->getDataFolder() . "/Infos/Death.json", C::JSON);
-                $money = new C(Main::getInstance()->getDataFolder() . "/Infos/Money.json", C::JSON);
-                Config::setConfig($damager, $kill, Config::onConfig($damager, "kill") + 1);
-                Config::setConfig($damager, $money, Config::onConfig($damager, "money") + 10);
-                Config::setConfig($player, $death, Config::onConfig($player, "death") + 1);
-
                 EntityDamageByEntity::time($damager, "del");
                 EntityDamageByEntity::time($player, "del");
 
+                $kill_db = new C(Main::getInstance()->getDataFolder() . "/Infos/Kill.json", C::JSON);
+                $death_db = new C(Main::getInstance()->getDataFolder() . "/Infos/Death.json", C::JSON);
+                $money_db = new C(Main::getInstance()->getDataFolder() . "/Infos/Money.json", C::JSON);
+                $kill = Config::onConfig($damager, "kill");
+                $money = Config::onConfig($damager, "money");
+                $death = Config::onConfig($player, "death");
+                Config::setConfig($damager, $kill_db, $kill + 1);
+                Config::setConfig($damager, $money_db, $money + 10);
+                Config::setConfig($player, $death_db, $death + 1);
+
+                return true;
+
             }
         }
+
+        return true;
     }
 }

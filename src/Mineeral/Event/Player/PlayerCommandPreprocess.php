@@ -21,8 +21,8 @@ class PlayerCommandPreprocess implements Listener
         $player = $event->getPlayer();
 
         $time = EntityDamageByEntity::time($player, "get");
-
-        if($event->getMessage()[0] === "/" and isset($time) and time() < $time){
+        var_dump($time);
+        if($event->getMessage()[0] === "/" && isset($time) && time() < $time){
 
             $player->sendTip(Event::FIGHT);
             $event->setCancelled();

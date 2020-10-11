@@ -31,10 +31,16 @@ class EntityDamageByEntity implements Listener
             if(isset(Rank::RANK_NAMETAG[Config::onConfig($damager, "rank")])) $damager->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($damager, "rank")] . " §f" . $damager->getName());
             if(isset(Rank::RANK_NAMETAG[Config::onConfig($entity, "rank")])) $entity->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($entity, "rank")] . " §f" . $entity->getName());
 
+<<<<<<< Updated upstream
             EntityDamageByEntity::time($damager, "set", EntityDamageByEntity::TIME + time());
             EntityDamageByEntity::time($entity, "set", EntityDamageByEntity::TIME + time());
             $damager->sendTip("§4-§c Vous êtes maintenant en combat§4 -");
             $entity->sendTip("§4-§c Vous êtes maintenant en combat§4 -");
+=======
+            EntityDamageByEntity::time($damager, "set", time() + EntityDamageByEntity::TIME);
+            EntityDamageByEntity::time($entity, "set", time() + EntityDamageByEntity::TIME);
+
+>>>>>>> Stashed changes
         }
     }
 
@@ -46,12 +52,11 @@ class EntityDamageByEntity implements Listener
             break;
             case "get":
                 if(!isset(EntityDamageByEntity::$cooldown[$player->getName()])) return 0;
-                EntityDamageByEntity::$cooldown[$player->getName()];
-                return 1;
+                return EntityDamageByEntity::$cooldown[$player->getName()];
             break;
             case "del":
                 unset(EntityDamageByEntity::$cooldown[$player->getName()]);
-                return 1;
+                return true;
             break;
         }
     }
