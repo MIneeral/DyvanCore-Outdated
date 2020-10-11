@@ -27,20 +27,15 @@ class EntityDamageByEntity implements Listener
         $entity = $event->getEntity();
 
         if($damager instanceof Player && $entity instanceof Player){
-
+            
             if(isset(Rank::RANK_NAMETAG[Config::onConfig($damager, "rank")])) $damager->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($damager, "rank")] . " §f" . $damager->getName());
             if(isset(Rank::RANK_NAMETAG[Config::onConfig($entity, "rank")])) $entity->setNameTag(Rank::RANK_NAMETAG[Config::onConfig($entity, "rank")] . " §f" . $entity->getName());
 
-<<<<<<< Updated upstream
             EntityDamageByEntity::time($damager, "set", EntityDamageByEntity::TIME + time());
             EntityDamageByEntity::time($entity, "set", EntityDamageByEntity::TIME + time());
             $damager->sendTip("§4-§c Vous êtes maintenant en combat§4 -");
             $entity->sendTip("§4-§c Vous êtes maintenant en combat§4 -");
-=======
-            EntityDamageByEntity::time($damager, "set", time() + EntityDamageByEntity::TIME);
-            EntityDamageByEntity::time($entity, "set", time() + EntityDamageByEntity::TIME);
 
->>>>>>> Stashed changes
         }
     }
 
