@@ -33,7 +33,8 @@ class EntityDamageByEntity implements Listener
 
             EntityDamageByEntity::time($damager, "set", EntityDamageByEntity::TIME + time());
             EntityDamageByEntity::time($entity, "set", EntityDamageByEntity::TIME + time());
-
+            $damager->sendTip("§4-§c Vous êtes maintenant en combat§4 -");
+            $entity->sendTip("§4-§c Vous êtes maintenant en combat§4 -");
         }
     }
 
