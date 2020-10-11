@@ -11,7 +11,7 @@ interface Event
     public const JOIN = "§f[§4+§f]§a ";
     public const QUIT = "§f[§4-§f]§4 ";
     public const KILL = "§c»§4 ";
-    public const NO_SPAM = Prefix::BAD . "Merci de ne pas spam de message !";
-    public const FIGHT = Prefix::IMPORTANT . "Vous êtes encore en combat !";
+    public const NO_SPAM = "§f[§c!§f] §cMerci de ne pas spam de message !";
+    public const FIGHT = "§4- §cVous êtes encore en combat !§4 -";
 
 }

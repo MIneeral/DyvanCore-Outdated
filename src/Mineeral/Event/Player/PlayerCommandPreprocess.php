@@ -24,7 +24,7 @@ class PlayerCommandPreprocess implements Listener
 
         if($event->getMessage()[0] === "/" and isset($time) and time() < $time){
 
-            $player->sendMessage(Event::FIGHT);
+            $player->sendPopup(Event::FIGHT);
             $event->setCancelled();
 
         }
