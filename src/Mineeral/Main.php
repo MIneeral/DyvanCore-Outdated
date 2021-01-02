@@ -57,7 +57,7 @@ class Main extends PluginBase implements Prefix
 
         if(gettype(Level::load()) === "string" && gettype(Command::load()) === "string" 
         && gettype(Event::load()) === "string" && gettype(Entity::load()) === "string" 
-        && gettype(Config::load()) === "string") return Prefix::CONSOLE . "ServerCore is operational";
+        && gettype(Config::load()) === "string") return Prefix::CONSOLE . "Server is operational";
         else {
 
             Main::getInstance()->getServer()->shutdown();
